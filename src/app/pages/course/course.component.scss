@@ -1,0 +1,36 @@
+.course-page-wrapper{
+  box-sizing: border-box;
+  height: 100%;
+
+  padding: 10px;
+
+  .nav{
+    height: 50px;
+
+    .nav-button{
+      box-sizing: border-box;
+
+      height: 40px;
+
+      padding: 10px;
+      margin: 5px;
+
+      border-radius: 10px;
+    }
+    .nav-button:first-child{
+      margin-left: 0;
+    }
+  }
+
+  .main{
+    box-sizing: border-box;
+    width: 100%;
+    height: calc(100% - 50px);
+
+    padding: 10px;
+
+    border-radius: 15px;
+
+    background: rgb(217, 217, 217);
+  }
+}
