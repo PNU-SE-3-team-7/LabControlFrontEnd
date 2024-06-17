@@ -5,20 +5,15 @@
   padding: 10px;
 
   .nav{
+    display: flex;
+
+    flex-direction: row;
+    align-items: center;
+
     height: 50px;
 
-    .nav-button{
-      box-sizing: border-box;
-
+    .nav-btn{
       height: 40px;
-
-      padding: 10px;
-      margin: 5px;
-
-      border-radius: 10px;
-    }
-    .nav-button:first-child{
-      margin-left: 0;
     }
   }
 

@@ -8,6 +8,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { CourseListComponent } from './pages/course-list/course-list.component';
 import { CourseAssigmentComponent } from './components/course-assigment/course-assigment.component';
 import {CourseComponent} from "./pages/course/course.component";
+import { RoutingButtonComponent } from './components/routing-button/routing-button.component';
+import {MatButton} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -16,11 +18,13 @@ import {CourseComponent} from "./pages/course/course.component";
     CourseComponent,
     CourseListComponent,
     CourseAssigmentComponent,
+    RoutingButtonComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        MatButton
+    ],
   providers: [
     provideAnimationsAsync()
   ],

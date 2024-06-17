@@ -1,0 +1,30 @@
+.routing-button{
+  box-sizing: border-box;
+
+  height: 100%;
+  width: max-content;
+
+  background-color: #d8d8d8;
+
+  padding: 10px;
+  margin: 0 10px;
+
+  border-radius: 10px;
+  border: none;
+}
+.routing-button:not(:disabled){
+  transition: ease .3s;
+}
+.routing-button:first-child{
+  margin-left: 0;
+}
+.routing-button:hover{
+  background-color: #009dff;
+}
+.routing-button:active, .active{
+  background-color: #e3c605;
+}
+.routing-button:disabled{
+  background-color: #b6b6b6;
+  color: white;
+}

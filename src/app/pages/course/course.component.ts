@@ -8,7 +8,11 @@ import {ActivatedRoute} from "@angular/router";
   styleUrl: './course.component.scss'
 })
 export class CourseComponent implements OnInit {
-  public coursesList: ICourse[] = [];
+  public course: ICourse = {
+    id: "JJerome",
+    name: "Bagato textu tutu povinno buti",
+    summary: "Bagato textu tutu povinno buti Bagato textu tutu povinno butiBagato textu tutu povinno buti"
+  }
 
   constructor(
     private router: ActivatedRoute,

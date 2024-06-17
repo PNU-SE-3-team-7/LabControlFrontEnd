@@ -1,14 +1,18 @@
 <div class="course-page-wrapper">
   <div class="nav">
-    <button class="nav-button">
-      Select
-    </button>
-    <button class="nav-button">
+    <app-routing-button class="nav-btn">
       Join
-    </button>
+    </app-routing-button>
   </div>
   <main class="main">
-    <a routerLink="assigment/2323">fgfgfg</a>
+    <div class="about-course">
+      <div class="course-name">
+        {{course.name}}
+      </div>
+      <div class="course-summary">
+        {{course.summary}}
+      </div>
+    </div>
     <router-outlet></router-outlet>
   </main>
 </div>
