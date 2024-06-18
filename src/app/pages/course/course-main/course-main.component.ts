@@ -161,7 +161,9 @@ export class CourseMainComponent implements OnInit {
 
   protected addAttachedContentLink(): void {
     this.dialog
-      .open(AddAttachedLinkDialogComponent, {})
+      .open(AddAttachedLinkDialogComponent, {
+        width: "80%",
+      })
       .afterClosed().subscribe(result => {
       console.log(result)
     }, error =>  this.matSnack.open("Something went wrong", "OK", {duration: 5000})

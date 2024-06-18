@@ -48,6 +48,8 @@
       .grade-status{
         .labels{
           display: flex;
+
+          flex-wrap: wrap;
         }
       }
     }
