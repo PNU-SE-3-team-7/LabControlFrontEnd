@@ -12,6 +12,7 @@ import {
 } from "../../../components/dialogs/add-attached-link-dialog/add-attached-link-dialog.component";
 import {ISubmissionComment} from "../../../models/IComment";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../../components/labels/assignment-type-states";
 
 interface IAddCommentForm{
   message: FormControl<string>
@@ -343,10 +344,22 @@ export class CourseAssignmentComponent implements OnInit {
     )
   }
 
+  protected formatDate(date: Date): string {
+    return date.toLocaleString('uk-UA', {
+      timeZone: 'Europe/Kyiv',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+
   protected removeAttachedContent(id: string): void {
     this.attachedContent = this.attachedContent.filter(s => s.id !== id)
   }
 
   protected readonly ACCURACY_GRADE_LABEL_INFO = ACCURACY_GRADE_LABEL_INFO;
   protected readonly COMPLETION_GRADE_LABEL_INFO = COMPLETION_GRADE_LABEL_INFO;
+  protected readonly ASSIGNMENT_TYPE_LABEL_INFO = ASSIGNMENT_TYPE_LABEL_INFO;
 }

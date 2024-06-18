@@ -4,6 +4,22 @@
   flex-direction: row;
   justify-content: space-between;
 
+  .about-assignment, .sub-assignments, .submission{
+    padding: 5px;
+
+    &:first-child{
+      padding-left: 0;
+    }
+    &:last-child{
+      padding-right: 0;
+    }
+  }
+
+  .assignment-attached-content{
+    max-height: 30vh;
+    height: min-content;
+  }
+
   .about-assignment{
     box-sizing: border-box;
 
@@ -11,28 +27,117 @@
     max-width: 70%;
     height: 100%;
 
-    padding: 0 10px;
+    padding: 5px 10px !important;
+    margin-right: 5px;
+
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.7);
+
+    .assignment-title, .assignment-description{
+    }
 
     .assignment-title{
-      font-size: 18px;
+      font-size: 20px;
+    }
+
+    .due-date{
+      margin-top: 5px;
+      font-size: 15px;
     }
 
     .assignment-description{
-      font-size: 10px;
+      margin-top: 10px;
+      font-size: 14px;
     }
   }
 
-  .sub-assignments{
+  .sub-assignments {
     box-sizing: border-box;
 
     min-width: 33%;
     max-width: 40%;
     width: max-content;
+
+    .title{
+      color: rgba(0, 0, 0, 0.4);
+      font-weight: 500;
+    }
+
+    .sub-assignments-list{
+      height: 95%;
+
+      overflow: auto;
+
+      .sub-assignment{
+        display: flex;
+
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+
+        margin: 5px 0;
+        padding: 2px 20px;
+
+        border-radius: 10px;
+
+        background: rgba(255, 255, 255, 0.7);
+
+        transition: ease .2s;
+
+        .left-side{
+          display: flex;
+
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+
+          min-width: 50%;
+          width: max-content;
+
+          .sub-assignment-title{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+
+        .right-side{
+          display: flex;
+
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+
+          margin-left: 1%;
+
+          width: 100%;
+
+          .due-date, .grade{
+            font-size: 14px;
+          }
+        }
+
+        &:hover{
+          background: rgba(222, 222, 222, 0.7);
+        }
+        &:active{
+          transform: scale(0.99);
+        }
+      }
+    }
   }
 
   .submission{
     min-width: 30%;
     max-width: 35%;
+
+    .submission-attached-content{
+      max-height: 35vh;
+      height: max-content;
+
+      margin-bottom: 10px;
+    }
 
     .details{
       display: flex;
@@ -43,7 +148,7 @@
         width: 100%;
         text-align: center;
 
-        color: rgba(34, 34, 34, 0.4);
+        background: rgba(255, 255, 255, 0.7);
       }
 
       .grade-status{
@@ -56,43 +161,6 @@
 
       .button{
         width: 100%;
-      }
-    }
-
-    .attached-content{
-      box-sizing: border-box;
-
-      width: 100%;
-      min-height: 30vh;
-
-      margin: 10px 0;
-      padding: 10px;
-      border-radius: 10px;
-
-      background: rgba(255, 255, 255, 0.4);
-
-      .content-list{
-        width: 100%;
-
-        height: 30vh;
-
-        overflow: auto;
-
-        .list-item{
-          display: flex;
-
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-
-          .link-text{
-            font-size: 16px;
-
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
-        }
       }
     }
 

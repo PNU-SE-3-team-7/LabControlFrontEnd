@@ -24,6 +24,7 @@ import {AppStrokeButton} from "./components/inputs/base-stroke-input/base-stroke
 import {CourseMainComponent} from "./pages/course/course-main/course-main.component";
 import {CourseAssignmentComponent} from "./pages/course/course-assignment/course-assignment.component";
 import {CourseComponent} from "./pages/course/course.component";
+import { AttachedContentComponent } from './components/attached-content/attached-content.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {CourseComponent} from "./pages/course/course.component";
     BaseLabelComponent,
     AddAttachedLinkDialogComponent,
     OnViewFocusDirective,
-    BaseStrokeInputComponent
+    BaseStrokeInputComponent,
+    AttachedContentComponent
   ],
   imports: [
     BrowserModule,

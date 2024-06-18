@@ -86,6 +86,10 @@
           margin-left: 1%;
 
           width: 100%;
+
+          .due-date, .grade{
+            font-size: 14px;
+          }
         }
 
         &:hover{

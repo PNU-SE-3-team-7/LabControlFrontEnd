@@ -1,0 +1,55 @@
+.attached-content{
+  box-sizing: border-box;
+  display: flex;
+
+  flex-direction: column;
+
+  width: 100%;
+  max-height: inherit;
+  min-height: inherit;
+  height: inherit;
+
+  padding: 10px;
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.4);
+
+  .button{
+    width: 100%;
+  }
+
+  .content-list{
+    width: 100%;
+
+    overflow: auto;
+
+    .list-item{
+      box-sizing: border-box;
+      display: flex;
+
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      padding: 0 5px;
+      border-radius: 10px;
+
+      .link-text{
+        font-size: 16px;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        width: 100%;
+
+        padding: 4px 0;
+
+      }
+
+      &:hover{
+        background: rgba(222, 222, 222, 0.7);
+      }
+    }
+  }
+}
