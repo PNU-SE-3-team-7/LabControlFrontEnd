@@ -28,8 +28,15 @@ export class CourseAssignmentComponent implements OnInit {
     id: '1',
     courseId: 'course1',
     parentId: 'parent1',
-    title: 'Assignment 1',
-    description: 'This is the first assignment',
+    title: 'Лабораторна №14 JWT',
+    description: 'Продовження виконання 13 лабораторної:\n' +
+      '1. Використати Basic Auth (модуль Flask-HTTPAuth) для реалізації отримання access  jwt-токена тільки для зареєстрованого користувача на сайті. \n' +
+      '2. Розмежуйте доступ до операцій Сreate, Update, Delete для моделі Todo ( доступ до цих операцій тільки по валідному jwt-токену).\n' +
+      '3. Обробити всі можливі ситуації при виконанні запитів.\n' +
+      '\n' +
+      '4. Протестувати і заскрінити запити за допомогою Postman.\n' +
+      '\n' +
+      '(Опціонально, будуть бонуси) Додати refresh token та операції refresh і revoke для токенів\n',
     type: AssignmentType.ASSIGNMENT,
     submissionEnabled: true,
     updatedDate: new Date('2023-06-01T10:00:00Z'),

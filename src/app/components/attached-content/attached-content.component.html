@@ -1,7 +1,7 @@
 <div class="attached-content">
   <div class="content-list">
-    <div class="list-item" *ngFor="let item of attachedContent" (click)="goToLink(item.fileUri)">
-      <a class="link-text">{{item.fileUri}}</a>
+    <div class="list-item" *ngFor="let item of attachedContent">
+      <div class="link-text" (click)="goToLink(item.fileUri)">{{item.fileUri}}</div>
       <app-cross-button (click)="removeAttachedContent(item.id)" *ngIf="editable"></app-cross-button>
     </div>
   </div>

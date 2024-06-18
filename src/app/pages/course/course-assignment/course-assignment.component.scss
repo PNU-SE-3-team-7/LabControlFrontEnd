@@ -7,6 +7,7 @@
   .about-assignment, .sub-assignments, .submission{
     padding: 5px;
 
+
     &:first-child{
       padding-left: 0;
     }
@@ -32,11 +33,6 @@
 
     border-radius: 10px;
 
-    background: rgba(255, 255, 255, 0.7);
-
-    .assignment-title, .assignment-description{
-    }
-
     .assignment-title{
       font-size: 20px;
     }
@@ -47,8 +43,18 @@
     }
 
     .assignment-description{
-      margin-top: 10px;
+      box-sizing: border-box;
+
       font-size: 14px;
+
+      padding: 5px;
+      border-radius: 10px;
+
+      margin: 10px 0;
+
+      background: rgba(255, 255, 255, 0.4);
+
+      white-space: pre-line;
     }
   }
 
