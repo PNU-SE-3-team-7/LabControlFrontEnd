@@ -14,6 +14,7 @@ export interface IAssignment {
   visibility: boolean;
   gradeType: GradeType;
   autoType: AutoType;
+  maxGrade: number;
   weight: number;
   threshold: number;
   sequence: number;

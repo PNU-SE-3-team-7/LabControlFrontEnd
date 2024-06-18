@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {CourseComponent} from "./pages/course/course.component";
-import {CourseAssigmentComponent} from "./pages/course/course-assigment/course-assigment.component";
 import {CourseListComponent} from "./pages/course-list/course-list.component";
 import {CourseMainComponent} from "./pages/course/course-main/course-main.component";
+import {CourseAssignmentComponent} from "./pages/course/course-assignment/course-assignment.component";
 
 const routes: Routes = [
   {
@@ -23,8 +23,8 @@ const routes: Routes = [
         component: CourseMainComponent,
       },
       {
-        path: 'assigment/:assignmentId',
-        component: CourseAssigmentComponent
+        path: 'assignment/:assignmentId',
+        component: CourseAssignmentComponent,
       }
     ]
   }

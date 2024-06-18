@@ -3,6 +3,9 @@
     <app-routing-button class="nav-btn">
       Join
     </app-routing-button>
+    <app-routing-button class="nav-btn" *ngIf="isPeoplesPageAvailable()">
+      Peoples
+    </app-routing-button>
   </div>
   <main class="main">
     <router-outlet></router-outlet>

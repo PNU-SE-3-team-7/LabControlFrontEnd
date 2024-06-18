@@ -13,8 +13,10 @@ export class CourseComponent implements OnInit {
   ) {
   }
 
-
   ngOnInit(): void {
-    console.log(this.router.snapshot.params)
+  }
+
+  protected isPeoplesPageAvailable(): boolean{
+    return "courseId" in this.router.snapshot.params
   }
 }
