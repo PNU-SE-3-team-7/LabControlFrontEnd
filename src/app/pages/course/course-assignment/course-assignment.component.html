@@ -13,11 +13,12 @@
       [attachedContent]="attachedContent"
       [editable]="true"
     ></app-attached-content>
+    <app-comments [comments]="submissionComments"></app-comments>
   </div>
   <div class="sub-assignments" *ngIf="subAssignments && subAssignments.length > 0">
     <p class="title">Course sub assignments:</p>
     <div class="sub-assignments-list">
-      <div class="sub-assignment" *ngFor="let item of subAssignments" [routerLink]="'assignment/' + item.id">
+      <div class="sub-assignment" *ngFor="let item of subAssignments" [routerLink]="'../' + item.id">
         <div class="left-side">
           <div class="sub-assignment-title">{{item.title}}</div>
           <app-base-label [stateInfo]="ASSIGNMENT_TYPE_LABEL_INFO[item.type]"></app-base-label>
@@ -46,18 +47,6 @@
       ></app-attached-content>
       <app-base-button class="button flat-button">Submit</app-base-button>
     </div>
-    <div class="comments">
-      <div class="comments-list">
-        <div class="comment-item" *ngFor="let comment of submissionComments">
-          {{comment.message}}
-        </div>
-      </div>
-      <form [formGroup]="addCommentForm" class="comment-form">
-        <input type="text" class="base-input" matInput placeholder="Message" formControlName="message" ngDefaultControl>
-        <app-base-button class="button send-btn" (click)="addSubmissionComment()">
-          Send
-        </app-base-button>
-      </form>
-    </div>
+    <app-comments [comments]="submissionComments"></app-comments>
   </div>
 </div>

@@ -11,8 +11,11 @@ import {
 import {ActivatedRoute} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
+interface IAddCommentForm{
+  message: FormControl<string>
+}
 
 @Component({
   selector: 'app-attached-content',
@@ -26,6 +29,10 @@ export class AttachedContentComponent implements OnInit {
 
   private contentType: "BASE" | "ASSIGNMENT" | "SUBMISSION" = "BASE"
 
+  protected addCommentForm: FormGroup<IAddCommentForm> = new FormGroup<IAddCommentForm>(<IAddCommentForm>{
+    message: new FormControl<string>("")
+  })
+
   constructor(
     private router: ActivatedRoute,
     private matSnack: MatSnackBar,
@@ -35,16 +42,16 @@ export class AttachedContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.attachedContent) {
-      this.attachedContent.forEach(content => {
-        if (this.isIAssignmentAttachedContent(content)) {
-          this.contentType = "ASSIGNMENT";
-        } else if (this.isISubmissionAttachedContent(content)) {
-          this.contentType = "SUBMISSION";
-        } else {
-          this.contentType = "BASE";
-        }
-      });
+    if (this.attachedContent && this.attachedContent.length > 0) {
+      const item = this.attachedContent[0]
+
+      if (this.isIAssignmentAttachedContent(item)) {
+        this.contentType = "ASSIGNMENT";
+      } else if (this.isISubmissionAttachedContent(item)) {
+        this.contentType = "SUBMISSION";
+      } else {
+        this.contentType = "BASE";
+      }
     }
   }
 

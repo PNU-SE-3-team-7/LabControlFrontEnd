@@ -7,16 +7,9 @@ import {COMPLETION_GRADE_LABEL_INFO} from "../../../components/labels/completion
 import {ISubmissionAttachedContent} from "../../../models/IAttachedContentBase";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
-import {
-  AddAttachedLinkDialogComponent, IAddAttachedLinkDialogReturnDataType
-} from "../../../components/dialogs/add-attached-link-dialog/add-attached-link-dialog.component";
-import {ISubmissionComment} from "../../../models/IComment";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder} from "@angular/forms";
 import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../../components/labels/assignment-type-states";
-
-interface IAddCommentForm{
-  message: FormControl<string>
-}
+import {ISubmissionComment} from "../../../models/IComment";
 
 @Component({
   selector: 'app-course-assignment',
@@ -58,112 +51,112 @@ export class CourseAssignmentComponent implements OnInit {
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
       fileUri: 'https://rt.pornhub.com/'
-    },{
+    }, {
       submissionId: '1',
       id: '232434',
       fileName: '',
@@ -300,55 +293,16 @@ export class CourseAssignmentComponent implements OnInit {
     },
   ]
 
-  protected addCommentForm: FormGroup<IAddCommentForm> = new FormGroup<IAddCommentForm>(<IAddCommentForm>{
-     message: new FormControl<string>("")
-  })
-
   constructor(
     private router: ActivatedRoute,
     private matSnack: MatSnackBar,
     private dialog: MatDialog,
     private fb: FormBuilder
   ) {
-    this.addCommentForm = fb.group<IAddCommentForm>(<IAddCommentForm>{
-      message: new FormControl<string>("")
-    })
   }
 
   ngOnInit(): void {
     console.log(this.router.snapshot.params)
-  }
-
-  protected addSubmissionComment(): void{
-    if (this.addCommentForm.valid && this.addCommentForm.get('message')?.value !== '') {
-      this.submissionComments.push({
-        submissionId: 'sdfsdf',
-        id: 'sdfsdf',
-        senderId: 'sdfsdf',
-        createdDate: new Date('2023-06-10T14:30:00Z'),
-        message: this.addCommentForm.get('message')?.value || ""
-      });
-    }
-  }
-
-  protected addAttachedContentLink(): void {
-    this.dialog
-      .open(AddAttachedLinkDialogComponent, {
-        width: "80%",
-      })
-      .afterClosed().subscribe((result:IAddAttachedLinkDialogReturnDataType) => {
-      console.log(result)
-      this.attachedContent.push({
-        submissionId: '34',
-        id: '45',
-        fileName: '',
-        fileUri: result.fileUri
-      })
-
-        this.matSnack.open("Link added successfully", "OK", {duration: 5000})
-
-    }, error =>  this.matSnack.open("Something went wrong", "OK", {duration: 5000})
-    )
   }
 
   protected formatDate(date: Date): string {
@@ -360,10 +314,6 @@ export class CourseAssignmentComponent implements OnInit {
       hour: '2-digit',
       minute: '2-digit'
     });
-  }
-
-  protected removeAttachedContent(id: string): void {
-    this.attachedContent = this.attachedContent.filter(s => s.id !== id)
   }
 
   protected readonly ACCURACY_GRADE_LABEL_INFO = ACCURACY_GRADE_LABEL_INFO;

@@ -1,0 +1,21 @@
+.comments{
+  box-sizing: border-box;
+
+  margin: 10px 0;
+  padding: 10px;
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.7);
+
+  .comment-form{
+    display: flex;
+
+    flex-direction: row;
+    align-items: center;
+
+    .send-btn{
+      width: max-content;
+    }
+  }
+}
