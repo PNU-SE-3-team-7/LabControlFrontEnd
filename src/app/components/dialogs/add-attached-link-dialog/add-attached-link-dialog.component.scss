@@ -1,0 +1,29 @@
+.dialog-wrapper{
+  box-sizing: border-box;
+  display: flex;
+
+  flex-direction: column;
+
+  background-color: #b6b6b6;
+
+  padding: 40px;
+
+  width: 100%;
+
+  .form-field{
+    width: 100%;
+  }
+
+  .dialog-buttons{
+    display: flex;
+
+    flex-direction: row;
+    justify-content: space-around;
+
+    width: 100%;
+
+    .btn:first-child{
+      margin-right: 20px;
+    }
+  }
+}

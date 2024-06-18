@@ -1,0 +1,17 @@
+<div class="dialog-wrapper">
+  <div class="title">
+
+  </div>
+  <form [formGroup]="form">
+    <input type="text" class="base-input" onViewFocus matInput placeholder="Your link" formControlName="fileUri" ngDefaultControl>
+  </form>
+
+  <div class="dialog-buttons">
+    <app-base-button class="button cancel btn" (click)="close(false)">
+      Cansel
+    </app-base-button>
+    <app-base-button class="button btn" (click)="close(true)" [disabled]="!form.valid">
+      Add link
+    </app-base-button>
+  </div>
+</div>

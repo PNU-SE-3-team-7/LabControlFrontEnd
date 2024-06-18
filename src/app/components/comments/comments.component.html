@@ -1,0 +1,13 @@
+<div class="comments">
+  <div class="comments-list">
+    <div class="comment-item" *ngFor="let comment of comments">
+      {{comment.message}}
+    </div>
+  </div>
+  <form [formGroup]="addCommentForm" class="comment-form">
+    <input type="text" class="base-input" matInput placeholder="Message" formControlName="message" ngDefaultControl>
+    <app-base-button class="button send-btn" (click)="addSubmissionComment()">
+      Send
+    </app-base-button>
+  </form>
+</div>

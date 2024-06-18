@@ -1,0 +1,25 @@
+<div class="course-main">
+  <div class="about-course">
+    <div class="course-name">
+      {{course.name}}
+    </div>
+    <div class="course-summary">
+      {{course.summary}}
+    </div>
+  </div>
+  <div class="assignments" *ngIf="assignments && assignments.length > 0">
+    <p class="title">Course assignments:</p>
+    <div class="assignments-list">
+      <div class="assigment" *ngFor="let item of assignments" [routerLink]="'assignment/' + item.id">
+        <div class="left-side">
+          <div class="assigment-title">{{item.title}}</div>
+          <app-base-label [stateInfo]="ASSIGNMENT_TYPE_LABEL_INFO[item.type]"></app-base-label>
+        </div>
+        <div class="right-side">
+          <div class="grade">{{7}}/{{item.maxGrade}}</div>
+          <div class="due-date">{{formatDate(item.dueDate)}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

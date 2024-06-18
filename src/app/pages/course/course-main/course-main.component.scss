@@ -1,0 +1,104 @@
+.course-main {
+  display: flex;
+
+  flex-direction: row;
+  justify-content: space-between;
+
+  max-height: 100%;
+
+  .about-course {
+    box-sizing: border-box;
+
+    min-width: 30%;
+    max-width: 45%;
+    height: 100%;
+
+    padding: 0 10px;
+
+    .course-name {
+      font-size: 24px;
+
+      margin: 10px 0 30px 0;
+    }
+
+    .course-summary {
+      font-size: 15px;
+    }
+  }
+
+  .assignments {
+    box-sizing: border-box;
+
+    min-width: 50%;
+    max-width: 55%;
+    width: max-content;
+
+    .title{
+      color: rgba(0, 0, 0, 0.4);
+      font-weight: 500;
+    }
+
+    .assignments-list{
+      height: 95%;
+
+      overflow: auto;
+
+      .assigment{
+        display: flex;
+
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+
+        margin: 5px 0;
+        padding: 2px 20px;
+
+        border-radius: 10px;
+
+        background: rgba(199, 199, 199, 0.4);
+
+        transition: ease .2s;
+
+        .left-side{
+          display: flex;
+
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+
+          min-width: 50%;
+          width: max-content;
+
+          .assigment-title{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+
+        .right-side{
+          display: flex;
+
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+
+          margin-left: 1%;
+
+          width: 100%;
+
+          .due-date, .grade{
+            font-size: 14px;
+          }
+        }
+
+        &:hover{
+          background: rgba(199, 199, 199, 0.6);
+        }
+        &:active{
+          transform: scale(0.99);
+        }
+      }
+    }
+  }
+}

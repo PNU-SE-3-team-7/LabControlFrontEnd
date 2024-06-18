@@ -1,0 +1,19 @@
+<div class="course-page-wrapper">
+  <div class="nav">
+    <app-routing-button class="nav-btn" [routerLink]="'/course/' + courseId">
+      Course
+    </app-routing-button>
+    <app-routing-button class="nav-btn">
+      Join
+    </app-routing-button>
+    <app-routing-button class="nav-btn" *ngIf="isPeoplesPageAvailable()">
+      Peoples
+    </app-routing-button>
+    <app-base-button class="button" (click)="previousPage()">
+      Back
+    </app-base-button>
+  </div>
+  <main class="main">
+    <router-outlet></router-outlet>
+  </main>
+</div>

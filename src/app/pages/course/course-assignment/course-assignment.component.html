@@ -1,0 +1,52 @@
+<div class="assignment-main">
+  <div class="about-assignment">
+    <div class="assignment-title">
+      {{assignment.title}}
+    </div>
+    <div class="due-date">{{formatDate(assignment.dueDate)}}</div>
+    <div class="assignment-description">
+      {{assignment.description}}
+    </div>
+    <app-attached-content
+      class="assignment-attached-content"
+      *ngIf="attachedContent"
+      [attachedContent]="attachedContent"
+      [editable]="true"
+    ></app-attached-content>
+    <app-comments [comments]="submissionComments"></app-comments>
+  </div>
+  <div class="sub-assignments" *ngIf="subAssignments && subAssignments.length > 0">
+    <p class="title">Course sub assignments:</p>
+    <div class="sub-assignments-list">
+      <div class="sub-assignment" *ngFor="let item of subAssignments" [routerLink]="'../' + item.id">
+        <div class="left-side">
+          <div class="sub-assignment-title">{{item.title}}</div>
+          <app-base-label [stateInfo]="ASSIGNMENT_TYPE_LABEL_INFO[item.type]"></app-base-label>
+        </div>
+        <div class="right-side">
+          <div class="grade">{{7}}/{{item.maxGrade}}</div>
+          <div class="due-date">{{formatDate(item.dueDate)}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="submission">
+    <div class="details">
+<!--      <p class="details-header">Your submission</p>-->
+      <div class="grade-status">
+        <div class="labels">
+          <app-base-label [stateInfo]="ACCURACY_GRADE_LABEL_INFO[submission.accuracyGrade]"></app-base-label>
+          <app-base-label [stateInfo]="COMPLETION_GRADE_LABEL_INFO[submission.completionGrade]"></app-base-label>
+        </div>
+        <div>Grade: {{submission.grade}}/{{assignment.maxGrade}} Auto grade: {{submission.autoGrade}}/{{assignment.maxGrade}}</div>
+      </div>
+      <app-attached-content
+        [attachedContent]="attachedContent"
+        [editable]="true"
+        class="submission-attached-content"
+      ></app-attached-content>
+      <app-base-button class="button flat-button">Submit</app-base-button>
+    </div>
+    <app-comments [comments]="submissionComments"></app-comments>
+  </div>
+</div>
