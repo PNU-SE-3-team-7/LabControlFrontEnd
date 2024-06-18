@@ -1,0 +1,39 @@
+//.base-input {
+//  box-sizing: border-box;
+//
+//  height: inherit;
+//  min-width: 50px;
+//  width: inherit;
+//
+//  background-color: var(--input-main-color);
+//
+//  padding: 10px 10px;
+//  margin: 15px 5px;
+//
+//  border-radius: 10px;
+//  border: 1px solid var(--input-secondary-color);
+//
+//  font-weight: 600;
+//  font-size: 15px;
+//
+//  color: var(--input-text-color);
+//  outline: none;
+//
+//  &:hover {
+//    transform: scale(1.01);
+//  }
+//
+//  &:not(:disabled) {
+//    transition: ease .2s;
+//  }
+//
+//  &:first-child {
+//    margin-left: 0;
+//  }
+//
+//  &:active, .active {
+//    transform: scale(0.99);
+//
+//    border: 1px solid var(--input-secondary-color);
+//  }
+//}

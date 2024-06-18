@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
-interface IAddAttachedLinkDialogReturnDataType {
+export interface IAddAttachedLinkDialogReturnDataType {
   fileUri: string
 }
 

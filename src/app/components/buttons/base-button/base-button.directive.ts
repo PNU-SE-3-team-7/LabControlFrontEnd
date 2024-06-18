@@ -3,7 +3,7 @@ import { BaseButtonComponent } from './base-button.component';
 
 @Directive({
   standalone: true,
-  selector: '[appBaseButton]'
+  selector: '[app-base-button]'
 })
 export class BaseButtonDirective implements OnInit {
   @Input() routerLink: string = "";

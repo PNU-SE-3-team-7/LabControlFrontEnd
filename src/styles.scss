@@ -7,6 +7,45 @@ body {
   padding: 0;
 
   color: #222;
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(0, 157, 255, 0.3);
+    border-radius: 10px;
+  }
+
+  --input-main-color: rgba(255, 255, 255, 0.2);
+  --input-secondary-color: #009dff;
+  --input-text-color: #222222;
+}
+
+.input {
+  @mixin color($main, $secondary, $text) {
+    --input-main-color: #{$main};
+    --input-secondary-color: #{$secondary};
+    --input-text-color: #{$text};
+  }
+
+  @include color(transparent, #009dff, #222);
+
+  &:hover {
+    @include color(#009dff, #009dff, #fff);
+  }
+
+  &:active, .active {
+    @include color(#bda505, #bda505, #fff);
+  }
+
+  &:disabled {
+    @include color(#004064, #009dff, #fff);
+  }
 }
 
 .button{
@@ -42,3 +81,62 @@ body {
     }
   }
 }
+
+.flat-button{
+  @mixin color($main, $secondary, $text){
+    --btn-main-color: #{$main};
+    --btn-secondary-color: #{$secondary};
+    --btn-text-color: #{$text};
+  }
+
+  @include color(#009dff, #009dff, #222);
+
+  &:hover{
+    @include color(#009dff, #009dff, #fff);
+  }
+  &:active, .active{
+    @include color(#bda505, #bda505, #fff);
+  }
+  &:disabled{
+    @include color(#004064, #009dff, #fff);
+  }
+}
+
+.base-input{
+  box-sizing: border-box;
+
+  height: inherit;
+  min-width: 50px;
+  width: 100%;
+
+  background-color: var(--input-main-color);
+
+  padding: 10px 10px;
+  margin: 10px 5px;
+
+  border-radius: 10px;
+  border: 1px solid var(--input-secondary-color);
+
+  font-weight: 600;
+  font-size: 15px;
+
+  color: var(--input-text-color);
+  outline: none;
+
+  &:hover{
+    transform: scale(1.01);
+  }
+  &:not(:disabled){
+    transition: ease .2s;
+  }
+  &:first-child{
+    margin-left: 0;
+  }
+  &:active, .active{
+    transform: scale(0.99);
+
+    border: 1px solid var(--input-secondary-color);
+  }
+}
+
+

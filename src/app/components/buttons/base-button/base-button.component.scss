@@ -1,9 +1,9 @@
 .base-button{
   box-sizing: border-box;
 
-  height: 100%;
+  height: inherit;
   min-width: max-content;
-  width: 100%;
+  width: inherit;
 
   background-color: var(--btn-main-color);
 
@@ -16,13 +16,17 @@
   font-weight: 600;
   font-size: 15px;
   color: var(--btn-text-color);
-}
-.base-button:not(:disabled){
-  transition: ease .2s;
-}
-.base-button:first-child{
-  margin-left: 0;
-}
-.base-button:active, .active{
-  transform: scale(0.95);
+
+  &:not(:disabled){
+    transition: ease .2s;
+  }
+  &:hover{
+    transform: scale(1.02);
+  }
+  &:first-child{
+    margin-left: 0;
+  }
+  &:active, .active{
+    transform: scale(0.95);
+  }
 }
