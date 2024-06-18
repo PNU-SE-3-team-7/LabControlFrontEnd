@@ -1,118 +1,98 @@
-.course-main{
+.course-main {
   display: flex;
 
   flex-direction: row;
+  justify-content: space-between;
 
-  .about-course{
+  max-height: 100%;
+
+  .about-course {
     box-sizing: border-box;
 
-    min-width: 33%;
-    max-width: 70%;
+    min-width: 30%;
+    max-width: 45%;
     height: 100%;
 
     padding: 0 10px;
 
-    .course-name{
-      font-size: 18px;
+    .course-name {
+      font-size: 24px;
+
+      margin: 10px 0 30px 0;
     }
 
-    .course-description{
-      font-size: 10px;
+    .course-summary {
+      font-size: 15px;
     }
   }
 
-  .course-assignments{
+  .assignments {
     box-sizing: border-box;
 
-    min-width: 33%;
-    max-width: 40%;
+    min-width: 50%;
+    max-width: 55%;
     width: max-content;
-  }
 
-  .submission{
-    min-width: 30%;
-    max-width: 35%;
-
-    .details{
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-
-      .details-header{
-        width: 100%;
-        text-align: center;
-
-        color: rgba(34, 34, 34, 0.4);
-      }
-
-      .grade-status{
-        .labels{
-          display: flex;
-
-          flex-wrap: wrap;
-        }
-      }
-
-      .button{
-        width: 100%;
-      }
+    .title{
+      color: rgba(0, 0, 0, 0.4);
+      font-weight: 500;
     }
 
-    .attached-content{
-      box-sizing: border-box;
+    .assignments-list{
+      height: 95%;
 
-      width: 100%;
-      min-height: 30vh;
+      overflow: auto;
 
-      margin: 10px 0;
-      padding: 10px;
-      border-radius: 10px;
+      .assigment{
+        display: flex;
 
-      background: rgba(255, 255, 255, 0.4);
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
 
-      .content-list{
-        width: 100%;
+        margin: 5px 0;
+        padding: 2px 20px;
 
-        height: 30vh;
+        border-radius: 10px;
 
-        overflow: auto;
+        background: rgba(199, 199, 199, 0.4);
 
-        .list-item{
+        transition: ease .2s;
+
+        .left-side{
           display: flex;
 
           flex-direction: row;
           justify-content: space-between;
           align-items: center;
 
-          .link-text{
-            font-size: 16px;
+          min-width: 50%;
+          width: max-content;
 
+          .assigment-title{
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
           }
         }
-      }
-    }
 
-    .comments{
-      box-sizing: border-box;
+        .right-side{
+          display: flex;
 
-      margin: 10px 0;
-      padding: 10px;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
 
-      border-radius: 10px;
+          margin-left: 1%;
 
-      background: rgba(255, 255, 255, 0.4);
+          width: 100%;
+        }
 
-      .comment-form{
-        display: flex;
-
-        flex-direction: row;
-        align-items: center;
-
-        .send-btn{
-          width: max-content;
+        &:hover{
+          background: rgba(199, 199, 199, 0.6);
+        }
+        &:active{
+          transform: scale(0.99);
         }
       }
     }

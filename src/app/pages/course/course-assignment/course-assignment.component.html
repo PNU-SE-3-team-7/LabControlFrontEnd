@@ -1,0 +1,50 @@
+<div class="assignment-main">
+  <div class="about-assignment">
+    <div class="assignment-title">
+      {{assignment.title}}
+    </div>
+    <div class="assignment-description">
+      {{assignment.description}}
+    </div>
+  </div>
+  <div class="sub-assignments" *ngIf="subAssignments && subAssignments.length > 0">
+    <div class="assigment" *ngFor="let item of subAssignments">
+      <p>{{item.title}}</p>
+    </div>
+  </div>
+  <div class="submission">
+    <div class="details">
+<!--      <p class="details-header">Your submission</p>-->
+      <div class="grade-status">
+        <div class="labels">
+          <app-base-label [stateInfo]="ACCURACY_GRADE_LABEL_INFO[submission.accuracyGrade]"></app-base-label>
+          <app-base-label [stateInfo]="COMPLETION_GRADE_LABEL_INFO[submission.completionGrade]"></app-base-label>
+        </div>
+        <p>Grade: {{submission.grade}}/{{assignment.maxGrade}}</p>
+      </div>
+      <div class="attached-content">
+        <div class="content-list">
+          <div class="list-item" *ngFor="let item of attachedContent">
+            <div class="link-text">{{item.fileUri}}{{item.fileUri}}</div>
+            <app-cross-button (click)="removeAttachedContent(item.id)"></app-cross-button>
+          </div>
+        </div>
+        <app-base-button class="button" (click)="addAttachedContentLink()">Add link</app-base-button>
+      </div>
+      <app-base-button class="button flat-button">Submit</app-base-button>
+    </div>
+    <div class="comments">
+      <div class="comments-list">
+        <div class="comment-item" *ngFor="let comment of submissionComments">
+          {{comment.message}}
+        </div>
+      </div>
+      <form [formGroup]="addCommentForm" class="comment-form">
+        <input type="text" class="base-input" matInput placeholder="Message" formControlName="message" ngDefaultControl>
+        <app-base-button class="button send-btn" (click)="addSubmissionComment()">
+          Send
+        </app-base-button>
+      </form>
+    </div>
+  </div>
+</div>
