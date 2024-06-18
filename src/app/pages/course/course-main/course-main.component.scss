@@ -1,0 +1,71 @@
+.course-main{
+  display: flex;
+
+  flex-direction: row;
+
+  .about-course{
+    box-sizing: border-box;
+
+    min-width: 33%;
+    max-width: 70%;
+    height: 100%;
+
+    padding: 0 10px;
+
+    .course-name{
+      font-size: 18px;
+    }
+
+    .course-description{
+      font-size: 10px;
+    }
+  }
+
+  .course-assignments{
+    box-sizing: border-box;
+
+    min-width: 33%;
+    max-width: 40%;
+    width: max-content;
+  }
+
+  .submission{
+    min-width: 30%;
+    max-width: 35%;
+
+    .details{
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      .details-header{
+        width: 100%;
+        text-align: center;
+
+        color: #3b3b3b;
+      }
+
+      .grade-status{
+        .labels{
+          display: flex;
+        }
+      }
+    }
+
+    .attached-content{
+      width: 100%;
+
+      .content-list{
+        width: 100%;
+
+        .list-item{
+          display: flex;
+
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+    }
+  }
+}

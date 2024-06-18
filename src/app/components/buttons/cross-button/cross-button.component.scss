@@ -1,0 +1,46 @@
+.cross-button{
+  box-sizing: content-box;
+  display: flex;
+  position: relative;
+
+  background: transparent;
+  border: none;
+
+  height: 20px;
+  width: 20px;
+
+  padding: 5px;
+  margin: 5px;
+
+  .line{
+    position: absolute;
+    display: block;
+
+    top: calc(50% - 10px);
+    left: calc(50% - 2px);
+
+    width: 4px;
+    height: 20px;
+
+    border-radius: 10px;
+
+    background: #222222;
+
+    transition: ease 0.1s;
+  }
+  .line:first-child{
+    transform: rotate(45deg);
+  }
+  .line:last-child{
+    transform: rotate(-45deg);
+  }
+}
+.cross-button:hover{
+  .line{
+    background: #ff0000;
+  }
+}
+
+.cross-button:active, .active{
+  transform: scale(0.9);
+}

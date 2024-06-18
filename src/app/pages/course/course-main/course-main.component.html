@@ -1,0 +1,42 @@
+<div class="course-main">
+  <div class="about-course">
+    <div class="course-name">
+      {{course.name}}
+    </div>
+    <div class="course-summary">
+      {{course.summary}}
+    </div>
+  </div>
+  <div class="course-assignments" *ngIf="subAssignments && subAssignments.length > 0">
+    <div class="assigment" *ngFor="let item of subAssignments">
+      <p>{{item.title}}</p>
+    </div>
+  </div>
+  <div class="submission">
+    <div class="details">
+      <p class="details-header">Your work</p>
+      <div class="grade-status">
+        <div class="labels">
+          <app-base-label [stateInfo]="ACCURACY_GRADE_LABEL_INFO[submission.accuracyGrade]"></app-base-label>
+          <app-base-label [stateInfo]="COMPLETION_GRADE_LABEL_INFO[submission.completionGrade]"></app-base-label>
+        </div>
+        <p>Grade: {{submission.grade}}/{{10}}</p>
+      </div>
+      <div class="attached-content">
+        <div class="content-list">
+          <div class="list-item" *ngFor="let item of attachedContent">
+            <div class="link-text">{{item.fileUri}}</div>
+            <app-cross-button (click)="removeAttachedContent(item.id)"></app-cross-button>
+          </div>
+        </div>
+        <app-base-button class="button" (click)="addAttachedContentLink()">Add link</app-base-button>
+      </div>
+      <app-base-button class="button">
+        Submit
+      </app-base-button>
+    </div>
+    <div class="comments">
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+.base-button{
+  box-sizing: border-box;
+
+  height: 100%;
+  min-width: max-content;
+  width: 100%;
+
+  background-color: var(--btn-main-color);
+
+  padding: 10px 25px;
+  margin: 2px 5px;
+
+  border-radius: 10px;
+  border: 1px solid var(--btn-secondary-color);
+
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--btn-text-color);
+}
+.base-button:not(:disabled){
+  transition: ease .2s;
+}
+.base-button:first-child{
+  margin-left: 0;
+}
+.base-button:active, .active{
+  transform: scale(0.95);
+}

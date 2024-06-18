@@ -1,0 +1,11 @@
+.base-label {
+  width: max-content;
+
+  padding: 2px 5px;
+  margin: 5px;
+
+  border-radius: 5px;
+}
+.base-label:first-child {
+  margin-left: 0;
+}
