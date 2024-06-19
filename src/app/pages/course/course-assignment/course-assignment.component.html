@@ -10,7 +10,9 @@
     <app-attached-content
       class="assignment-attached-content"
       *ngIf="attachedContent"
-      [attachedContent]="attachedContent"
+      [attachedContent]="assignmentAttachedContent"
+      (onAddButtonClicked)="onAssignmentAttachedContentUpdated($event)"
+      (onRemoveButtonClicked)="onRemoveAssigmentAttachedContent($event)"
       [editable]="true"
     ></app-attached-content>
     <app-comments [comments]="submissionComments"></app-comments>
@@ -42,6 +44,8 @@
       </div>
       <app-attached-content
         [attachedContent]="attachedContent"
+        (onAddButtonClicked)="onSubmissionAttachedContentUpdated($event)"
+        (onRemoveButtonClicked)="onRemoveSubmissionAttachedContent($event)"
         [editable]="true"
         class="submission-attached-content"
       ></app-attached-content>

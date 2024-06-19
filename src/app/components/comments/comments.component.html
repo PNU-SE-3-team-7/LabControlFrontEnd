@@ -1,7 +1,20 @@
 <div class="comments">
   <div class="comments-list">
-    <div class="comment-item" *ngFor="let comment of comments">
-      {{comment.message}}
+    <div class="comment-item-wrapper"
+         *ngFor="let comment of comments"
+         [ngClass]="{
+                    'yours': comment.senderId !== this.user.id,
+                    'mine': comment.senderId === this.user.id,
+                    }"
+    >
+      <div class="comment-item">
+        <div class="comment-owner" [style.color]="getUserColor(comment.senderId)">
+          {{ comment.senderId === this.user.id ? "You" : "JJerome" }}:
+        </div>
+        <div class="comment-text">
+          {{ comment.message }}
+        </div>
+      </div>
     </div>
   </div>
   <form [formGroup]="addCommentForm" class="comment-form">
