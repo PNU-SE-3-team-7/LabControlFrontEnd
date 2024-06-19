@@ -22,9 +22,9 @@ export enum SubmissionStatus {
 
 export const SUBMISSION_STATUS_TO_SUBMIT_TEXT: Record<SubmissionStatus, string> = {
   NOT_TURNED_IN: "Submit",
-  TURNED_IN: "Cansel",
+  TURNED_IN: "Cancel",
   RETURNED: "Submit again",
-  TURNED_IN_AGAIN: "Cansel again"
+  TURNED_IN_AGAIN: "Cancel again"
 }
 
 export enum AccuracyGrade {

@@ -24,8 +24,9 @@ import {AppStrokeButton} from "./components/inputs/base-stroke-input/base-stroke
 import {CourseMainComponent} from "./pages/course/course-main/course-main.component";
 import {CourseAssignmentComponent} from "./pages/course/course-assignment/course-assignment.component";
 import {CourseComponent} from "./pages/course/course.component";
-import { AttachedContentComponent } from './components/attached-content/attached-content.component';
-import { CommentsComponent } from './components/comments/comments.component';
+import {AttachedContentComponent} from './components/attached-content/attached-content.component';
+import {CommentsComponent} from './components/comments/comments.component';
+import {CourseEditComponent} from './pages/course-edit/course-edit.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { CommentsComponent } from './components/comments/comments.component';
     BaseStrokeInputComponent,
     AttachedContentComponent,
     CommentsComponent,
+    CourseEditComponent,
   ],
   imports: [
     BrowserModule,
