@@ -1,4 +1,4 @@
-.comments{
+.comments {
   box-sizing: border-box;
 
   margin: 10px 0;
@@ -8,28 +8,27 @@
 
   background: rgba(255, 255, 255, 0.7);
 
-  .comment-form{
+  .comment-form {
     display: flex;
 
     flex-direction: row;
     align-items: center;
 
-    .send-btn{
+    .send-btn {
       width: max-content;
     }
   }
 
-
-  .mine{
+  .mine {
     justify-content: flex-end !important;
 
-    .comment-text{
+    .comment-text {
       text-align: right !important;
     }
   }
 
-  .comments-list{
-    .comment-item-wrapper{
+  .comments-list {
+    .comment-item-wrapper {
       display: flex;
 
       flex-direction: row;
@@ -38,7 +37,7 @@
 
       width: 100%;
 
-      .comment-item{
+      .comment-item {
         display: flex;
 
         flex-direction: column;

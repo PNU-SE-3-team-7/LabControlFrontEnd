@@ -367,7 +367,7 @@ export class CourseAssignmentComponent implements OnInit {
     this.attachedContent = this.attachedContent.filter(content => content.id !== itemId)
   }
 
-  protected onSubmissionAttachedContentUpdated(content: IAttachedComponentAddLinkType){
+  protected onSubmissionAttachedContentUpdated(content: IAttachedComponentAddLinkType) {
     this.attachedContent.push({
       fileName: "",
       fileUri: content.url,
@@ -376,7 +376,7 @@ export class CourseAssignmentComponent implements OnInit {
     })
   }
 
-  protected onAssignmentAttachedContentUpdated(content: IAttachedComponentAddLinkType){
+  protected onAssignmentAttachedContentUpdated(content: IAttachedComponentAddLinkType) {
     this.assignmentAttachedContent.push({
       fileName: "",
       fileUri: content.url,
