@@ -26,6 +26,10 @@ import {CourseAssignmentComponent} from "./pages/course/course-assignment/course
 import {CourseComponent} from "./pages/course/course.component";
 import { AttachedContentComponent } from './components/attached-content/attached-content.component';
 import { CommentsComponent } from './components/comments/comments.component';
+import { BaseRangeDatepickerComponent } from './components/inputs/base-range-datepicker/base-range-datepicker.component';
+import { BaseCheckboxesComponent } from './components/inputs/base-checkboxes/base-checkboxes.component';
+import { BaseSelectComponent } from './components/inputs/base-select/base-select.component';
+import { BaseTextareaComponent } from './components/inputs/base-textarea/base-textarea.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,7 @@ import { CommentsComponent } from './components/comments/comments.component';
     OnViewFocusDirective,
     BaseStrokeInputComponent,
     AttachedContentComponent,
-    CommentsComponent
+    CommentsComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +59,10 @@ import { CommentsComponent } from './components/comments/comments.component';
     MatFormField,
     MatInput,
     AppStrokeButton,
+    BaseRangeDatepickerComponent,
+    BaseCheckboxesComponent,
+    BaseSelectComponent,
+    BaseTextareaComponent,
   ],
   providers: [
     provideAnimationsAsync()
