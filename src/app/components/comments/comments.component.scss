@@ -1,8 +1,15 @@
 .comments {
   box-sizing: border-box;
+  display: flex;
+
+  flex-direction: column;
 
   margin: 10px 0;
   padding: 10px;
+
+  max-height: inherit;
+  min-height: inherit;
+  height: inherit;
 
   border-radius: 10px;
 
@@ -28,6 +35,9 @@
   }
 
   .comments-list {
+    overflow-y: auto;
+    height: 100%;
+
     .comment-item-wrapper {
       display: flex;
 
@@ -44,13 +54,27 @@
 
         background: rgba(0, 0, 0, 0.05);
 
-        margin: 3px 0;
-        padding: 4px 6px;
+        margin: 2px 0;
+        padding: 2px 6px;
         border-radius: 10px;
 
         min-width: 30%;
         max-width: 90%;
         width: max-content;
+
+        font-size: 14px;
+
+        overflow: hidden;
+        text-overflow: clip;
+        white-space: wrap;
+        word-wrap: break-word;
+
+        .comment-owner {
+          font-weight: 600;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
       }
     }
   }

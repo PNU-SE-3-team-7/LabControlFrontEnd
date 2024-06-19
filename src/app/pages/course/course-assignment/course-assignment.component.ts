@@ -1,7 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {AssignmentType, AutoType, GradeType, IAssignment} from "../../../models/IAssignment";
-import {AccuracyGrade, CompletionGrade, ISubmission, SubmissionStatus} from "../../../models/ISubmission";
+import {
+  AccuracyGrade,
+  CompletionGrade,
+  ISubmission,
+  SUBMISSION_STATUS_TO_SUBMIT_TEXT,
+  SubmissionStatus
+} from "../../../models/ISubmission";
 import {ACCURACY_GRADE_LABEL_INFO} from "../../../components/labels/accurast-grade-states";
 import {COMPLETION_GRADE_LABEL_INFO} from "../../../components/labels/completion-grade-states";
 import {IAssignmentAttachedContent, ISubmissionAttachedContent} from "../../../models/IAttachedContentBase";
@@ -327,21 +333,21 @@ export class CourseAssignmentComponent implements OnInit {
     {
       submissionId: 'sdfsdf',
       id: '1',
-      senderId: 'sdfgfgd',
+      senderId: 'c',
       createdDate: new Date('2023-06-10T14:30:00Z'),
       message: 'adfgadfgadfg'
     },
     {
       submissionId: 'sdfsdf',
       id: '1',
-      senderId: 'fdgfdjjsgf',
+      senderId: 'b',
       createdDate: new Date('2023-06-10T14:30:00Z'),
       message: 'Mes234234234sage'
     },
     {
       submissionId: 'sdfsdf',
       id: 'sdfsdf',
-      senderId: 'dfsdfrfdgfd',
+      senderId: 'a',
       createdDate: new Date('2023-06-10T14:30:00Z'),
       message: 'Messag345345345345e'
     },
@@ -399,4 +405,5 @@ export class CourseAssignmentComponent implements OnInit {
   protected readonly ACCURACY_GRADE_LABEL_INFO = ACCURACY_GRADE_LABEL_INFO;
   protected readonly COMPLETION_GRADE_LABEL_INFO = COMPLETION_GRADE_LABEL_INFO;
   protected readonly ASSIGNMENT_TYPE_LABEL_INFO = ASSIGNMENT_TYPE_LABEL_INFO;
+  protected readonly SUBMISSION_GRADE_TO_SUBMIT_TEXT = SUBMISSION_STATUS_TO_SUBMIT_TEXT;
 }

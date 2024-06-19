@@ -15,7 +15,7 @@
       (onRemoveButtonClicked)="onRemoveAssigmentAttachedContent($event)"
       [editable]="true"
     ></app-attached-content>
-    <app-comments [comments]="submissionComments"></app-comments>
+    <app-comments class="assignment-comments" [comments]="submissionComments"></app-comments>
   </div>
   <div class="sub-assignments" *ngIf="subAssignments && subAssignments.length > 0">
     <p class="title">Course sub assignments:</p>
@@ -49,8 +49,9 @@
         [editable]="true"
         class="submission-attached-content"
       ></app-attached-content>
-      <app-base-button class="button flat-button">Submit</app-base-button>
+      <app-base-button class="button flat-button">{{ SUBMISSION_GRADE_TO_SUBMIT_TEXT[submission.submissionStatus] }}
+      </app-base-button>
     </div>
-    <app-comments [comments]="submissionComments"></app-comments>
+    <app-comments class="submission-comments" [comments]="submissionComments"></app-comments>
   </div>
 </div>

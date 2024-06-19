@@ -32,6 +32,11 @@
 
     border-radius: 10px;
 
+    .assignment-comments {
+      max-height: 33vh;
+      height: max-content;
+    }
+
     .assignment-title{
       font-size: 20px;
     }
@@ -60,8 +65,8 @@
   .sub-assignments {
     box-sizing: border-box;
 
-    min-width: 33%;
-    max-width: 40%;
+    min-width: 30%;
+    max-width: 30%;
     width: max-content;
 
     .title{
@@ -138,6 +143,11 @@
   .submission{
     min-width: 30%;
     max-width: 35%;
+
+    .submission-comments {
+      max-height: 50vh;
+      height: max-content;
+    }
 
     .submission-attached-content{
       max-height: 35vh;
