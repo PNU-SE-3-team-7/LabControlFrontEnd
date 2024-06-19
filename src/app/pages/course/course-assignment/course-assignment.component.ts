@@ -227,7 +227,7 @@ export class CourseAssignmentComponent implements OnInit {
     autoGrade: 8,
     createdDate: new Date('2023-06-01T10:00:00Z'),
     updatedDate: new Date('2023-06-01T10:00:00Z'),
-    accuracyGrade: AccuracyGrade.DONE_CORRECTLY,
+    accuracyGrade: AccuracyGrade.OFF_TASK,
     completionGrade: CompletionGrade.OVERDONE
   }
   protected subAssignments: IAssignment[] = [
