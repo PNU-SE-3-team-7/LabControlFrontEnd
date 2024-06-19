@@ -45,7 +45,7 @@ import { CommentsComponent } from './components/comments/comments.component';
     OnViewFocusDirective,
     BaseStrokeInputComponent,
     AttachedContentComponent,
-    CommentsComponent
+    CommentsComponent,
   ],
   imports: [
     BrowserModule,

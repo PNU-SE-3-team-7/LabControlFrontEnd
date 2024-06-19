@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {
   IAssignmentAttachedContent,
   IAttachedContentBase,
@@ -13,8 +13,12 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
+export interface IAttachedComponentAddLinkType{
+  url: string;
+}
+
 interface IAddCommentForm{
-  message: FormControl<string>
+  url: FormControl<string>
 }
 
 @Component({
@@ -26,11 +30,13 @@ export class AttachedContentComponent implements OnInit {
 
   @Input() attachedContent?: IAttachedContentBase[] | IAssignmentAttachedContent[] | ISubmissionAttachedContent[];
   @Input() editable: boolean = false;
+  @Output() readonly onAddButtonClicked = new EventEmitter<IAttachedComponentAddLinkType>();
+  @Output() readonly onRemoveButtonClicked = new EventEmitter<string>();
 
   private contentType: "BASE" | "ASSIGNMENT" | "SUBMISSION" = "BASE"
 
   protected addCommentForm: FormGroup<IAddCommentForm> = new FormGroup<IAddCommentForm>(<IAddCommentForm>{
-    message: new FormControl<string>("")
+    url: new FormControl<string>("")
   })
 
   constructor(
@@ -75,27 +81,17 @@ export class AttachedContentComponent implements OnInit {
         width: "80%",
       })
       .afterClosed().subscribe((result: IAddAttachedLinkDialogReturnDataType) => {
-        console.log(result)
-
-        if (this.attachedContent != undefined) {
-          this.attachedContent.push({
-            assignmentId: "234234",
-            submissionId: '34',
-            id: '45',
-            fileName: '',
-            fileUri: result.fileUri
-          })
-
-          this.matSnack.open("Link added successfully", "OK", {duration: 5000})
-        }
-
+        this.onAddButtonClicked.emit({
+          url: result.fileUri
+        })
+        this.matSnack.open("Link added successfully", "OK", {duration: 5000})
       }, error => this.matSnack.open("Something went wrong", "OK", {duration: 5000})
     )
   }
 
   protected removeAttachedContent(id: string): void {
     if (this.editable){
-      this.attachedContent = this.attachedContent?.filter(s => s.id !== id)
+      this.onRemoveButtonClicked.emit(id);
     }
   }
 }

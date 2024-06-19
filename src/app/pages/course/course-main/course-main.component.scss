@@ -94,6 +94,8 @@
 
         &:hover{
           background: rgba(199, 199, 199, 0.6);
+
+          cursor: pointer;
         }
         &:active{
           transform: scale(0.99);

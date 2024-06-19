@@ -1,4 +1,4 @@
-.comments{
+.comments {
   box-sizing: border-box;
 
   margin: 10px 0;
@@ -8,14 +8,50 @@
 
   background: rgba(255, 255, 255, 0.7);
 
-  .comment-form{
+  .comment-form {
     display: flex;
 
     flex-direction: row;
     align-items: center;
 
-    .send-btn{
+    .send-btn {
       width: max-content;
+    }
+  }
+
+  .mine {
+    justify-content: flex-end !important;
+
+    .comment-text {
+      text-align: right !important;
+    }
+  }
+
+  .comments-list {
+    .comment-item-wrapper {
+      display: flex;
+
+      flex-direction: row;
+      justify-content: flex-start;
+      text-align: left;
+
+      width: 100%;
+
+      .comment-item {
+        display: flex;
+
+        flex-direction: column;
+
+        background: rgba(0, 0, 0, 0.05);
+
+        margin: 3px 0;
+        padding: 4px 6px;
+        border-radius: 10px;
+
+        min-width: 30%;
+        max-width: 90%;
+        width: max-content;
+      }
     }
   }
 }

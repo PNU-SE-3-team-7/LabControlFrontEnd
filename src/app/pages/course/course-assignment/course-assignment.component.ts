@@ -4,12 +4,13 @@ import {AssignmentType, AutoType, GradeType, IAssignment} from "../../../models/
 import {AccuracyGrade, CompletionGrade, ISubmission, SubmissionStatus} from "../../../models/ISubmission";
 import {ACCURACY_GRADE_LABEL_INFO} from "../../../components/labels/accurast-grade-states";
 import {COMPLETION_GRADE_LABEL_INFO} from "../../../components/labels/completion-grade-states";
-import {ISubmissionAttachedContent} from "../../../models/IAttachedContentBase";
+import {IAssignmentAttachedContent, ISubmissionAttachedContent} from "../../../models/IAttachedContentBase";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
 import {FormBuilder} from "@angular/forms";
 import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../../components/labels/assignment-type-states";
 import {ISubmissionComment} from "../../../models/IComment";
+import {IAttachedComponentAddLinkType} from "../../../components/attached-content/attached-content.component";
 
 @Component({
   selector: 'app-course-assignment',
@@ -45,6 +46,59 @@ export class CourseAssignmentComponent implements OnInit {
     threshold: 70,
     sequence: 1
   }
+  protected assignmentAttachedContent: IAssignmentAttachedContent[] = [
+    {
+      assignmentId: '1',
+      id: '232434',
+      fileName: '',
+      fileUri: 'https://rt.pornhub.com/'
+    }, {
+      assignmentId: '1',
+      id: '232434',
+      fileName: '',
+      fileUri: 'https://rt.pornhub.com/'
+    }, {
+      assignmentId: '1',
+      id: '232434',
+      fileName: '',
+      fileUri: 'https://rt.pornhub.com/'
+    }, {
+      assignmentId: '1',
+      id: '232434',
+      fileName: '',
+      fileUri: 'https://rt.pornhub.com/'
+    }, {
+      assignmentId: '1',
+      id: '232434',
+      fileName: '',
+      fileUri: 'https://rt.pornhub.com/'
+    }, {
+      assignmentId: '1',
+      id: '232434',
+      fileName: '',
+      fileUri: 'https://rt.pornhub.com/'
+    }, {
+      assignmentId: '1',
+      id: '232434',
+      fileName: '',
+      fileUri: 'https://rt.pornhub.com/'
+    }, {
+      assignmentId: '1',
+      id: '232434',
+      fileName: '',
+      fileUri: 'https://rt.pornhub.com/'
+    }, {
+      assignmentId: '1',
+      id: '232434',
+      fileName: '',
+      fileUri: 'https://rt.pornhub.com/'
+    }, {
+      assignmentId: '1',
+      id: '232434',
+      fileName: '',
+      fileUri: 'https://rt.pornhub.com/'
+    }
+  ]
   protected attachedContent: ISubmissionAttachedContent[] = [
     {
       submissionId: '1',
@@ -265,31 +319,31 @@ export class CourseAssignmentComponent implements OnInit {
   protected submissionComments: ISubmissionComment[] = [
     {
       submissionId: 'sdfsdf',
-      id: 'sdfsdf',
-      senderId: 'sdfsdf',
+      id: '1',
+      senderId: '1',
       createdDate: new Date('2023-06-10T14:30:00Z'),
-      message: 'Message'
+      message: 'sdfgdfagdafg'
+    },
+    {
+      submissionId: 'sdfsdf',
+      id: '1',
+      senderId: 'sdfgfgd',
+      createdDate: new Date('2023-06-10T14:30:00Z'),
+      message: 'adfgadfgadfg'
+    },
+    {
+      submissionId: 'sdfsdf',
+      id: '1',
+      senderId: 'fdgfdjjsgf',
+      createdDate: new Date('2023-06-10T14:30:00Z'),
+      message: 'Mes234234234sage'
     },
     {
       submissionId: 'sdfsdf',
       id: 'sdfsdf',
-      senderId: 'sdfsdf',
+      senderId: 'dfsdfrfdgfd',
       createdDate: new Date('2023-06-10T14:30:00Z'),
-      message: 'Message'
-    },
-    {
-      submissionId: 'sdfsdf',
-      id: 'sdfsdf',
-      senderId: 'sdfsdf',
-      createdDate: new Date('2023-06-10T14:30:00Z'),
-      message: 'Message'
-    },
-    {
-      submissionId: 'sdfsdf',
-      id: 'sdfsdf',
-      senderId: 'sdfsdf',
-      createdDate: new Date('2023-06-10T14:30:00Z'),
-      message: 'Message'
+      message: 'Messag345345345345e'
     },
   ]
 
@@ -305,7 +359,33 @@ export class CourseAssignmentComponent implements OnInit {
     console.log(this.router.snapshot.params)
   }
 
-  protected formatDate(date: Date): string {
+  protected onRemoveAssigmentAttachedContent(itemId: string): void {
+    this.assignmentAttachedContent = this.assignmentAttachedContent.filter(content => content.id !== itemId)
+  }
+
+  protected onRemoveSubmissionAttachedContent(itemId: string): void {
+    this.attachedContent = this.attachedContent.filter(content => content.id !== itemId)
+  }
+
+  protected onSubmissionAttachedContentUpdated(content: IAttachedComponentAddLinkType) {
+    this.attachedContent.push({
+      fileName: "",
+      fileUri: content.url,
+      id: "123",
+      submissionId: "2323"
+    })
+  }
+
+  protected onAssignmentAttachedContentUpdated(content: IAttachedComponentAddLinkType) {
+    this.assignmentAttachedContent.push({
+      fileName: "",
+      fileUri: content.url,
+      id: "123",
+      assignmentId: "23254"
+    })
+  }
+
+  public formatDate(date: Date): string {
     return date.toLocaleString('uk-UA', {
       timeZone: 'Europe/Kyiv',
       day: '2-digit',
