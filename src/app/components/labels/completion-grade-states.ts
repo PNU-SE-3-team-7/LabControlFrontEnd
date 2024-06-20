@@ -3,33 +3,33 @@ import {StateInfo} from "./base-label/base-label.component";
 
 export const COMPLETION_GRADE_LABEL_INFO: Record<CompletionGrade, StateInfo> = {
   OVERDONE: {
-    text: 'OVERDONE',
-    lightColor: 'rgba(250,42,42,0.2)',
-    mainColor: 'rgba(255,0,0)'
+    text: 'Перевиконано',
+    lightColor: 'rgba(255, 166, 47,0.2)',
+    mainColor: 'rgba(255, 166, 47)'
   },
   DONE: {
-    text: 'DONE',
-    lightColor: 'rgba(250,42,42,0.2)',
-    mainColor: 'rgba(255,0,0)'
+    text: 'Виконано',
+    lightColor: 'rgba(0,255,60,0.2)',
+    mainColor: 'rgba(0,255,60)'
   },
   PARTIAL_DONE: {
-    text: 'PARTIAL_DONE',
-    lightColor: 'rgba(250,42,42,0.2)',
-    mainColor: 'rgba(255,0,0)'
+    text: 'Виконано частково',
+    lightColor: 'rgba(255, 166, 47,0.2)',
+    mainColor: 'rgba(255, 166, 47)'
   },
   NOT_DONE: {
-    text: 'NOT_DONE',
-    lightColor: 'rgba(250,42,42,0.2)',
-    mainColor: 'rgba(255,0,0)'
+    text: 'Не виконано',
+    lightColor: 'rgba(238, 78, 78,0.2)',
+    mainColor: 'rgba(238, 78, 78)'
   },
   NOT_ATTEMPTED: {
-    text: 'NOT_ATTEMPTED',
-    lightColor: 'rgba(250,42,42,0.2)',
-    mainColor: 'rgba(255,0,0)'
+    text: 'Не розпочато',
+    lightColor: 'rgba(2,2,2,0.2)',
+    mainColor: 'rgba(2,2,2)'
   },
   NONE: {
-    text: 'DONE_CORRECTLY',
-    lightColor: 'rgba(250,42,42,0.2)',
-    mainColor: 'rgba(255,0,0)'
+    text: 'Не оцінено',
+    lightColor: 'rgba(0,255,60,0.2)',
+    mainColor: 'rgba(0,255,60)'
   },
 }
