@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {ICourse} from "../../../models/ICourse";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -6,13 +6,14 @@ import {MatDialog} from "@angular/material/dialog";
 import {FormBuilder} from "@angular/forms";
 import {AssignmentType, AutoType, GradeType, IAssignment} from "../../../models/IAssignment";
 import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../../components/labels/assignment-type-states";
+import {ICourseButtonsVisibility, ICourseChildEvents} from "../course.component";
 
 @Component({
   selector: 'app-course-main',
   templateUrl: './course-main.component.html',
   styleUrl: './course-main.component.scss'
 })
-export class CourseMainComponent {
+export class CourseMainComponent implements ICourseChildEvents {
   protected course: ICourse = {
     id: "JJerome",
     name: "Bagato textu tutu povinno buti",
@@ -681,8 +682,15 @@ export class CourseMainComponent {
   ) {
   }
 
-  ngOnInit(): void {
-    console.log(this.router.snapshot.params)
+  getButtonsVisibility(): ICourseButtonsVisibility {
+    return {
+      createCourseVisible: false,
+      saveCourseVisible: false
+    }
+  }
+
+  onSaveButtonClicked(): void {
+    console.log("save")
   }
 
   protected formatDate(date: Date): string {

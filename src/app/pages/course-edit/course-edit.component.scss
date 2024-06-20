@@ -1,141 +1,142 @@
-.course-edit-wrapper {
+
+.course-edit {
   box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: 100%;
   height: 100%;
 
-  padding: 10px;
+  border-radius: 10px;
 
-  .nav {
-    display: flex;
+  background: #e8e8e8;
 
-    flex-direction: row;
-    align-items: center;
+  overflow: auto;
 
-    height: 50px;
-
-    .nav-btn {
-      height: 40px;
-    }
-  }
-
-  .course-edit {
+  .course-edit-from {
     box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 
-    width: 100%;
-
-    max-height: 100%;
-    height: calc(100% - 50px);
+    min-width: 30%;
+    max-width: 45%;
+    width: 80%;
+    height: 100%;
 
     padding: 10px;
+    border-radius: 10px;
 
-    border-radius: 15px;
+    background: rgb(255, 255, 255, 0.7);
 
-    background: #e8e8e8;
+    .field-label {
+      font-size: 14px;
+      font-weight: 500;
+
+      color: #4a4a4a;
+    }
+
+    .base-input {
+      margin: 5px 0;
+
+      height: 15vh;
+      width: 100%;
+
+      resize: none;
+    }
+
+    .course-name {
+      font-size: 24px;
+    }
+
+    .course-summary {
+      font-size: 15px;
+    }
+  }
+}
+
+.assignments {
+  box-sizing: border-box;
+
+  min-width: 50%;
+  max-width: 55%;
+  width: max-content;
+
+  .title {
+    color: rgba(0, 0, 0, 0.4);
+    font-weight: 500;
+  }
+
+  .assignments-list {
+    height: 95%;
 
     overflow: auto;
 
-    .course-edit-from {
-      box-sizing: border-box;
-
-      min-width: 30%;
-      max-width: 45%;
-      height: 100%;
-
-      padding: 10px;
-      border-radius: 10px;
-
-      background: rgb(255, 255, 255, 0.7);
-
-      .course-name {
-        font-size: 24px;
-
-        margin: 10px 0 30px 0;
-      }
-
-      .course-summary {
-        font-size: 15px;
-      }
+    .assigment {
+      transition: ease .2s;
     }
+  }
+}
 
-    .assignments {
-      box-sizing: border-box;
+.assigment, .cdk-drag-preview {
+  display: flex;
 
-      min-width: 50%;
-      max-width: 55%;
-      width: max-content;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 
-      .title {
-        color: rgba(0, 0, 0, 0.4);
-        font-weight: 500;
-      }
+  margin: 5px 0;
+  padding: 2px 20px 2px 10px;
 
-      .assignments-list {
-        height: 95%;
+  border-radius: 10px;
 
-        overflow: auto;
+  background: rgba(199, 199, 199, 0.4);
 
-        .assigment {
-          display: flex;
+  .drag-handle-icon {
+    cursor: grab;
+    overflow: clip;
 
-          flex-direction: row;
-          justify-content: flex-start;
-          align-items: center;
+    margin-right: 10px;
+  }
 
-          margin: 5px 0;
-          padding: 2px 20px;
+  .left-side {
+    display: flex;
 
-          border-radius: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 
-          background: rgba(199, 199, 199, 0.4);
+    min-width: 50%;
+    width: max-content;
 
-          transition: ease .2s;
-
-          .left-side {
-            display: flex;
-
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-
-            min-width: 50%;
-            width: max-content;
-
-            .assigment-title {
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            }
-          }
-
-          .right-side {
-            display: flex;
-
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-
-            margin-left: 1%;
-
-            width: 100%;
-
-            .due-date, .grade {
-              font-size: 14px;
-            }
-          }
-
-          &:hover {
-            background: rgba(199, 199, 199, 0.6);
-
-            cursor: pointer;
-          }
-
-          &:active {
-            transform: scale(0.99);
-          }
-        }
-      }
+    .assigment-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
+  }
+
+  .right-side {
+    display: flex;
+
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-left: 1%;
+
+    width: 100%;
+
+    .due-date, .grade {
+      font-size: 14px;
+    }
+  }
+
+  &:hover {
+    background: rgba(199, 199, 199, 0.6);
+
+    cursor: pointer;
+  }
+
+  &:active {
+    transform: scale(0.99);
   }
 }

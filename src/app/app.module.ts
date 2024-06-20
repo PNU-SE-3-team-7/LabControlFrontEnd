@@ -27,6 +27,12 @@ import {CourseComponent} from "./pages/course/course.component";
 import {AttachedContentComponent} from './components/attached-content/attached-content.component';
 import {CommentsComponent} from './components/comments/comments.component';
 import {CourseEditComponent} from './pages/course-edit/course-edit.component';
+import {
+  CourseAssignmentEditComponent
+} from './pages/course-edit/course-assignment-edit/course-assignment-edit.component';
+import {CdkDrag, CdkDragHandle, CdkDropList} from "@angular/cdk/drag-drop";
+import {MatIcon} from "@angular/material/icon";
+import {MatTooltip} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -48,6 +54,7 @@ import {CourseEditComponent} from './pages/course-edit/course-edit.component';
     AttachedContentComponent,
     CommentsComponent,
     CourseEditComponent,
+    CourseAssignmentEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +64,11 @@ import {CourseEditComponent} from './pages/course-edit/course-edit.component';
     MatFormField,
     MatInput,
     AppStrokeButton,
+    CdkDropList,
+    MatIcon,
+    CdkDragHandle,
+    MatTooltip,
+    CdkDrag,
   ],
   providers: [
     provideAnimationsAsync()

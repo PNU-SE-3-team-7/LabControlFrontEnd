@@ -1,40 +1,35 @@
-<div class="course-edit-wrapper">
-  <div class="nav">
-    <app-base-button class="button" (click)="previousPage()">
-      Back
-    </app-base-button>
-  </div>
-  <main class="course-edit">
-    <form class="course-edit-from" [formGroup]="courseEditForm">
-      <div class="about-course">
-        <div class="course-name">
-          <textarea type="text"
-                    class="base-input"
-                    matInput
-                    placeholder="Course name"
-                    formControlName="name"
-                    ngDefaultControl></textarea>
-        </div>
-        <div class="course-summary">
-          <textarea matInput
-                    formControlName="summary">
-          </textarea>
-        </div>
-        <!--      <div class="assignments" *ngIf="assignments && assignments.length > 0">-->
-        <!--        <p class="title">Course assignments:</p>-->
-        <!--        <div class="assignments-list">-->
-        <!--          <div class="assigment" *ngFor="let item of assignments" [routerLink]="'assignment/' + item.id">-->
-        <!--            <div class="left-side">-->
-        <!--              <div class="assigment-title">{{item.title}}</div>-->
-        <!--              <app-base-label [stateInfo]="ASSIGNMENT_TYPE_LABEL_INFO[item.type]"></app-base-label>-->
-        <!--            </div>-->
-        <!--            <div class="right-side">-->
-        <!--              <div class="grade">{{7}}/{{item.maxGrade}}</div>-->
-        <!--              <div class="due-date">{{formatDate(item.dueDate)}}</div>-->
-        <!--            </div>-->
-        <!--          </div>-->
-        <!--        </div>-->
+<main class="course-edit">
+  <form class="course-edit-from" [formGroup]="courseEditForm">
+    <div class="about-course">
+      <div class="course-name">
+        <div class="field-label">Course name:</div>
+        <textarea class="base-input" formControlName="name" maxlength="255"></textarea>
       </div>
-    </form>
-  </main>
-</div>
+      <div class="course-summary">
+        <div class="field-label">Course summary:</div>
+        <textarea class="base-input" formControlName="summary" maxlength="255"></textarea>
+      </div>
+    </div>
+  </form>
+  <div class="assignments" *ngIf="assignments && assignments.length > 0">
+    <p class="title">Course assignments:</p>
+    <div class="assignments-list" cdkDropList (cdkDropListDropped)="dropAssignment($event)">
+      <div
+        class="assigment"
+        *ngFor="let item of assignments"
+        cdkDrag
+      >
+        <mat-icon class="drag-handle-icon" matTooltip="Змінити порядок полів"
+                  cdkDragHandle>drag_indicator
+        </mat-icon>
+        <div class="left-side">
+          <div class="assigment-title">{{ item.title }}</div>
+          <app-base-label [stateInfo]="ASSIGNMENT_TYPE_LABEL_INFO[item.type]"></app-base-label>
+        </div>
+        <div class="right-side">
+          <div class="due-date">{{ formatDate(item.dueDate) }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

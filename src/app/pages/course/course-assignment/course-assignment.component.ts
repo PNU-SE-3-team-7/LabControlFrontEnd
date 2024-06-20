@@ -17,13 +17,14 @@ import {FormBuilder} from "@angular/forms";
 import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../../components/labels/assignment-type-states";
 import {ISubmissionComment} from "../../../models/IComment";
 import {IAttachedComponentAddLinkType} from "../../../components/attached-content/attached-content.component";
+import {ICourseButtonsVisibility, ICourseChildEvents} from "../course.component";
 
 @Component({
   selector: 'app-course-assignment',
   templateUrl: './course-assignment.component.html',
   styleUrl: './course-assignment.component.scss'
 })
-export class CourseAssignmentComponent implements OnInit {
+export class CourseAssignmentComponent implements OnInit, ICourseChildEvents {
   protected assignment: IAssignment = {
     id: '1',
     courseId: 'course1',
@@ -359,6 +360,16 @@ export class CourseAssignmentComponent implements OnInit {
     private dialog: MatDialog,
     private fb: FormBuilder
   ) {
+  }
+
+  getButtonsVisibility(): ICourseButtonsVisibility {
+    return {
+      createCourseVisible: false,
+      saveCourseVisible: false
+    }
+  }
+
+  onSaveButtonClicked(): void {
   }
 
   ngOnInit(): void {

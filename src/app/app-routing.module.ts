@@ -5,6 +5,9 @@ import {CourseListComponent} from "./pages/course-list/course-list.component";
 import {CourseMainComponent} from "./pages/course/course-main/course-main.component";
 import {CourseAssignmentComponent} from "./pages/course/course-assignment/course-assignment.component";
 import {CourseEditComponent} from "./pages/course-edit/course-edit.component";
+import {
+  CourseAssignmentEditComponent
+} from "./pages/course-edit/course-assignment-edit/course-assignment-edit.component";
 
 const routes: Routes = [
   {
@@ -15,9 +18,12 @@ const routes: Routes = [
     path: "course",
     component: CourseListComponent,
   }, {
-    path: "course/:courseId/edit",
+    path: "course/create",
     component: CourseEditComponent,
   },{
+    path: 'assignment/create',
+    component: CourseAssignmentEditComponent,
+  }, {
     path: 'course/:courseId',
     component: CourseComponent,
     children: [
@@ -26,8 +32,16 @@ const routes: Routes = [
         component: CourseMainComponent,
       },
       {
+        path: 'edit',
+        component: CourseEditComponent,
+      },
+      {
         path: 'assignment/:assignmentId',
         component: CourseAssignmentComponent,
+      },
+      {
+        path: 'assignment/:assignmentId/edit',
+        component: CourseAssignmentEditComponent,
       }
     ]
   }
