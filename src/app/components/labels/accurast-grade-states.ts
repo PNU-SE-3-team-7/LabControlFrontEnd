@@ -3,7 +3,7 @@ import {StateInfo} from "./base-label/base-label.component";
 
 export const ACCURACY_GRADE_LABEL_INFO: Record<AccuracyGrade | string, StateInfo> = {
   DONE_CORRECTLY: {
-    text: 'Коректно',
+    text: 'Правильно',
     lightColor: 'rgba(0,255,60,0.2)',
     mainColor: 'rgb(0,255,60)'
   },
@@ -18,7 +18,7 @@ export const ACCURACY_GRADE_LABEL_INFO: Record<AccuracyGrade | string, StateInfo
     mainColor: 'rgba(238, 78, 78)'
   },
   NOT_DONE: {
-    text: 'Невиконано',
+    text: 'Не виконано',
     lightColor: 'rgba(100,100,100,0.2)',
     mainColor: 'rgb(100,100,100)'
   },
