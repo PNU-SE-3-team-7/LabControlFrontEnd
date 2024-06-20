@@ -14,8 +14,8 @@ export const ACCURACY_GRADE_LABEL_INFO: Record<AccuracyGrade | string, StateInfo
   },
   DONE_WRONG: {
     text: 'Неправильно',
-    lightColor: 'rgba(250,42,42,0.2)',
-    mainColor: 'rgba(255,0,0)'
+    lightColor: 'rgba(238, 78, 78,0.2)',
+    mainColor: 'rgba(238, 78, 78)'
   },
   NOT_DONE: {
     text: 'Невиконано',
