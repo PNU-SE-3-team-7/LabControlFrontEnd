@@ -34,6 +34,7 @@ import {CdkDrag, CdkDragHandle, CdkDropList} from "@angular/cdk/drag-drop";
 import {MatIcon} from "@angular/material/icon";
 import {MatTooltip} from "@angular/material/tooltip";
 import {MatOption, MatSelect} from "@angular/material/select";
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 
 @NgModule({
   declarations: [
@@ -73,6 +74,9 @@ import {MatOption, MatSelect} from "@angular/material/select";
     MatLabel,
     MatSelect,
     MatOption,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatDatepicker,
   ],
   providers: [
     provideAnimationsAsync()

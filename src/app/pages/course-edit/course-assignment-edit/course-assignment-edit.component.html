@@ -8,31 +8,44 @@
       <mat-label class="field-label">Description</mat-label>
       <textarea class="base-input description" [maxLength]="255" formControlName="description"></textarea>
     </div>
-    <div class="states">
-      <mat-form-field class="form-field">
-        <mat-label>Assignment type</mat-label>
-        <mat-select formControlName="type" required>
-          <mat-option *ngFor="let option of AssignmentType.formValues" [value]="option.value">
-            {{ option.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="form-field">
-        <mat-label>Grade type</mat-label>
-        <mat-select formControlName="gradeType" required>
-          <mat-option *ngFor="let option of GradeType.formValues" [value]="option.value">
-            {{ option.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="form-field">
-        <mat-label>Grade type</mat-label>
-        <mat-select formControlName="gradeType" required>
-          <mat-option *ngFor="let option of GradeType.formValues" [value]="option.value">
-            {{ option.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div class="form-field">
+      <mat-label class="field-label">States:</mat-label>
+      <div class="states">
+        <mat-form-field class="form-field">
+          <mat-label>Assignment type</mat-label>
+          <mat-select formControlName="type" required>
+            <mat-option *ngFor="let option of AssignmentType.formValues" [value]="option.value">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Grade type</mat-label>
+          <mat-select formControlName="gradeType" required>
+            <mat-option *ngFor="let option of GradeType.formValues" [value]="option.value">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Grade type</mat-label>
+          <mat-select formControlName="gradeType" required>
+            <mat-option *ngFor="let option of GradeType.formValues" [value]="option.value">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!--    </div>-->
+      <!--    <mat-form-field>-->
+      <!--      <mat-label>Від</mat-label>-->
+      <!--      <input matInput-->
+      <!--             [matDatepicker]="pickerFrom"-->
+      <!--             placeholder="&#45;&#45;/&#45;&#45;/&#45;&#45;"-->
+      <!--             formControlName="dateFrom">-->
+      <!--      <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>-->
+      <!--      <mat-datepicker #pickerFrom></mat-datepicker>-->
+      <!--    </mat-form-field>-->
     </div>
   </form>
 
