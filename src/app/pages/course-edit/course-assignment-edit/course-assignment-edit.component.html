@@ -1,1 +1,42 @@
-<p>course-assignment-edit works!</p>
+<div class="assignment-edit-main">
+  <form class="about-form" *ngIf="assignmentEditForm" [formGroup]="assignmentEditForm">
+    <div class="form-field">
+      <mat-label class="field-label">Title</mat-label>
+      <textarea class="base-input title" [maxLength]="255" formControlName="title"></textarea>
+    </div>
+    <div class="form-field">
+      <mat-label class="field-label">Description</mat-label>
+      <textarea class="base-input description" [maxLength]="255" formControlName="description"></textarea>
+    </div>
+    <div class="states">
+      <mat-form-field class="form-field">
+        <mat-label>Assignment type</mat-label>
+        <mat-select formControlName="type" required>
+          <mat-option *ngFor="let option of AssignmentType.formValues" [value]="option.value">
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Grade type</mat-label>
+        <mat-select formControlName="gradeType" required>
+          <mat-option *ngFor="let option of GradeType.formValues" [value]="option.value">
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Grade type</mat-label>
+        <mat-select formControlName="gradeType" required>
+          <mat-option *ngFor="let option of GradeType.formValues" [value]="option.value">
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <div class="sub-assignments">
+
+  </div>
+</div>

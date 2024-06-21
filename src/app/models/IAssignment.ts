@@ -26,12 +26,52 @@ export enum AssignmentType {
   MATERIAL = "MATERIAL"
 }
 
+export namespace AssignmentType {
+  export const formValues: { value: AssignmentType, name: string }[] = [
+    {
+      value: AssignmentType.ASSIGNMENT,
+      name: "Лабораторна"
+    }, {
+      value: AssignmentType.TASK,
+      name: "Завдання"
+    }, {
+      value: AssignmentType.MATERIAL,
+      name: "Матеріал"
+    },
+  ]
+}
+
 export enum GradeType {
   CONTINUOUS = "CONTINUOUS",
   DISCRETE = "DISCRETE"
 }
 
+export namespace GradeType {
+  export const formValues: { value: GradeType, name: string }[] = [
+    {
+      value: GradeType.CONTINUOUS,
+      name: "Звичайне"
+    }, {
+      value: GradeType.CONTINUOUS,
+      name: "Дискретне"
+    }
+  ]
+}
+
+
 export enum AutoType {
   MANUAL = "MANUAL",
   AUTO = "AUTO"
+}
+
+export namespace AutoType {
+  export const formValues: { value: AutoType, name: string }[] = [
+    {
+      value: AutoType.MANUAL,
+      name: "Звичайне"
+    }, {
+      value: AutoType.AUTO,
+      name: "Автоматичне"
+    }
+  ]
 }

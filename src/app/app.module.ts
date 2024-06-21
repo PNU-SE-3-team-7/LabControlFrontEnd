@@ -16,7 +16,7 @@ import {
   AddAttachedLinkDialogComponent
 } from './components/dialogs/add-attached-link-dialog/add-attached-link-dialog.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {MatFormField} from "@angular/material/form-field";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {OnViewFocusDirective} from "./components/directives/on-view-focus.directive";
 import {BaseStrokeInputComponent} from './components/inputs/base-stroke-input/base-stroke-input.component';
@@ -33,6 +33,7 @@ import {
 import {CdkDrag, CdkDragHandle, CdkDropList} from "@angular/cdk/drag-drop";
 import {MatIcon} from "@angular/material/icon";
 import {MatTooltip} from "@angular/material/tooltip";
+import {MatOption, MatSelect} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -69,6 +70,9 @@ import {MatTooltip} from "@angular/material/tooltip";
     CdkDragHandle,
     MatTooltip,
     CdkDrag,
+    MatLabel,
+    MatSelect,
+    MatOption,
   ],
   providers: [
     provideAnimationsAsync()
