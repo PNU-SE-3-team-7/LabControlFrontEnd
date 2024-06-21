@@ -16,12 +16,12 @@
     </div>
 
     <div class="right-side">
-      <app-base-button class="button" (click)="save()" *ngIf="buttonsVisibility.saveCourseVisible">
+      <app-base-button class="button" (click)="save()" *ngIf="buttonsVisibility.saveButtonVisible">
         Save
       </app-base-button>
     </div>
   </div>
   <main class="main">
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="onActivatedRouteChange($event)"></router-outlet>
   </main>
 </div>

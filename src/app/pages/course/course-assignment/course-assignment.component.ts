@@ -364,8 +364,8 @@ export class CourseAssignmentComponent implements OnInit, ICourseChildEvents {
 
   getButtonsVisibility(): ICourseButtonsVisibility {
     return {
-      createCourseVisible: false,
-      saveCourseVisible: false
+      createButtonVisible: false,
+      saveButtonVisible: false
     }
   }
 

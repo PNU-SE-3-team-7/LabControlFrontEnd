@@ -1,11 +1,10 @@
-import {Component, ComponentRef, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {ChangeDetectorRef, Component, OnInit,} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
-import {filter,} from 'rxjs/operators';
 
 export interface ICourseButtonsVisibility {
-  createCourseVisible: boolean
-  saveCourseVisible: boolean
+  createButtonVisible: boolean
+  saveButtonVisible: boolean
 }
 
 export interface ICourseChildEvents {
@@ -19,42 +18,29 @@ export interface ICourseChildEvents {
   templateUrl: './course.component.html',
   styleUrls: ['./course.component.scss']
 })
-export class CourseComponent implements OnInit, OnDestroy {
-  protected courseId: string = ""
-  private childComponentRef?: ComponentRef<any>
-  protected childComponentInstance?: ICourseChildEvents
+export class CourseComponent implements OnInit {
+  protected courseId: string = "";
+  protected childComponentInstance?: ICourseChildEvents;
   protected buttonsVisibility: ICourseButtonsVisibility = {
-    createCourseVisible: false,
-    saveCourseVisible: false,
+    createButtonVisible: false,
+    saveButtonVisible: false,
   };
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private viewContainerRef: ViewContainerRef
+    private cdr: ChangeDetectorRef
   ) {
-  }
-
-  ngOnDestroy(): void {
-    this.childComponentRef?.destroy();
   }
 
   ngOnInit(): void {
     if ("courseId" in this.activatedRoute.snapshot.params) {
       this.courseId = this.activatedRoute.snapshot.params["courseId"] || "";
     }
-
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(this.updateChildComponentInstance);
-
-    this.updateChildComponentInstance()
   }
 
   protected save(): void {
-    console.log(this.childComponentInstance)
-    console.log('DFdsf')
     this.childComponentInstance?.onSaveButtonClicked()
   }
 
@@ -62,23 +48,13 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.location.back();
   }
 
-  protected isPeoplesPageAvailable(): boolean{
-    return "courseId" in this.activatedRoute.snapshot.params
+  protected onActivatedRouteChange(component: ICourseChildEvents): void {
+    this.childComponentInstance = component
+    this.buttonsVisibility = this.childComponentInstance.getButtonsVisibility()
+    this.cdr.detectChanges();
   }
 
-  private updateChildComponentInstance(): void {
-    console.log(this.activatedRoute)
-    let currentRoute = this.activatedRoute.firstChild;
-
-    while (currentRoute?.firstChild) {
-      currentRoute = currentRoute.firstChild;
-    }
-
-    if (currentRoute?.component) {
-      this.childComponentRef = this.viewContainerRef.createComponent(currentRoute.component);
-
-      this.childComponentInstance = this.childComponentRef.instance as ICourseChildEvents;
-      this.buttonsVisibility = this.childComponentInstance.getButtonsVisibility()
-    }
+  protected isPeoplesPageAvailable(): boolean {
+    return "courseId" in this.activatedRoute.snapshot.params
   }
 }

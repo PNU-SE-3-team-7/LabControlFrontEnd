@@ -18,6 +18,7 @@
         class="assigment"
         *ngFor="let item of assignments"
         cdkDrag
+        (click)="goToAssignmentEdit(item.id)"
       >
         <mat-icon class="drag-handle-icon" matTooltip="Змінити порядок полів"
                   cdkDragHandle>drag_indicator

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {AssignmentType, AutoType, GradeType, IAssignment} from "../../models/IAssignment";
@@ -18,6 +18,7 @@ interface CourseEditFormType {
   styleUrl: './course-edit.component.scss'
 })
 export class CourseEditComponent implements ICourseChildEvents {
+  private courseId: string = "";
   protected assignments: IAssignment[] = [
     {
       id: '2',
@@ -679,6 +680,7 @@ export class CourseEditComponent implements ICourseChildEvents {
 
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private location: Location,
     private fb: FormBuilder
   ) {
@@ -688,10 +690,17 @@ export class CourseEditComponent implements ICourseChildEvents {
     })
   }
 
+  ngOnInit(): void {
+    this.activatedRoute.parent?.paramMap.subscribe(params => {
+      this.courseId = params.get('courseId') || '';
+    });
+  }
+
+
   getButtonsVisibility(): ICourseButtonsVisibility {
     return {
-      createCourseVisible: false,
-      saveCourseVisible: true
+      createButtonVisible: false,
+      saveButtonVisible: true
     }
   }
 
@@ -700,7 +709,7 @@ export class CourseEditComponent implements ICourseChildEvents {
   }
 
   protected goToAssignmentEdit(id: string): void {
-    this.router.navigate("/course/", co)
+    this.router.navigateByUrl(`/course/${this.courseId}/assignment/${id}/edit`)
   }
 
   protected dropAssignment(event: CdkDragDrop<any>): void {
