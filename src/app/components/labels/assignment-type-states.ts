@@ -3,18 +3,18 @@ import {AssignmentType} from "../../models/IAssignment";
 
 export const ASSIGNMENT_TYPE_LABEL_INFO: Record<AssignmentType, StateInfo> = {
   ASSIGNMENT: {
-    text: 'ASSIGNMENT',
-    lightColor: 'rgba(250,42,42,0.2)',
-    mainColor: 'rgba(255,0,0)'
+    text: 'Лабораторна',
+    lightColor: 'rgba(255, 166, 47,0.2)',
+    mainColor: 'rgba(255, 166, 47)'
   },
   TASK: {
-    text: 'TASK',
-    lightColor: 'rgba(250,42,42,0.2)',
-    mainColor: 'rgba(255,0,0)'
+    text: 'Завдання',
+    lightColor: 'rgba(238, 78, 78,0.2)',
+    mainColor: 'rgba(238, 78, 78)'
   },
   MATERIAL: {
-    text: 'MATERIAL',
-    lightColor: 'rgba(250,42,42,0.2)',
-    mainColor: 'rgba(255,0,0)'
+    text: 'Матеріал',
+    lightColor: 'rgba(5, 146, 18,0.2)',
+    mainColor: 'rgba(5, 146, 18)'
   },
 }
