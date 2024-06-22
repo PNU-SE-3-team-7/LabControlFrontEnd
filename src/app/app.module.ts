@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {importProvidersFrom, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -26,8 +26,8 @@ import {CourseAssignmentComponent} from "./pages/course/course-assignment/course
 import {CourseComponent} from "./pages/course/course.component";
 import {AttachedContentComponent} from './components/attached-content/attached-content.component';
 import {CommentsComponent} from './components/comments/comments.component';
-import {CourseEditComponent} from './pages/course-edit/course-edit.component';
-import {CourseAssignmentEditComponent} from './pages/course-assignment-edit/course-assignment-edit.component';
+import {CourseEditComponent} from './pages/course/course-edit/course-edit.component';
+import {CourseAssignmentEditComponent} from './pages/course/course-assignment-edit/course-assignment-edit.component';
 import {CdkDrag, CdkDragHandle, CdkDropList} from "@angular/cdk/drag-drop";
 import {MatIcon} from "@angular/material/icon";
 import {MatTooltip} from "@angular/material/tooltip";
@@ -39,6 +39,7 @@ import {
   MatDatepickerToggle
 } from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import {MatNativeDateModule} from "@angular/material/core";
     MatNativeDateModule,
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    importProvidersFrom(HttpClientModule),
   ],
   bootstrap: [AppComponent]
 })

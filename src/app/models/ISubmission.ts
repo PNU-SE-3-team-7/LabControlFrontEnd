@@ -1,5 +1,20 @@
 
 export interface ISubmission {
+  id: string
+  assignmentId: string;
+  userId: string;
+  parentId: string;
+  turnedInDate: Date;
+  submissionStatus: SubmissionStatus;
+  grade: number;
+  autoGrade: number;
+  createdDate: Date;
+  updatedDate: Date;
+  accuracyGrade: AccuracyGrade;
+  completionGrade: CompletionGrade;
+}
+
+export interface ISubmissionCreateDto {
   assignmentId: string;
   userId: string;
   parentId: string;

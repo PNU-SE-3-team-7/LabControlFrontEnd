@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {FormControl, FormGroup} from "@angular/forms";
 import {IAssignmentComment, ICommentBase, ISubmissionComment} from "../../models/IComment";
-import {IUser} from "../../models/IUser";
+import {UserService} from "../../services/api/user-service";
 
 interface IAddCommentForm {
   message: FormControl<string>
@@ -17,12 +17,7 @@ export class CommentsComponent implements OnInit {
   @Input() comments: ICommentBase[] | IAssignmentComment[] | ISubmissionComment[] = [];
   @Input() editable: boolean = false;
 
-  protected user: IUser = {
-    id: '1',
-    name: 'JJerome',
-    email: 'jjerome@gmail.com',
-    role: 'USER'
-  }
+  protected member: ICourseUserPreviewDto = UserService.getUserPreviewDtoPlaceholder()
 
   protected addCommentForm: FormGroup<IAddCommentForm> = new FormGroup<IAddCommentForm>(<IAddCommentForm>{
     message: new FormControl<string>("")
@@ -30,10 +25,12 @@ export class CommentsComponent implements OnInit {
 
   constructor(
     private matSnack: MatSnackBar,
+    private userService: UserService,
   ) {
   }
 
   ngOnInit(): void {
+    this.user = this.userService.getUser()
   }
 
   private isIAssignmentComment(content: ICommentBase): content is IAssignmentComment {
@@ -50,7 +47,7 @@ export class CommentsComponent implements OnInit {
         submissionId: 'sdfsdf',
         assignmentId: "dfdf",
         id: '1',
-        senderId: 'sdfsdf',
+        senderId: this.user.id,
         createdDate: new Date('2023-06-10T14:30:00Z'),
         message: this.addCommentForm.get('message')?.value || ""
       });

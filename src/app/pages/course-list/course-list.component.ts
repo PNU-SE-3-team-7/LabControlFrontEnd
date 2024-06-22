@@ -16,26 +16,5 @@ export class CourseListComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.router.queryParams.subscribe(params => {
-      this.coursesList = [
-        {
-          id: '12345',
-          name: 'Arsen',
-          summary: 'lol'
-        }, {
-          id: '345345',
-          name: 'Arsen',
-          summary: 'lol'
-        }, {
-          id: '456456',
-          name: 'Arsen',
-          summary: 'lol'
-        }, {
-          id: '5467474',
-          name: 'Arsen',
-          summary: 'lol'
-        },
-      ]
-    })
   }
 }

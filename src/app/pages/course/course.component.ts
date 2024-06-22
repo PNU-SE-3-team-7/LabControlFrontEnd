@@ -1,6 +1,8 @@
 import {ChangeDetectorRef, Component, OnInit,} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
+import {ICourseUserPreviewDto} from "../../models/IUser";
+import {UserService} from "../../services/api/user-service";
 
 export enum CourseChildEventType {
   CREATE = "CREATE",
@@ -28,6 +30,8 @@ export interface ICourseChildEvents {
   styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit {
+  private member: ICourseUserPreviewDto = UserService.getUserPreviewDtoPlaceholder()
+
   private defaultButtonsVisibility: Record<CourseChildEventType, ICourseButtonDetails> = {
     CREATE: {visible: false, text: 'Create'},
     DELETE: {visible: false, text: 'Delete'},
@@ -44,11 +48,18 @@ export class CourseComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private userService: UserService,
   ) {
   }
 
   ngOnInit(): void {
+    this.member = this.userService.getCourseMember(this.courseId);
+
+    this.activatedRoute.data.subscribe(data => {
+      data['user'] = this.member;
+    });
+
     if ("courseId" in this.activatedRoute.snapshot.params) {
       this.courseId = this.activatedRoute.snapshot.params["courseId"] || "";
     }
@@ -82,7 +93,4 @@ export class CourseComponent implements OnInit {
   protected isPeoplesPageAvailable(): boolean {
     return "courseId" in this.activatedRoute.snapshot.params
   }
-
-  protected readonly Object = Object;
-  protected readonly CourseChildEventType = CourseChildEventType;
 }
