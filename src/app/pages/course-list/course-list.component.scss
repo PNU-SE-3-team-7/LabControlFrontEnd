@@ -1,0 +1,40 @@
+.course-list {
+  padding-top: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: auto;
+  width: 80%;
+  padding-bottom: 50px;
+
+
+
+  a {
+    color: #2a6496;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+
+    &:hover {
+      color: #204d74;
+      text-decoration: underline;
+    }
+  }
+
+  p {
+    color: #666;
+    font-size: 14px;
+  }
+
+  div {
+    padding: 20px 40px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+    flex-basis: calc(32% - 1px);
+    box-sizing: border-box;
+    border-radius: 25px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
