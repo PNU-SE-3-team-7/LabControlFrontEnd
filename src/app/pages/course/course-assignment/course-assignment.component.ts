@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AssignmentType, AutoType, GradeType, IAssignment} from "../../../models/IAssignment";
 import {
   AccuracyGrade,
@@ -17,7 +17,7 @@ import {FormBuilder} from "@angular/forms";
 import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../../components/labels/assignment-type-states";
 import {ISubmissionComment} from "../../../models/IComment";
 import {IAttachedComponentAddLinkType} from "../../../components/attached-content/attached-content.component";
-import {ICourseButtonsVisibility, ICourseChildEvents} from "../course.component";
+import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "../course.component";
 
 @Component({
   selector: 'app-course-assignment',
@@ -355,25 +355,39 @@ export class CourseAssignmentComponent implements OnInit, ICourseChildEvents {
   ]
 
   constructor(
-    private router: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
     private matSnack: MatSnackBar,
     private dialog: MatDialog,
     private fb: FormBuilder
   ) {
   }
 
-  getButtonsVisibility(): ICourseButtonsVisibility {
+  getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>> {
     return {
-      createButtonVisible: false,
-      saveButtonVisible: false
+      ADD: {
+        visible: true,
+        text: "Add subassignment",
+      },
+      EDIT: {
+        visible: true,
+        text: "Edit",
+      }
     }
   }
 
-  onSaveButtonClicked(): void {
+  ngOnInit(): void {
+
   }
 
-  ngOnInit(): void {
-    console.log(this.router.snapshot.params)
+  onButtonClicked(type: CourseChildEventType): void {
+    switch (type) {
+      case CourseChildEventType.EDIT:
+        this.router.navigate(['edit'], {relativeTo: this.activatedRoute});
+        break
+      case CourseChildEventType.ADD:
+        this.router.navigate([`../${this.assignment.id}/create`], {relativeTo: this.activatedRoute});
+    }
   }
 
   protected onRemoveAssigmentAttachedContent(itemId: string): void {

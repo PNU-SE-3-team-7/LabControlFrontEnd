@@ -18,7 +18,7 @@
     <app-comments class="assignment-comments" [comments]="submissionComments"></app-comments>
   </div>
   <div class="sub-assignments" *ngIf="subAssignments && subAssignments.length > 0">
-    <p class="title">Course sub assignments:</p>
+    <p class="title">Course subassignments:</p>
     <div class="sub-assignments-list">
       <div class="sub-assignment" *ngFor="let item of subAssignments" [routerLink]="'../' + item.id">
         <div class="left-side">

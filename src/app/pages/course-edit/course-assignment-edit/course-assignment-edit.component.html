@@ -36,12 +36,70 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="form-field">
+    </div>
+    <div class="dates-time">
+      <div class="form-field" *ngIf="assignmentEditForm.controls.type.value != AssignmentType.MATERIAL">
         <mat-label class="field-label">Due date:</mat-label>
         <input class="base-input" type="datetime-local" placeholder="start date" formControlName="dueDate">
       </div>
+      <div class="form-field">
+        <mat-label class="field-label">Visibility start date:</mat-label>
+        <input class="base-input" type="datetime-local" placeholder="start date" formControlName="dueDate">
+      </div>
+      <div class="form-field">
+        <mat-label class="field-label">Visibility end date:</mat-label>
+        <input class="base-input" type="datetime-local" placeholder="start date" formControlName="dueDate">
+      </div>
     </div>
-
+    <div class="grades">
+      <div class="form-field">
+        <mat-label class="field-label">Max grade</mat-label>
+        <input
+          class="base-input"
+          type="number"
+          formControlName="title"
+          placeholder="Max grade"
+          list="defaultMaxGrade"
+        >
+        <datalist id="defaultMaxGrade">
+          <option value="1"></option>
+          <option value="5"></option>
+          <option value="10"></option>
+          <option value="20"></option>
+          <option value="100"></option>
+        </datalist>
+      </div>
+      <div class="form-field">
+        <mat-label class="field-label">Weight</mat-label>
+        <input
+          class="base-input"
+          type="number"
+          formControlName="title"
+          placeholder="Weight"
+          list="defaultWeight"
+        >
+        <datalist id="defaultWeight">
+          <option value="0"></option>
+          <option value="25"></option>
+          <option value="50"></option>
+          <option value="75"></option>
+          <option value="100"></option>
+        </datalist>
+      </div>
+      <div class="form-field">
+        <mat-label class="field-label">Threshold</mat-label>
+        <input
+          class="base-input"
+          type="number"
+          formControlName="title"
+          placeholder="Threshold"
+          list="defaultThreshold"
+        >
+        <datalist id="defaultThreshold">
+          <option value="100"></option>
+        </datalist>
+      </div>
+    </div>
   </form>
 
   <div class="sub-assignments">

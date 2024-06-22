@@ -16,8 +16,13 @@
     </div>
 
     <div class="right-side">
-      <app-base-button class="button" (click)="save()" *ngIf="buttonsVisibility.saveButtonVisible">
-        Save
+      <app-base-button
+        class="button"
+        (click)="callChildOnClickMethod(item.type)"
+        *ngFor="let item of getButtonsDetails()"
+        [ngClass]="item.details.ngClasses"
+      >
+        {{ item.details.text }}
       </app-base-button>
     </div>
   </div>

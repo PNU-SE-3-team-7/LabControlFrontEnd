@@ -2,15 +2,24 @@ import {ChangeDetectorRef, Component, OnInit,} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 
-export interface ICourseButtonsVisibility {
-  createButtonVisible: boolean
-  saveButtonVisible: boolean
+export enum CourseChildEventType {
+  CREATE = "CREATE",
+  DELETE = "DELETE",
+  EDIT = "EDIT",
+  SAVE = "SAVE",
+  ADD = "ADD",
+}
+
+export interface ICourseButtonDetails {
+  visible: boolean
+  text: string
+  ngClasses?: string[]
 }
 
 export interface ICourseChildEvents {
-  getButtonsVisibility(): ICourseButtonsVisibility
+  getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>>
 
-  onSaveButtonClicked(): void
+  onButtonClicked(type: CourseChildEventType): void
 }
 
 @Component({
@@ -19,12 +28,17 @@ export interface ICourseChildEvents {
   styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit {
+  private defaultButtonsVisibility: Record<CourseChildEventType, ICourseButtonDetails> = {
+    CREATE: {visible: false, text: 'Create'},
+    DELETE: {visible: false, text: 'Delete'},
+    ADD: {visible: false, text: 'Add'},
+    SAVE: {visible: false, text: 'Save'},
+    EDIT: {visible: false, text: 'Edit'}
+  };
+
   protected courseId: string = "";
   protected childComponentInstance?: ICourseChildEvents;
-  protected buttonsVisibility: ICourseButtonsVisibility = {
-    createButtonVisible: false,
-    saveButtonVisible: false,
-  };
+  protected buttonsVisibility: Record<CourseChildEventType, ICourseButtonDetails> = this.defaultButtonsVisibility;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -40,8 +54,18 @@ export class CourseComponent implements OnInit {
     }
   }
 
-  protected save(): void {
-    this.childComponentInstance?.onSaveButtonClicked()
+  protected getButtonsDetails(): { type: CourseChildEventType, details: ICourseButtonDetails }[] {
+    return Object.values(CourseChildEventType)
+      .map(type => {
+        return {
+          type: type,
+          details: this.buttonsVisibility[type]
+        }
+      }).filter(item => item.details.visible)
+  }
+
+  protected callChildOnClickMethod(type: CourseChildEventType): void {
+    this.childComponentInstance?.onButtonClicked(type)
   }
 
   protected previousPage(): void {
@@ -50,11 +74,15 @@ export class CourseComponent implements OnInit {
 
   protected onActivatedRouteChange(component: ICourseChildEvents): void {
     this.childComponentInstance = component
-    this.buttonsVisibility = this.childComponentInstance.getButtonsVisibility()
+    const customVisibility = this.childComponentInstance.getButtonsVisibility();
+    this.buttonsVisibility = {...this.defaultButtonsVisibility, ...customVisibility};
     this.cdr.detectChanges();
   }
 
   protected isPeoplesPageAvailable(): boolean {
     return "courseId" in this.activatedRoute.snapshot.params
   }
+
+  protected readonly Object = Object;
+  protected readonly CourseChildEventType = CourseChildEventType;
 }

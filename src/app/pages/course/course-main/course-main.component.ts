@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ICourse} from "../../../models/ICourse";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -6,14 +6,15 @@ import {MatDialog} from "@angular/material/dialog";
 import {FormBuilder} from "@angular/forms";
 import {AssignmentType, AutoType, GradeType, IAssignment} from "../../../models/IAssignment";
 import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../../components/labels/assignment-type-states";
-import {ICourseButtonsVisibility, ICourseChildEvents} from "../course.component";
+import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "../course.component";
 
 @Component({
   selector: 'app-course-main',
   templateUrl: './course-main.component.html',
   styleUrl: './course-main.component.scss'
 })
-export class CourseMainComponent implements ICourseChildEvents {
+export class CourseMainComponent implements ICourseChildEvents, OnInit {
+  private courseId?: string;
   protected course: ICourse = {
     id: "JJerome",
     name: "Bagato textu tutu povinno buti",
@@ -674,23 +675,36 @@ export class CourseMainComponent implements ICourseChildEvents {
   ];
 
   constructor(
-    private router: ActivatedRoute,
-    private r: Router,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
     private matSnack: MatSnackBar,
     private dialog: MatDialog,
     private fb: FormBuilder
   ) {
   }
 
-  getButtonsVisibility(): ICourseButtonsVisibility {
+  ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.courseId = params.get('courseId') || ""
+    });
+  }
+
+
+  getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>> {
     return {
-      createButtonVisible: false,
-      saveButtonVisible: false
+      EDIT: {
+        visible: true,
+        text: "Edit"
+      }
     }
   }
 
-  onSaveButtonClicked(): void {
-    console.log("save")
+  onButtonClicked(type: CourseChildEventType): void {
+    switch (type) {
+      case CourseChildEventType.EDIT:
+        this.router.navigate(['edit'], {relativeTo: this.activatedRoute});
+        break
+    }
   }
 
   protected formatDate(date: Date): string {
@@ -702,10 +716,6 @@ export class CourseMainComponent implements ICourseChildEvents {
       hour: '2-digit',
       minute: '2-digit'
     });
-  }
-
-  protected openAssignment(id: string): void {
-    this.r.navigate(['/assignment', id]);
   }
 
   protected readonly ASSIGNMENT_TYPE_LABEL_INFO = ASSIGNMENT_TYPE_LABEL_INFO;

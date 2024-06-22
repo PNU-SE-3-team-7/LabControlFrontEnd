@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ICourseButtonsVisibility, ICourseChildEvents} from "../../course/course.component";
+import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "../../course/course.component";
 import {ActivatedRoute} from "@angular/router";
 import {AssignmentType, AutoType, GradeType, IAssignment} from "../../../models/IAssignment";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
@@ -11,7 +11,7 @@ interface ICourseAssignmentEditFormType {
   dueDate: FormControl<Date | undefined>
   visibilityStart: FormControl<Date | undefined>
   visibilityEnd: FormControl<Date | undefined>
-  visibility: FormControl<boolean>
+  // visibility: FormControl<boolean>
   gradeType: FormControl<GradeType>
   autoType: FormControl<AutoType>
   maxGrade: FormControl<number>
@@ -25,7 +25,9 @@ interface ICourseAssignmentEditFormType {
   styleUrl: './course-assignment-edit.component.scss'
 })
 export class CourseAssignmentEditComponent implements ICourseChildEvents, OnInit {
+  private action?: "CREATE" | "EDIT";
   private courseId: string = '';
+  private parentId: string = '';
   private assignmentId: string = ''
   protected assignment: IAssignment = {
     id: '1',
@@ -67,10 +69,9 @@ export class CourseAssignmentEditComponent implements ICourseChildEvents, OnInit
       title: new FormControl<string>(""),
       description: new FormControl<string>(""),
       type: new FormControl<AssignmentType>(AssignmentType.TASK),
-      dueDate: new FormControl<Date | undefined>(undefined),
-      visibilityStart: new FormControl<Date | undefined>(undefined),
-      visibilityEnd: new FormControl<Date | undefined>(undefined),
-      visibility: new FormControl<boolean>(false),
+      dueDate: new FormControl<Date | null>(null),
+      visibilityStart: new FormControl<Date | null>(null),
+      visibilityEnd: new FormControl<Date | null>(null),
       gradeType: new FormControl<GradeType>(GradeType.DISCRETE),
       autoType: new FormControl<AutoType>(AutoType.MANUAL),
       maxGrade: new FormControl<number>(10),
@@ -79,24 +80,38 @@ export class CourseAssignmentEditComponent implements ICourseChildEvents, OnInit
     })
   }
 
-  ngOnInit(): void {
-    this.activatedRoute.parent?.paramMap.subscribe(params => {
-      this.courseId = params.get('courseId') || '';
-    });
-  }
-
-  getButtonsVisibility(): ICourseButtonsVisibility {
+  getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>> {
     return {
-      createButtonVisible: false,
-      saveButtonVisible: true
+      DELETE: {
+        visible: true,
+        text: 'Delete',
+        ngClasses: ["cancel"]
+      },
+      SAVE: {
+        visible: true,
+        text: 'Save',
+      }
     }
   }
 
-  onSaveButtonClicked(): void {
+  onButtonClicked(type: CourseChildEventType): void {
+    console.log("Course id:" + this.courseId);
+    console.log("Parent id:" + this.parentId);
     console.log(this.assignmentEditForm?.controls.title.value)
     console.log(this.assignmentEditForm?.controls.description.value)
     console.log(this.assignmentEditForm?.controls.type.value)
     console.log(this.assignmentEditForm?.controls.dueDate.value)
+  }
+
+
+  ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.parentId = params.get('parentId') || ""
+      this.action = this.parentId ? "CREATE" : "EDIT"
+    });
+    this.activatedRoute.parent?.paramMap.subscribe(params => {
+      this.courseId = params.get('courseId') || '';
+    });
   }
 
   protected readonly AssignmentType = AssignmentType;

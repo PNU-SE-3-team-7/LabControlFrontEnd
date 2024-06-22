@@ -41,6 +41,10 @@ const routes: Routes = [
         component: CourseAssignmentComponent,
       },
       {
+        path: 'assignment/:parentId/create',
+        component: CourseAssignmentEditComponent,
+      },
+      {
         path: 'assignment/:assignmentId/edit',
         component: CourseAssignmentEditComponent,
       }

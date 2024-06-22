@@ -5,7 +5,7 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {AssignmentType, AutoType, GradeType, IAssignment} from "../../models/IAssignment";
 import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../components/labels/assignment-type-states";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {ICourseButtonsVisibility, ICourseChildEvents} from "../course/course.component";
+import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "../course/course.component";
 
 interface CourseEditFormType {
   name: FormControl<string>,
@@ -690,22 +690,23 @@ export class CourseEditComponent implements ICourseChildEvents {
     })
   }
 
+  getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>> {
+    return {
+      SAVE: {
+        visible: true,
+        text: "Save",
+      }
+    }
+  }
+
+  onButtonClicked(type: CourseChildEventType): void {
+    console.log(type)
+  }
+
   ngOnInit(): void {
     this.activatedRoute.parent?.paramMap.subscribe(params => {
       this.courseId = params.get('courseId') || '';
     });
-  }
-
-
-  getButtonsVisibility(): ICourseButtonsVisibility {
-    return {
-      createButtonVisible: false,
-      saveButtonVisible: true
-    }
-  }
-
-  onSaveButtonClicked(): void {
-    console.log("save")
   }
 
   protected goToAssignmentEdit(id: string): void {
