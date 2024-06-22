@@ -1,0 +1,118 @@
+<div class="assignment-edit-main">
+  <form class="about-form" *ngIf="assignmentEditForm" [formGroup]="assignmentEditForm">
+    <div class="form-field">
+      <mat-label class="field-label">Title</mat-label>
+      <textarea class="base-input title" [maxLength]="255" formControlName="title"></textarea>
+    </div>
+    <div class="form-field">
+      <mat-label class="field-label">Description</mat-label>
+      <textarea class="base-input description" [maxLength]="255" formControlName="description"></textarea>
+    </div>
+    <div class="form-field">
+      <mat-label class="field-label">States:</mat-label>
+      <div class="states">
+        <mat-form-field class="form-field">
+          <mat-label>Assignment type</mat-label>
+          <mat-select formControlName="type" required>
+            <mat-option *ngFor="let option of AssignmentType.formValues" [value]="option.value">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Grade type</mat-label>
+          <mat-select formControlName="gradeType" required>
+            <mat-option *ngFor="let option of GradeType.formValues" [value]="option.value">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Auto type</mat-label>
+          <mat-select formControlName="autoType" required>
+            <mat-option *ngFor="let option of AutoType.formValues" [value]="option.value">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="dates-time">
+      <div class="form-field" *ngIf="assignmentEditForm.controls.type.value != AssignmentType.MATERIAL">
+        <mat-label class="field-label">Due date:</mat-label>
+        <input class="base-input" type="datetime-local" formControlName="dueDate">
+      </div>
+      <div class="form-field">
+        <mat-label class="field-label">Visibility start date:</mat-label>
+        <input class="base-input" type="datetime-local" formControlName="visibilityStart">
+      </div>
+      <div class="form-field">
+        <mat-label class="field-label">Visibility end date:</mat-label>
+        <input class="base-input" type="datetime-local" formControlName="visibilityEnd">
+      </div>
+    </div>
+    <div class="grades">
+      <div class="form-field">
+        <mat-label class="field-label">Max grade</mat-label>
+        <input
+          class="base-input"
+          type="number"
+          formControlName="maxGrade"
+          placeholder="Max grade"
+          list="defaultMaxGrade"
+        >
+        <datalist id="defaultMaxGrade">
+          <option value="1"></option>
+          <option value="5"></option>
+          <option value="10"></option>
+          <option value="20"></option>
+          <option value="100"></option>
+        </datalist>
+      </div>
+      <div class="form-field">
+        <mat-label class="field-label">Weight</mat-label>
+        <input
+          class="base-input"
+          type="number"
+          formControlName="weight"
+          placeholder="Weight"
+          list="defaultWeight"
+        >
+        <datalist id="defaultWeight">
+          <option value="0"></option>
+          <option value="25"></option>
+          <option value="50"></option>
+          <option value="75"></option>
+          <option value="100"></option>
+        </datalist>
+      </div>
+      <div class="form-field">
+        <mat-label class="field-label">Threshold</mat-label>
+        <input
+          class="base-input"
+          type="number"
+          formControlName="threshold"
+          placeholder="Threshold"
+          list="defaultThreshold"
+        >
+        <datalist id="defaultThreshold">
+          <option value="100"></option>
+        </datalist>
+      </div>
+    </div>
+  </form>
+  <div class="sub-assignments" *ngIf="subAssignments && subAssignments.length > 0">
+    <p class="title">Course subassignments:</p>
+    <div class="sub-assignments-list">
+      <div class="sub-assignment" *ngFor="let item of subAssignments" [routerLink]="'../../' + item.id">
+        <div class="left-side">
+          <div class="sub-assignment-title">{{ item.title }}</div>
+          <app-base-label [stateInfo]="ASSIGNMENT_TYPE_LABEL_INFO[item.type]"></app-base-label>
+        </div>
+        <div class="right-side">
+          <div class="due-date">Due date: {{ formatDate(item.dueDate) }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

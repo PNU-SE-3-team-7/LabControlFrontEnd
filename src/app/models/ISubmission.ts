@@ -20,6 +20,13 @@ export enum SubmissionStatus {
   TURNED_IN_AGAIN = "TURNED_IN_AGAIN",
 }
 
+export const SUBMISSION_STATUS_TO_SUBMIT_TEXT: Record<SubmissionStatus, string> = {
+  NOT_TURNED_IN: "Submit",
+  TURNED_IN: "Cancel",
+  RETURNED: "Submit again",
+  TURNED_IN_AGAIN: "Cancel again"
+}
+
 export enum AccuracyGrade {
   DONE_CORRECTLY = "DONE_CORRECTLY",
   DONE_INACCURATELY = "DONE_INACCURATELY",

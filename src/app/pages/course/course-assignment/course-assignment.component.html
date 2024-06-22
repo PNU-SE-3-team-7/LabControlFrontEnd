@@ -3,7 +3,7 @@
     <div class="assignment-title">
       {{assignment.title}}
     </div>
-    <div class="due-date">{{formatDate(assignment.dueDate)}}</div>
+    <div class="due-date">Due date:{{ formatDate(assignment.dueDate) }}</div>
     <div class="assignment-description">
       {{assignment.description}}
     </div>
@@ -15,10 +15,10 @@
       (onRemoveButtonClicked)="onRemoveAssigmentAttachedContent($event)"
       [editable]="true"
     ></app-attached-content>
-    <app-comments [comments]="submissionComments"></app-comments>
+    <app-comments class="assignment-comments" [comments]="submissionComments"></app-comments>
   </div>
   <div class="sub-assignments" *ngIf="subAssignments && subAssignments.length > 0">
-    <p class="title">Course sub assignments:</p>
+    <p class="title">Course subassignments:</p>
     <div class="sub-assignments-list">
       <div class="sub-assignment" *ngFor="let item of subAssignments" [routerLink]="'../' + item.id">
         <div class="left-side">
@@ -49,8 +49,9 @@
         [editable]="true"
         class="submission-attached-content"
       ></app-attached-content>
-      <app-base-button class="button flat-button">Submit</app-base-button>
+      <app-base-button class="button flat-button">{{ SUBMISSION_GRADE_TO_SUBMIT_TEXT[submission.submissionStatus] }}
+      </app-base-button>
     </div>
-    <app-comments [comments]="submissionComments"></app-comments>
+    <app-comments class="submission-comments" [comments]="submissionComments"></app-comments>
   </div>
 </div>

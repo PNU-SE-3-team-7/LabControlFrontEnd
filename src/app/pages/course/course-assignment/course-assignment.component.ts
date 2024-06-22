@@ -1,7 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AssignmentType, AutoType, GradeType, IAssignment} from "../../../models/IAssignment";
-import {AccuracyGrade, CompletionGrade, ISubmission, SubmissionStatus} from "../../../models/ISubmission";
+import {
+  AccuracyGrade,
+  CompletionGrade,
+  ISubmission,
+  SUBMISSION_STATUS_TO_SUBMIT_TEXT,
+  SubmissionStatus
+} from "../../../models/ISubmission";
 import {ACCURACY_GRADE_LABEL_INFO} from "../../../components/labels/accurast-grade-states";
 import {COMPLETION_GRADE_LABEL_INFO} from "../../../components/labels/completion-grade-states";
 import {IAssignmentAttachedContent, ISubmissionAttachedContent} from "../../../models/IAttachedContentBase";
@@ -11,13 +17,17 @@ import {FormBuilder} from "@angular/forms";
 import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../../components/labels/assignment-type-states";
 import {ISubmissionComment} from "../../../models/IComment";
 import {IAttachedComponentAddLinkType} from "../../../components/attached-content/attached-content.component";
+import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "../course.component";
 
 @Component({
   selector: 'app-course-assignment',
   templateUrl: './course-assignment.component.html',
   styleUrl: './course-assignment.component.scss'
 })
-export class CourseAssignmentComponent implements OnInit {
+export class CourseAssignmentComponent implements OnInit, ICourseChildEvents {
+  private assignmentId?: string;
+  private courseId?: string;
+
   protected assignment: IAssignment = {
     id: '1',
     courseId: 'course1',
@@ -327,36 +337,65 @@ export class CourseAssignmentComponent implements OnInit {
     {
       submissionId: 'sdfsdf',
       id: '1',
-      senderId: 'sdfgfgd',
+      senderId: 'c',
       createdDate: new Date('2023-06-10T14:30:00Z'),
       message: 'adfgadfgadfg'
     },
     {
       submissionId: 'sdfsdf',
       id: '1',
-      senderId: 'fdgfdjjsgf',
+      senderId: 'b',
       createdDate: new Date('2023-06-10T14:30:00Z'),
       message: 'Mes234234234sage'
     },
     {
       submissionId: 'sdfsdf',
       id: 'sdfsdf',
-      senderId: 'dfsdfrfdgfd',
+      senderId: 'a',
       createdDate: new Date('2023-06-10T14:30:00Z'),
       message: 'Messag345345345345e'
     },
   ]
 
   constructor(
-    private router: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
     private matSnack: MatSnackBar,
     private dialog: MatDialog,
     private fb: FormBuilder
   ) {
   }
 
+  getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>> {
+    return {
+      ADD: {
+        visible: true,
+        text: "Add subassignment",
+      },
+      EDIT: {
+        visible: true,
+        text: "Edit",
+      }
+    }
+  }
+
   ngOnInit(): void {
-    console.log(this.router.snapshot.params)
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.assignmentId = params.get('assignmentId') || ""
+    });
+    this.activatedRoute.parent?.paramMap.subscribe(params => {
+      this.courseId = params.get('courseId') || '';
+    });
+  }
+
+  onButtonClicked(type: CourseChildEventType): void {
+    switch (type) {
+      case CourseChildEventType.EDIT:
+        this.router.navigate(['edit'], {relativeTo: this.activatedRoute});
+        break
+      case CourseChildEventType.ADD:
+        this.router.navigate([`../${this.assignment.id}/create`], {relativeTo: this.activatedRoute});
+    }
   }
 
   protected onRemoveAssigmentAttachedContent(itemId: string): void {
@@ -399,4 +438,5 @@ export class CourseAssignmentComponent implements OnInit {
   protected readonly ACCURACY_GRADE_LABEL_INFO = ACCURACY_GRADE_LABEL_INFO;
   protected readonly COMPLETION_GRADE_LABEL_INFO = COMPLETION_GRADE_LABEL_INFO;
   protected readonly ASSIGNMENT_TYPE_LABEL_INFO = ASSIGNMENT_TYPE_LABEL_INFO;
+  protected readonly SUBMISSION_GRADE_TO_SUBMIT_TEXT = SUBMISSION_STATUS_TO_SUBMIT_TEXT;
 }

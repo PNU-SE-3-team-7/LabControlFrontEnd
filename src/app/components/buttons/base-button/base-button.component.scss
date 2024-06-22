@@ -1,5 +1,9 @@
 .base-button{
   box-sizing: border-box;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
 
   height: inherit;
   min-width: max-content;

@@ -9,7 +9,8 @@
     >
       <div class="comment-item">
         <div class="comment-owner" [style.color]="getUserColor(comment.senderId)">
-          {{ comment.senderId === this.user.id ? "You" : "JJerome" }}:
+          {{ comment.senderId === this.user.id ? "You" : "JJerome" }}
+          :
         </div>
         <div class="comment-text">
           {{ comment.message }}

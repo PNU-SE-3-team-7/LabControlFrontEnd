@@ -1,0 +1,36 @@
+<main class="course-edit">
+  <form class="course-edit-from" [formGroup]="courseEditForm">
+    <div class="about-course">
+      <div class="course-name">
+        <div class="field-label">Course name:</div>
+        <textarea class="base-input" formControlName="name" maxlength="255"></textarea>
+      </div>
+      <div class="course-summary">
+        <div class="field-label">Course summary:</div>
+        <textarea class="base-input" formControlName="summary" maxlength="255"></textarea>
+      </div>
+    </div>
+  </form>
+  <div class="assignments" *ngIf="assignments && assignments.length > 0">
+    <p class="title">Course assignments:</p>
+    <div class="assignments-list" cdkDropList (cdkDropListDropped)="dropAssignment($event)">
+      <div
+        class="assigment"
+        *ngFor="let item of assignments"
+        cdkDrag
+        (click)="goToAssignmentEdit(item.id)"
+      >
+        <mat-icon class="drag-handle-icon" matTooltip="Змінити порядок полів"
+                  cdkDragHandle>drag_indicator
+        </mat-icon>
+        <div class="left-side">
+          <div class="assigment-title">{{ item.title }}</div>
+          <app-base-label [stateInfo]="ASSIGNMENT_TYPE_LABEL_INFO[item.type]"></app-base-label>
+        </div>
+        <div class="right-side">
+          <div class="due-date">{{ formatDate(item.dueDate) }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

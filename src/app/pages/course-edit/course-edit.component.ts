@@ -1,25 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {ICourse} from "../../../models/ICourse";
+import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {MatDialog} from "@angular/material/dialog";
-import {FormBuilder} from "@angular/forms";
-import {AssignmentType, AutoType, GradeType, IAssignment} from "../../../models/IAssignment";
-import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../../components/labels/assignment-type-states";
-import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "../course.component";
+import {Location} from "@angular/common";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {AssignmentType, AutoType, GradeType, IAssignment} from "../../models/IAssignment";
+import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../components/labels/assignment-type-states";
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "../course/course.component";
+
+interface CourseEditFormType {
+  name: FormControl<string>,
+  summary: FormControl<string>,
+}
 
 @Component({
-  selector: 'app-course-main',
-  templateUrl: './course-main.component.html',
-  styleUrl: './course-main.component.scss'
+  selector: 'app-course-edit',
+  templateUrl: './course-edit.component.html',
+  styleUrl: './course-edit.component.scss'
 })
-export class CourseMainComponent implements ICourseChildEvents, OnInit {
-  private courseId?: string;
-  protected course: ICourse = {
-    id: "JJerome",
-    name: "Bagato textu tutu povinno buti",
-    summary: "Bagato textu tutu povinno buti Bagato textu tutu povinno butiBagato textu tutu povinno buti"
-  }
+export class CourseEditComponent implements ICourseChildEvents {
+  private courseId: string = "";
   protected assignments: IAssignment[] = [
     {
       id: '2',
@@ -674,36 +673,58 @@ export class CourseMainComponent implements ICourseChildEvents, OnInit {
     }
   ];
 
+  protected courseEditForm: FormGroup<CourseEditFormType> = new FormGroup<CourseEditFormType>(<CourseEditFormType>{
+    name: new FormControl<string>(""),
+    summary: new FormControl<string>(""),
+  });
+
   constructor(
-    private activatedRoute: ActivatedRoute,
     private router: Router,
-    private matSnack: MatSnackBar,
-    private dialog: MatDialog,
+    private activatedRoute: ActivatedRoute,
+    private location: Location,
     private fb: FormBuilder
   ) {
+    this.courseEditForm = fb.group<CourseEditFormType>(<CourseEditFormType>{
+      name: new FormControl<string>(""),
+      summary: new FormControl<string>(""),
+    })
   }
-
-  ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      this.courseId = params.get('courseId') || ""
-    });
-  }
-
 
   getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>> {
     return {
-      EDIT: {
+      SAVE: {
         visible: true,
-        text: "Edit"
+        text: "Save",
+      },
+      DELETE: {
+        visible: true,
+        text: "Delete",
+        ngClasses: ["cancel"]
       }
     }
   }
 
   onButtonClicked(type: CourseChildEventType): void {
-    switch (type) {
-      case CourseChildEventType.EDIT:
-        this.router.navigate(['edit'], {relativeTo: this.activatedRoute});
-        break
+    console.log(type)
+  }
+
+  ngOnInit(): void {
+    this.activatedRoute.parent?.paramMap.subscribe(params => {
+      this.courseId = params.get('courseId') || '';
+    });
+  }
+
+  protected goToAssignmentEdit(id: string): void {
+    this.router.navigateByUrl(`/course/${this.courseId}/assignment/${id}`)
+  }
+
+  protected dropAssignment(event: CdkDragDrop<any>): void {
+    moveItemInArray(
+      this.assignments, event.previousIndex, event.currentIndex
+    );
+
+    for (let i = 0; i < this.assignments.length; ++i) {
+      this.assignments[i].sequence = i + 1
     }
   }
 

@@ -16,7 +16,7 @@ import {
   AddAttachedLinkDialogComponent
 } from './components/dialogs/add-attached-link-dialog/add-attached-link-dialog.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {MatFormField} from "@angular/material/form-field";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {OnViewFocusDirective} from "./components/directives/on-view-focus.directive";
 import {BaseStrokeInputComponent} from './components/inputs/base-stroke-input/base-stroke-input.component';
@@ -24,8 +24,21 @@ import {AppStrokeButton} from "./components/inputs/base-stroke-input/base-stroke
 import {CourseMainComponent} from "./pages/course/course-main/course-main.component";
 import {CourseAssignmentComponent} from "./pages/course/course-assignment/course-assignment.component";
 import {CourseComponent} from "./pages/course/course.component";
-import { AttachedContentComponent } from './components/attached-content/attached-content.component';
-import { CommentsComponent } from './components/comments/comments.component';
+import {AttachedContentComponent} from './components/attached-content/attached-content.component';
+import {CommentsComponent} from './components/comments/comments.component';
+import {CourseEditComponent} from './pages/course-edit/course-edit.component';
+import {CourseAssignmentEditComponent} from './pages/course-assignment-edit/course-assignment-edit.component';
+import {CdkDrag, CdkDragHandle, CdkDropList} from "@angular/cdk/drag-drop";
+import {MatIcon} from "@angular/material/icon";
+import {MatTooltip} from "@angular/material/tooltip";
+import {MatOption, MatSelect} from "@angular/material/select";
+import {
+  MatDatepicker,
+  MatDatepickerInput,
+  MatDatepickerModule,
+  MatDatepickerToggle
+} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -46,6 +59,8 @@ import { CommentsComponent } from './components/comments/comments.component';
     BaseStrokeInputComponent,
     AttachedContentComponent,
     CommentsComponent,
+    CourseEditComponent,
+    CourseAssignmentEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +70,19 @@ import { CommentsComponent } from './components/comments/comments.component';
     MatFormField,
     MatInput,
     AppStrokeButton,
+    CdkDropList,
+    MatIcon,
+    CdkDragHandle,
+    MatTooltip,
+    CdkDrag,
+    MatLabel,
+    MatSelect,
+    MatOption,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatDatepickerModule,
+    MatDatepicker,
+    MatNativeDateModule,
   ],
   providers: [
     provideAnimationsAsync()
