@@ -20,14 +20,14 @@
   }
 
   &.cancel {
-    @include color(#de2d2d, #750d0d, #222);
+    @include color(#de2d2d, #750d0d, #fff);
 
     &:hover {
-      @include color(#de2d2d, #de2d2d, #fff);
+      @include color(#de2d2d, #de2d2d, #222222);
     }
 
     &:active, .active {
-      @include color(#41ce14, #39b412, #fff);
+      @include color(#222222, #222222, #fff);
     }
 
     &:disabled {

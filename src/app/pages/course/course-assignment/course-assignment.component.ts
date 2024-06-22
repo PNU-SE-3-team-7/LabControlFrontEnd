@@ -25,6 +25,9 @@ import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "..
   styleUrl: './course-assignment.component.scss'
 })
 export class CourseAssignmentComponent implements OnInit, ICourseChildEvents {
+  private assignmentId?: string;
+  private courseId?: string;
+
   protected assignment: IAssignment = {
     id: '1',
     courseId: 'course1',
@@ -377,7 +380,12 @@ export class CourseAssignmentComponent implements OnInit, ICourseChildEvents {
   }
 
   ngOnInit(): void {
-
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.assignmentId = params.get('assignmentId') || ""
+    });
+    this.activatedRoute.parent?.paramMap.subscribe(params => {
+      this.courseId = params.get('courseId') || '';
+    });
   }
 
   onButtonClicked(type: CourseChildEventType): void {

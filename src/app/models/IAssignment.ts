@@ -52,7 +52,7 @@ export namespace GradeType {
       value: GradeType.CONTINUOUS,
       name: "Звичайне"
     }, {
-      value: GradeType.CONTINUOUS,
+      value: GradeType.DISCRETE,
       name: "Дискретне"
     }
   ]

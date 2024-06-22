@@ -28,9 +28,9 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field class="form-field">
-          <mat-label>Grade type</mat-label>
-          <mat-select formControlName="gradeType" required>
-            <mat-option *ngFor="let option of GradeType.formValues" [value]="option.value">
+          <mat-label>Auto type</mat-label>
+          <mat-select formControlName="autoType" required>
+            <mat-option *ngFor="let option of AutoType.formValues" [value]="option.value">
               {{ option.name }}
             </mat-option>
           </mat-select>
@@ -40,15 +40,15 @@
     <div class="dates-time">
       <div class="form-field" *ngIf="assignmentEditForm.controls.type.value != AssignmentType.MATERIAL">
         <mat-label class="field-label">Due date:</mat-label>
-        <input class="base-input" type="datetime-local" placeholder="start date" formControlName="dueDate">
+        <input class="base-input" type="datetime-local" formControlName="dueDate">
       </div>
       <div class="form-field">
         <mat-label class="field-label">Visibility start date:</mat-label>
-        <input class="base-input" type="datetime-local" placeholder="start date" formControlName="dueDate">
+        <input class="base-input" type="datetime-local" formControlName="visibilityStart">
       </div>
       <div class="form-field">
         <mat-label class="field-label">Visibility end date:</mat-label>
-        <input class="base-input" type="datetime-local" placeholder="start date" formControlName="dueDate">
+        <input class="base-input" type="datetime-local" formControlName="visibilityEnd">
       </div>
     </div>
     <div class="grades">
@@ -57,7 +57,7 @@
         <input
           class="base-input"
           type="number"
-          formControlName="title"
+          formControlName="maxGrade"
           placeholder="Max grade"
           list="defaultMaxGrade"
         >
@@ -74,7 +74,7 @@
         <input
           class="base-input"
           type="number"
-          formControlName="title"
+          formControlName="weight"
           placeholder="Weight"
           list="defaultWeight"
         >
@@ -91,7 +91,7 @@
         <input
           class="base-input"
           type="number"
-          formControlName="title"
+          formControlName="threshold"
           placeholder="Threshold"
           list="defaultThreshold"
         >
@@ -102,7 +102,18 @@
     </div>
   </form>
 
-  <div class="sub-assignments">
-
+  <div class="sub-assignments" *ngIf="subAssignments && subAssignments.length > 0">
+    <p class="title">Course subassignments:</p>
+    <div class="sub-assignments-list">
+      <div class="sub-assignment" *ngFor="let item of subAssignments" [routerLink]="'../../' + item.id">
+        <div class="left-side">
+          <div class="sub-assignment-title">{{ item.title }}</div>
+          <app-base-label [stateInfo]="ASSIGNMENT_TYPE_LABEL_INFO[item.type]"></app-base-label>
+        </div>
+        <div class="right-side">
+          <div class="due-date">Due date: {{ formatDate(item.dueDate) }}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -695,6 +695,11 @@ export class CourseEditComponent implements ICourseChildEvents {
       SAVE: {
         visible: true,
         text: "Save",
+      },
+      DELETE: {
+        visible: true,
+        text: "Delete",
+        ngClasses: ["cancel"]
       }
     }
   }
