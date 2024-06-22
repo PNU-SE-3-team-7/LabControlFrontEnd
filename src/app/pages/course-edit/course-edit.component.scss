@@ -18,10 +18,11 @@
     box-sizing: border-box;
 
     min-width: 30%;
-    max-width: 45%;
+    max-width: 50%;
     width: 80%;
     height: 100%;
 
+    margin-right: 5px;
     padding: 10px;
     border-radius: 10px;
 
@@ -59,6 +60,8 @@
   min-width: 50%;
   max-width: 55%;
   width: max-content;
+
+  margin-left: 5px;
 
   .title {
     color: rgba(0, 0, 0, 0.4);

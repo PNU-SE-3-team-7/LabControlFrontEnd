@@ -23,7 +23,6 @@ export class CommentsComponent implements OnInit {
     email: 'jjerome@gmail.com',
     role: 'USER'
   }
-  private commenetType: "BASE" | "ASSIGNMENT" | "SUBMISSION" = "BASE"
 
   protected addCommentForm: FormGroup<IAddCommentForm> = new FormGroup<IAddCommentForm>(<IAddCommentForm>{
     message: new FormControl<string>("")
@@ -35,17 +34,6 @@ export class CommentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.comments && this.comments.length > 0) {
-      const item = this.comments[0]
-
-      if (this.isIAssignmentComment(item)) {
-        this.commenetType = "ASSIGNMENT";
-      } else if (this.isISubmissionAttachedContent(item)) {
-        this.commenetType = "SUBMISSION";
-      } else {
-        this.commenetType = "BASE";
-      }
-    }
   }
 
   private isIAssignmentComment(content: ICommentBase): content is IAssignmentComment {
