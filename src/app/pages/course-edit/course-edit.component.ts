@@ -715,7 +715,7 @@ export class CourseEditComponent implements ICourseChildEvents {
   }
 
   protected goToAssignmentEdit(id: string): void {
-    this.router.navigateByUrl(`/course/${this.courseId}/assignment/${id}/edit`)
+    this.router.navigateByUrl(`/course/${this.courseId}/assignment/${id}`)
   }
 
   protected dropAssignment(event: CdkDragDrop<any>): void {
