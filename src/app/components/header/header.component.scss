@@ -10,9 +10,8 @@
   font-size: 20px;
   font-weight: 500;
 
-  .separate-line{
-    margin: 0 20px;
 
+  .separate-line{
     width: 2px;
     height: 100%;
 
@@ -30,16 +29,20 @@
     height: 50px;
 
     padding: 10px;
-    border-radius: 0 0 15px 15px;
+    border-radius: 0 0 25px 25px;
 
     background: #009dff;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
 
     .user_details{
+      margin: 0 20px;
     }
 
     .nav-links{
+      margin: 0 20px;
       .link{
-        color: #e3c605;
+        text-decoration: none;
+        color: white;
       }
     }
   }
