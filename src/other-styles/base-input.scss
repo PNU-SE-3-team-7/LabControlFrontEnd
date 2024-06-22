@@ -1,6 +1,6 @@
 $input-main-color: transparent !default;
 $input-secondary-color: #009dff !default;
-$input-text-color: #222 !default;
+$input-text-color: #222222 !default;
 
 .base-input {
   box-sizing: border-box;
@@ -33,6 +33,35 @@ $input-text-color: #222 !default;
   &.active {
     transform: scale(0.99);
     border: 1px solid $input-secondary-color;
+  }
+
+  &[type="datetime-local"] {
+    appearance: none;
+    padding: 10px 20px;
+
+    width: max-content;
+
+    &::-webkit-calendar-picker-indicator {
+      color: $input-text-color;
+      opacity: 0.8;
+      cursor: pointer;
+    }
+
+    &::-webkit-datetime-edit-fields-wrapper {
+      padding: 0;
+    }
+
+    &::-webkit-datetime-edit,
+    &::-webkit-datetime-edit-year-field,
+    &::-webkit-datetime-edit-month-field,
+    &::-webkit-datetime-edit-day-field,
+    &::-webkit-datetime-edit-hour-field,
+    &::-webkit-datetime-edit-minute-field,
+    &::-webkit-datetime-edit-second-field,
+    &::-webkit-datetime-edit-millisecond-field,
+    &::-webkit-datetime-edit-ampm-field {
+      color: $input-text-color;
+    }
   }
 }
 

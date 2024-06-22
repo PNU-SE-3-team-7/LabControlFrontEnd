@@ -96,6 +96,7 @@ export class CourseAssignmentEditComponent implements ICourseChildEvents, OnInit
     console.log(this.assignmentEditForm?.controls.title.value)
     console.log(this.assignmentEditForm?.controls.description.value)
     console.log(this.assignmentEditForm?.controls.type.value)
+    console.log(this.assignmentEditForm?.controls.dueDate.value)
   }
 
   protected readonly AssignmentType = AssignmentType;

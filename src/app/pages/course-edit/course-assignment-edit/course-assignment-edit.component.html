@@ -36,17 +36,12 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <!--    </div>-->
-      <!--    <mat-form-field>-->
-      <!--      <mat-label>Від</mat-label>-->
-      <!--      <input matInput-->
-      <!--             [matDatepicker]="pickerFrom"-->
-      <!--             placeholder="&#45;&#45;/&#45;&#45;/&#45;&#45;"-->
-      <!--             formControlName="dateFrom">-->
-      <!--      <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>-->
-      <!--      <mat-datepicker #pickerFrom></mat-datepicker>-->
-      <!--    </mat-form-field>-->
+      <div class="form-field">
+        <mat-label class="field-label">Due date:</mat-label>
+        <input class="base-input" type="datetime-local" placeholder="start date" formControlName="dueDate">
+      </div>
     </div>
+
   </form>
 
   <div class="sub-assignments">
