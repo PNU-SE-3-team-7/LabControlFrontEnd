@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatSnakeService} from "../../../services/mat-snake-service";
 import {UserService} from "../../../services/api/user-service";
-import {IUser} from "../../../models/IUser";
+import {ILoginUser, IUser} from "../../../models/IUser";
 import {Router} from "@angular/router";
 
 interface LoginFormType {
@@ -36,5 +36,15 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl("/")
       }
     })
+  }
+
+  protected tryLogin(event: SubmitEvent): void {
+    this.userService.login(this.buildLoginDto())
+  }
+
+  protected buildLoginDto(): ILoginUser {
+    return {
+      email: this.loginForm.controls.login.value
+    }
   }
 }
