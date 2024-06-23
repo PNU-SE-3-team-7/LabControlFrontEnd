@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {ApiService} from "./api.service";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {ICourseUserPreviewDto, ILoginUser, IUser, MemberType, UserRole} from "../../models/IUser";
 import {MatSnakeService} from "../mat-snake-service";
 import {Router} from "@angular/router";
@@ -10,8 +10,9 @@ import {Router} from "@angular/router";
   providedIn: 'root'
 })
 export class UserService {
-
   private pathPrefix: string = "/auth";
+  private userSubject = new BehaviorSubject<IUser | null>(null);
+  public user$ = this.userSubject.asObservable();
   private user: IUser = {
     id: "unknown",
     firstName: "unknown",
@@ -41,53 +42,16 @@ export class UserService {
     this.tryGetUser()
   }
 
-  private tryGetUser(): void {
+  public tryGetUser(): void {
     this.whoami().subscribe((response) => {
-      this.user = response
-      this.observer.next(this.user)
-    }, error => {
-      UserService.removeAuthToken()
-      this.router.navigate(['/login'])
-      this.snake.error(error)
-    })
+        this.userSubject.next(response);
+      },
+      (error) => {
+        UserService.removeAuthToken();
+        this.router.navigate(['/login']);
+      }
+    );
   }
-
-  /*  private tryLogin(): void{
-      this.login({email: "user@mail.com"}).subscribe((response) => {
-        UserService.setAuthToken(response.token)
-        this.whoami().subscribe((response) => {
-          this.user = response
-          this.observer.next(this.user)
-        }, error => {
-          UserService.removeAuthToken()
-          this.snake.error(error)
-        });
-      }, error => {
-        UserService.removeAuthToken()
-        this.snake.error(error)
-      })
-    }*/
-
-  /*  private checkLogin(): void {
-      this.whoami().subscribe((response) => {
-        this.user = response
-      }, error => {
-        UserService.removeAuthToken()
-        this.login("user@mail.com").subscribe((response) => {
-          UserService.setAuthToken(response.token)
-          this.whoami().subscribe((response) => {
-            console.log("dfdf")
-            this.user = response
-          }, error => {
-            UserService.removeAuthToken()
-            this.snake.error(error)
-          });
-        }, error => {
-          UserService.removeAuthToken()
-          this.snake.error(error)
-        })
-      })
-    }*/
 
   public login(user: ILoginUser): void {
     this.api.post<{ token: string }>(`${this.pathPrefix}/login`, {body: user})
@@ -99,10 +63,6 @@ export class UserService {
         UserService.removeAuthToken()
         this.snake.error(error)
       });
-  }
-
-  public getUser(): IUser {
-    return this.user
   }
 
   public getCourseMember(courseId: string): ICourseUserPreviewDto {
@@ -138,8 +98,10 @@ export class UserService {
   }
 
   public static removeAuthToken(): void {
-    // window.location.reload()
-    window.localStorage.removeItem("auth_token")
+    if (this.getAuthToken() != null) {
+      window.localStorage.removeItem("auth_token")
+      window.location.reload()
+    }
   }
 
   public static setAuthToken(jwtToken: string): void {

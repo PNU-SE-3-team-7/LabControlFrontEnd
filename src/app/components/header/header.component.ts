@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {IUser} from "../../models/IUser";
 import {UserService} from "../../services/api/user-service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,8 @@ import {UserService} from "../../services/api/user-service";
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-  protected user?: IUser
+  public user: IUser | null = null;
+  private userSubscription: Subscription | null = null;
 
   constructor(
     private userService: UserService,
@@ -16,10 +18,20 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.userUpdate?.subscribe((updatedUser: IUser) => {
-      console.log(updatedUser);
-      this.user = updatedUser;
-    })
+    this.userSubscription = this.userService.user$.subscribe(user => {
+      this.user = user;
+      console.log('User updated in HeaderComponent:', user);
+    });
+  }
+
+  protected logout(): void {
+    UserService.removeAuthToken()
+  }
+
+  ngOnDestroy(): void {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   protected readonly UserService = UserService;
