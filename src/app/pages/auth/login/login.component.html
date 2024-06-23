@@ -1,1 +1,9 @@
-<p>login works!</p>
+<div class="login-form-wrapper">
+  <p class="title">Sign-in</p>
+  <form class="login-form" [formGroup]="loginForm">
+    <div class="form-field">
+      <mat-label class="label">Login</mat-label>
+      <input type="text" class="base-input" matInput placeholder="user@email.com" formControlName="login">
+    </div>
+  </form>
+</div>

@@ -8,7 +8,7 @@ import {UserService} from "../../services/api/user-service";
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-  protected user: IUser = UserService.getUserPlaceholder()
+  protected user?: IUser
 
   constructor(
     private userService: UserService,
@@ -16,6 +16,11 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = this.userService.getUser()
+    this.userService.userUpdate?.subscribe((updatedUser: IUser) => {
+      console.log(updatedUser);
+      this.user = updatedUser;
+    })
   }
+
+  protected readonly UserService = UserService;
 }

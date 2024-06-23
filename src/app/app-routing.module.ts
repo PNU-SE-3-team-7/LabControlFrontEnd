@@ -7,12 +7,16 @@ import {CourseAssignmentComponent} from "./pages/course/course-assignment/course
 import {CourseEditComponent} from "./pages/course/course-edit/course-edit.component";
 import {CourseAssignmentEditComponent} from "./pages/course/course-assignment-edit/course-assignment-edit.component";
 import {UserService} from "./services/api/user-service";
+import {LoginComponent} from "./pages/auth/login/login.component";
 
 const routes: Routes = [
   {
     path: "",
     redirectTo: "/course",
     pathMatch: "full"
+  }, {
+    path: "login",
+    component: LoginComponent,
   }, {
     path: "course",
     component: CourseListComponent,
