@@ -11,6 +11,7 @@ import {ICourse, ICourseCreateDto} from "../../../models/ICourse";
 import {MatSnakeService} from "../../../services/mat-snake-service";
 import {UserService} from "../../../services/api/user-service";
 import {AssignmentService} from "../../../services/api/assignment-service";
+import {ICourseUserPreviewDto, IUser, MemberType, UserRole} from "../../../models/IUser";
 
 interface CourseEditFormType {
   name: FormControl<string>,
@@ -24,6 +25,7 @@ interface CourseEditFormType {
 })
 export class CourseEditComponent implements ICourseChildEvents, OnInit {
   private member: ICourseUserPreviewDto = UserService.getUserPreviewDtoPlaceholder()
+  private user: IUser = UserService.getUserPlaceholder()
   private courseId?: string = "";
   protected course?: ICourse
   protected assignments: IAssignment[] = [];
@@ -41,12 +43,15 @@ export class CourseEditComponent implements ICourseChildEvents, OnInit {
     private fb: FormBuilder,
     private snake: MatSnakeService,
     private courseService: CourseService,
+    private userService: UserService,
     private assignmentService: AssignmentService,
   ) {
     this.courseEditForm = fb.group<CourseEditFormType>(<CourseEditFormType>{
       name: new FormControl<string>(""),
       summary: new FormControl<string>(""),
     })
+
+    this.user = userService.getUser()
   }
 
   ngOnInit(): void {
@@ -66,7 +71,6 @@ export class CourseEditComponent implements ICourseChildEvents, OnInit {
             summary: new FormControl<string>(this.course.summary),
           })
         }, error => this.snake.error(error))
-
         this.assignmentService.getByCourseId(this.courseId)
           .subscribe((response: IAssignment[]) => {
             this.assignments = response
@@ -78,11 +82,12 @@ export class CourseEditComponent implements ICourseChildEvents, OnInit {
   getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>> {
     return {
       SAVE: {
-        visible: true,
+        visible: this.member.memberType === MemberType.EDUCATOR
+          || this.courseId == "" && this.user.role === UserRole.TEACHER,
         text: "Save",
       },
       DELETE: {
-        visible: true,
+        visible: this.member.memberType === MemberType.EDUCATOR,
         text: "Delete",
         ngClasses: ["cancel"]
       }
@@ -95,7 +100,6 @@ export class CourseEditComponent implements ICourseChildEvents, OnInit {
 
       if (this.courseId == "") {
         this.courseService.createCourse(this.buildCourseCreateDto()).subscribe(response => {
-          console.log(response)
           this.router.navigateByUrl(`/course/${response.id}`)
           this.snake.info("Курс успішно створено")
         }, error => this.snake.error(error))
@@ -114,7 +118,7 @@ export class CourseEditComponent implements ICourseChildEvents, OnInit {
       id: this.course?.id || "",
       name: this.courseEditForm.controls?.name.value,
       summary: this.courseEditForm.controls?.summary.value,
-      ownerId: this.user.id
+      ownerId: this.member.id
     }
   }
 

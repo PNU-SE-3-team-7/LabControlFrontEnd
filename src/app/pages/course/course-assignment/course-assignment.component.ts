@@ -15,6 +15,7 @@ import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "..
 import {AssignmentService} from "../../../services/api/assignment-service";
 import {SubmissionService} from "../../../services/api/submission-service";
 import {UserService} from "../../../services/api/user-service";
+import {ICourseUserPreviewDto} from "../../../models/IUser";
 
 @Component({
   selector: 'app-course-assignment',
@@ -33,6 +34,8 @@ export class CourseAssignmentComponent implements OnInit, ICourseChildEvents {
   protected subAssignments: IAssignment[] = []
   protected submissionComments: ISubmissionComment[] = []
 
+  protected membersSubmission: {}[] = []
+  
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,

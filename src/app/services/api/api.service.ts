@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {UserService} from "./user-service";
 
 @Injectable({
   providedIn: "root",
@@ -9,11 +10,12 @@ export class ApiService {
 
   protected baseURL: string = "http://localhost:8080";
 
-  protected headers: any = {};
+  protected headers: any = {"Authorization": `Bearer ${UserService.getAuthToken()}`};
 
   constructor(
     private http: HttpClient
   ) {
+
   }
 
   private getOptions(data: any) {

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {ApiService} from "./api.service";
-import {Observable, Observer} from "rxjs";
+import {Observable} from "rxjs";
 import {ICourseUserPreviewDto, IUser, MemberType, UserRole} from "../../models/IUser";
 
 
@@ -16,7 +16,6 @@ export class UserService {
     email: "email@pnu.edu.ua",
     role: UserRole.TEACHER
   }
-
   private userCourse: ICourseUserPreviewDto = {
     id: "17255fe7-c3dc-4b89-aa57-f724c79e3462",
     firstName: "JJerome",
@@ -24,12 +23,26 @@ export class UserService {
     email: "member@pnu.edu.ua",
     memberType: MemberType.MEMBER
   }
-
-  private pathPrefix: string = "/user";
+  private pathPrefix: string = "/auth";
 
   constructor(
     private api: ApiService
   ) {
+    if (UserService.getAuthToken() == null) {
+      this.login("user@mail.com").subscribe((response) => {
+        UserService.setAuthToken(response.token)
+      }, error => {
+        console.log(error)
+      })
+    } else {
+      this.whoami().subscribe((response) => {
+        console.log(response)
+      })
+    }
+  }
+
+  private login(email: string): Observable<{ token: string }> {
+    return this.api.post<{ token: string }>(`${this.pathPrefix}/login`, {body: {email: email}});
   }
 
   public getUser(): IUser {
@@ -41,11 +54,7 @@ export class UserService {
   }
 
   public whoami(): Observable<IUser> {
-    return new Observable<IUser>((observer: Observer<IUser>) => {
-      setTimeout(() => {
-
-      })
-    });
+    return this.api.get(`${this.pathPrefix}/whoami`)
   }
 
   public static getUserPreviewDtoPlaceholder(): ICourseUserPreviewDto {
@@ -66,5 +75,17 @@ export class UserService {
       email: "anonymous",
       role: UserRole.TEACHER
     }
+  }
+
+  public static getAuthToken(): string | null {
+    return window.localStorage.getItem("auth_token")
+  }
+
+  public static removeAuthToken(): void {
+    window.localStorage.removeItem("auth_token")
+  }
+
+  public static setAuthToken(jwtToken: string): void {
+    window.localStorage.setItem("auth_token", jwtToken)
   }
 }

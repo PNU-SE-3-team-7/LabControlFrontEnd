@@ -40,6 +40,7 @@ import {
 } from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {HttpClientModule} from "@angular/common/http";
+import {LoginComponent} from './pages/auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import {HttpClientModule} from "@angular/common/http";
     CommentsComponent,
     CourseEditComponent,
     CourseAssignmentEditComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

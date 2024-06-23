@@ -6,7 +6,7 @@ import {IAssignment} from "../../../models/IAssignment";
 import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../../components/labels/assignment-type-states";
 import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "../course.component";
 import {CourseService} from "../../../services/api/course.service";
-import {UserRole} from "../../../models/IUser";
+import {ICourseUserPreviewDto, MemberType, UserRole} from "../../../models/IUser";
 import {UserService} from "../../../services/api/user-service";
 import {AssignmentService} from "../../../services/api/assignment-service";
 import {MatSnakeService} from "../../../services/mat-snake-service";
@@ -40,22 +40,22 @@ export class CourseMainComponent implements ICourseChildEvents, OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       this.courseId = params.get('courseId') || ""
 
-      this.courseService.getCourse(this.courseId)
-        .subscribe((response: ICourse) => {
-          this.course = response;
-        }, error => this.snake.error(error))
-
-      this.assignmentService.getByCourseId(this.courseId)
-        .subscribe((response: IAssignment[]) => {
-          this.assignments = response
-        }, error => this.snake.error(error))
+      // this.courseService.getCourse(this.courseId)
+      //   .subscribe((response: ICourse) => {
+      //     this.course = response;
+      //   }, error => this.snake.error(error))
+      //
+      // this.assignmentService.getByCourseId(this.courseId)
+      //   .subscribe((response: IAssignment[]) => {
+      //     this.assignments = response
+      //   }, error => this.snake.error(error))
     });
   }
 
   getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>> {
     return {
       EDIT: {
-        visible: true,
+        visible: this.member.memberType === MemberType.EDUCATOR,
         text: "Edit"
       }
     }
@@ -82,4 +82,5 @@ export class CourseMainComponent implements ICourseChildEvents, OnInit {
 
   protected readonly ASSIGNMENT_TYPE_LABEL_INFO = ASSIGNMENT_TYPE_LABEL_INFO;
   protected readonly UserRole = UserRole;
+  protected readonly MemberType = MemberType;
 }

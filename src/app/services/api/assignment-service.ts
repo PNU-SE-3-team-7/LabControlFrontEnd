@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {ApiService} from "./api.service";
 import {Observable} from "rxjs";
-import {AssignmentType, AutoType, GradeType, IAssignment} from "../../models/IAssignment";
+import {AssignmentType, AutoType, GradeType, IAssignment, IAssignmentCreateDto} from "../../models/IAssignment";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class AssignmentService {
     return this.api.get<IAssignment>(`${this.pathPrefix}/${id}`);
   }
 
-  public create(data: IAssignment): Observable<IAssignment> {
+  public create(data: IAssignmentCreateDto): Observable<IAssignment> {
     return this.api.post<IAssignment>(`${this.pathPrefix}`, {body: data});
   }
 

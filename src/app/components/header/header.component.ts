@@ -8,7 +8,7 @@ import {UserService} from "../../services/api/user-service";
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-  protected user: IUser = UserService.getUserPlaceholder
+  protected user: IUser = UserService.getUserPlaceholder()
 
   constructor(
     private userService: UserService,

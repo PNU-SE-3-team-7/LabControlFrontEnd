@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {FormControl, FormGroup} from "@angular/forms";
 import {IAssignmentComment, ICommentBase, ISubmissionComment} from "../../models/IComment";
 import {UserService} from "../../services/api/user-service";
+import {ICourseUserPreviewDto} from "../../models/IUser";
 
 interface IAddCommentForm {
   message: FormControl<string>
@@ -14,23 +14,20 @@ interface IAddCommentForm {
   styleUrl: './comments.component.scss'
 })
 export class CommentsComponent implements OnInit {
-  @Input() comments: ICommentBase[] | IAssignmentComment[] | ISubmissionComment[] = [];
-  @Input() editable: boolean = false;
-
-  protected member: ICourseUserPreviewDto = UserService.getUserPreviewDtoPlaceholder()
+  @Input() comments: ICommentBase[] | IAssignmentComment[] | ISubmissionComment[] = []
+  @Input() editable: boolean = false
+  @Input() assigneeId: string = ""
+  @Input() member: ICourseUserPreviewDto = UserService.getUserPreviewDtoPlaceholder()
 
   protected addCommentForm: FormGroup<IAddCommentForm> = new FormGroup<IAddCommentForm>(<IAddCommentForm>{
     message: new FormControl<string>("")
   })
 
   constructor(
-    private matSnack: MatSnackBar,
-    private userService: UserService,
   ) {
   }
 
   ngOnInit(): void {
-    this.user = this.userService.getUser()
   }
 
   private isIAssignmentComment(content: ICommentBase): content is IAssignmentComment {
@@ -44,10 +41,10 @@ export class CommentsComponent implements OnInit {
   protected addSubmissionComment(): void {
     if (this.addCommentForm.valid && this.addCommentForm.get('message')?.value !== '') {
       this.comments.push({
+        id: '1',
         submissionId: 'sdfsdf',
         assignmentId: "dfdf",
-        id: '1',
-        senderId: this.user.id,
+        senderId: this.member.id,
         createdDate: new Date('2023-06-10T14:30:00Z'),
         message: this.addCommentForm.get('message')?.value || ""
       });

@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "../course.component";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AssignmentType, AutoType, GradeType, IAssignment, IAssignmentCreateDto} from "../../../models/IAssignment";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../../components/labels/assignment-type-states";
 import {ICourseUserPreviewDto, MemberType} from "../../../models/IUser";
 import {UserService} from "../../../services/api/user-service";
 import {AssignmentService} from "../../../services/api/assignment-service";
+import {MatSnakeService} from "../../../services/mat-snake-service";
 
 interface ICourseAssignmentEditFormType {
   title: FormControl<string>
@@ -41,23 +42,12 @@ export class CourseAssignmentEditComponent implements ICourseChildEvents, OnInit
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder,
+    private snake: MatSnakeService,
     private assignmentService: AssignmentService
   ) {
-    this.assignmentEditForm = fb.group<ICourseAssignmentEditFormType>(<ICourseAssignmentEditFormType>{
-      title: new FormControl<string>(""),
-      description: new FormControl<string>(""),
-      type: new FormControl<AssignmentType>(AssignmentType.TASK),
-      dueDate: new FormControl<Date | null>(null),
-      submissionEnabled: new FormControl<boolean>(true),
-      visibilityStart: new FormControl<Date | null>(null),
-      visibilityEnd: new FormControl<Date | null>(null),
-      gradeType: new FormControl<GradeType>(GradeType.DISCRETE),
-      autoType: new FormControl<AutoType>(AutoType.MANUAL),
-      maxGrade: new FormControl<number>(10),
-      weight: new FormControl<number>(1),
-      threshold: new FormControl<number>(0),
-    })
+    this.buildAssignmentEditForm()
   }
 
   ngOnInit(): void {
@@ -89,40 +79,69 @@ export class CourseAssignmentEditComponent implements ICourseChildEvents, OnInit
     }
   }
 
-
   onButtonClicked(type: CourseChildEventType): void {
     if (type === CourseChildEventType.DELETE) {
       if (this.action === "CREATE") {
-        this.assignmentService.create()
-      } else {
+        this.assignmentService.create(this.buildAssignmentCreateDto())
+          .subscribe(response => {
 
+            this.router.navigateByUrl(`/course/${response.id}`)
+            this.snake.info("Курс успішно створено")
+          }, error => this.snake.error(error))
+      } else {
+        this.assignmentService.update(this.buildAssignmentDto())
+          .subscribe(response => {
+
+            this.assignment = response
+
+            this.snake.info("Курс успішно оновлено")
+          }, error => this.snake.error(error))
       }
     }
   }
 
-  private buildAssignentCreateDto(): IAssignmentCreateDto {
-    const formControls = this.assignmentEditForm?.controls;
+  private buildAssignmentEditForm(): void {
+    const a = this.assignment
+    this.assignmentEditForm = this.fb.group<ICourseAssignmentEditFormType>(<ICourseAssignmentEditFormType>{
+      title: new FormControl<string>(a.title || "", [Validators.required]),
+      description: new FormControl<string>(a.description || "", [Validators.required]),
+      type: new FormControl<AssignmentType>(a.type || AssignmentType.ASSIGNMENT, [Validators.required]),
+      dueDate: new FormControl<Date | null>(a.dueDate, [Validators.required]),
+      submissionEnabled: new FormControl<boolean>(a.submissionEnabled || true, [Validators.required]),
+      visibilityStart: new FormControl<Date | null>(a.visibilityStart, [Validators.required]),
+      visibilityEnd: new FormControl<Date | null>(a.visibilityEnd, [Validators.required]),
+      gradeType: new FormControl<GradeType>(a.gradeType || GradeType.CONTINUOUS, [Validators.required]),
+      autoType: new FormControl<AutoType>(a.autoType || AutoType.MANUAL, [Validators.required]),
+      maxGrade: new FormControl<number>(a.maxGrade, [Validators.required]),
+      weight: new FormControl<number>(a.weight, [Validators.required]),
+      threshold: new FormControl<number>(a.threshold, [Validators.required]),
+    })
+  }
 
+  private buildAssignmentDto(): IAssignment {
     return {
-      courseId: "",
-      parentId: "", // Предполагается, что parentId должен быть установлен извне, если необходимо
-      title: formControls?.title.value || "",
-      description: formControls?.description.value || "",
-      type: formControls.type,
-      autoType: formControls?.autoType.value || AutoType.MANUAL,
-      submissionEnabled: formControls.submissionEnabled,
-      dueDate: formControls.dueDate,
-      gradeType: formControls.gradeType,
-      createdDate: new Date(), // Устанавливаем текущую дату как дату создания
-      updatedDate: new Date(), // Устанавливаем текущую дату как дату обновления
-      visibilityEnd: formControls.visibilityEnd,
-      visibilityStart: formControls.visibilityStart,
-      maxGrade: formControls.maxGrade || 0,
-      weight: formControls.weight || 0,
-      threshold: formControls.threshold || 0,
-      sequence: 0 // Предполагается, что sequence должен быть установлен извне
+      ...this.assignment,
+      ...this.buildAssignmentCreateDto()
     };
   }
+
+  private buildAssignmentCreateDto(): IAssignmentCreateDto {
+    const formControls = this.assignmentEditForm?.controls;
+    return {
+      ...this.assignment,
+      title: formControls?.title.value || this.assignment.title,
+      description: formControls?.description.value || this.assignment.description,
+      type: formControls?.type.value || this.assignment.type,
+      autoType: formControls?.autoType.value || this.assignment.autoType,
+      submissionEnabled: formControls?.submissionEnabled.value || this.assignment.submissionEnabled,
+      dueDate: formControls?.dueDate.value || this.assignment.dueDate,
+      gradeType: formControls?.gradeType.value || this.assignment.gradeType,
+      visibilityEnd: formControls?.visibilityEnd.value || this.assignment.visibilityEnd,
+      visibilityStart: formControls?.visibilityStart.value || this.assignment.visibilityStart,
+      maxGrade: formControls?.maxGrade.value || this.assignment.maxGrade,
+      weight: formControls?.weight.value || this.assignment.weight,
+      threshold: formControls?.threshold.value || this.assignment.threshold,
+    };
   }
 
   public formatDate(date: Date): string {

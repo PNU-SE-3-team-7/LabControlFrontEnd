@@ -27,8 +27,6 @@ export interface IAssignmentCreateDto {
   description: string;
   type: AssignmentType;
   submissionEnabled: boolean;
-  updatedDate: Date;
-  createdDate: Date;
   dueDate: Date;
   visibilityStart: Date;
   visibilityEnd: Date;
@@ -37,7 +35,6 @@ export interface IAssignmentCreateDto {
   maxGrade: number;
   weight: number;
   threshold: number;
-  sequence: number;
 }
 
 export enum AssignmentType {
