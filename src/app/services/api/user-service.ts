@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {ApiService} from "./api.service";
 import {Observable} from "rxjs";
 import {ICourseUserPreviewDto, IUser, MemberType, UserRole} from "../../models/IUser";
+import {MatSnakeService} from "../mat-snake-service";
 
 
 @Injectable({
@@ -9,37 +10,70 @@ import {ICourseUserPreviewDto, IUser, MemberType, UserRole} from "../../models/I
 })
 export class UserService {
 
+  private pathPrefix: string = "/auth";
   private user: IUser = {
-    id: "17255fe7-c3dc-4b89-aa57-f724c79e3462",
-    firstName: "JJerome",
-    lastName: "PNU",
-    email: "email@pnu.edu.ua",
+    id: "unknown",
+    firstName: "unknown",
+    lastName: "unknown",
+    email: "unknown",
     role: UserRole.TEACHER
   }
   private userCourse: ICourseUserPreviewDto = {
-    id: "17255fe7-c3dc-4b89-aa57-f724c79e3462",
-    firstName: "JJerome",
-    lastName: "PNU",
-    email: "member@pnu.edu.ua",
+    id: "unknown",
+    firstName: "unknown",
+    lastName: "unknown",
+    email: "unknown",
     memberType: MemberType.MEMBER
   }
-  private pathPrefix: string = "/auth";
-
-  constructor(
-    private api: ApiService
-  ) {
-    if (UserService.getAuthToken() == null) {
+  public userUpdate?: Observable<IUser> = new Observable<IUser>((observer) => {
+    this.whoami().subscribe((response) => {
+      this.user = response
+      observer.next(this.user)
+    }, error => {
+      UserService.removeAuthToken()
       this.login("user@mail.com").subscribe((response) => {
         UserService.setAuthToken(response.token)
+        this.whoami().subscribe((response) => {
+          this.user = response
+          observer.next(this.user)
+        }, error => {
+          UserService.removeAuthToken()
+          this.snake.error(error)
+        });
       }, error => {
-        console.log(error)
+        UserService.removeAuthToken()
+        this.snake.error(error)
       })
-    } else {
-      this.whoami().subscribe((response) => {
-        console.log(response)
-      })
-    }
+    })
+  });
+
+  constructor(
+    private api: ApiService,
+    private snake: MatSnakeService
+  ) {
+    // this.checkLogin()
   }
+
+  // private checkLogin(): void {
+  //   this.whoami().subscribe((response) => {
+  //     this.user = response
+  //   }, error => {
+  //     UserService.removeAuthToken()
+  //     this.login("user@mail.com").subscribe((response) => {
+  //       UserService.setAuthToken(response.token)
+  //       this.whoami().subscribe((response) => {
+  //         console.log("dfdf")
+  //         this.user = response
+  //       }, error => {
+  //         UserService.removeAuthToken()
+  //         this.snake.error(error)
+  //       });
+  //     }, error => {
+  //       UserService.removeAuthToken()
+  //       this.snake.error(error)
+  //     })
+  //   })
+  // }
 
   private login(email: string): Observable<{ token: string }> {
     return this.api.post<{ token: string }>(`${this.pathPrefix}/login`, {body: {email: email}});

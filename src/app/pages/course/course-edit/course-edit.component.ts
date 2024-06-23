@@ -50,8 +50,9 @@ export class CourseEditComponent implements ICourseChildEvents, OnInit {
       name: new FormControl<string>(""),
       summary: new FormControl<string>(""),
     })
-
-    this.user = userService.getUser()
+    userService.userUpdate?.subscribe((user: IUser) => {
+      this.user = user;
+    })
   }
 
   ngOnInit(): void {
@@ -100,6 +101,7 @@ export class CourseEditComponent implements ICourseChildEvents, OnInit {
 
       if (this.courseId == "") {
         this.courseService.createCourse(this.buildCourseCreateDto()).subscribe(response => {
+          console.log("sddf")
           this.router.navigateByUrl(`/course/${response.id}`)
           this.snake.info("Курс успішно створено")
         }, error => this.snake.error(error))

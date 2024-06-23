@@ -10,7 +10,24 @@ export class ApiService {
 
   protected baseURL: string = "http://localhost:8080";
 
-  protected headers: any = {"Authorization": `Bearer ${UserService.getAuthToken()}`};
+  private _headers: any = {}
+
+  public get headers(): any {
+    if (UserService.getAuthToken() != null) {
+      this._headers = {
+        ...this._headers,
+        Authorization: `Bearer ${UserService.getAuthToken()}`
+      }
+    } else if (this._headers.Authorization) {
+      delete this._headers.Authorization;
+    }
+
+    return this._headers;
+  }
+
+  public set headers(headers: any) {
+    this._headers = headers;
+  }
 
   constructor(
     private http: HttpClient
