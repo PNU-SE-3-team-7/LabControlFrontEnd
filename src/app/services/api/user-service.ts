@@ -28,12 +28,6 @@ export class UserService {
     memberType: MemberType.MEMBER
   }
 
-  private observer?: any
-
-  public userUpdate?: Observable<IUser> = new Observable<IUser>((observer) => {
-    this.observer = observer
-  });
-
   constructor(
     private api: ApiService,
     private snake: MatSnakeService,

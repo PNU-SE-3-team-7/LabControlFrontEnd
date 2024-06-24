@@ -16,7 +16,7 @@ import {MatSnakeService} from "../../../services/mat-snake-service";
   templateUrl: './course-main.component.html',
   styleUrl: './course-main.component.scss'
 })
-export class CourseMainComponent implements ICourseChildEvents, OnInit {
+export class CourseMainComponent extends ICourseChildEvents implements OnInit {
   protected member: ICourseUserPreviewDto = UserService.getUserPreviewDtoPlaceholder();
   private courseId: string = "";
   protected course?: ICourse
@@ -30,6 +30,7 @@ export class CourseMainComponent implements ICourseChildEvents, OnInit {
     private courseService: CourseService,
     private assignmentService: AssignmentService,
   ) {
+    super()
   }
 
   ngOnInit(): void {

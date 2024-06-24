@@ -20,7 +20,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.userSubscription = this.userService.user$.subscribe(user => {
       this.user = user;
-      console.log('User updated in HeaderComponent:', user);
     });
   }
 

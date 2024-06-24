@@ -5,13 +5,14 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {IAssignment} from "../../../models/IAssignment";
 import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../../components/labels/assignment-type-states";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "../course.component";
+import {CourseChildEventType, ICourseChildEvents} from "../course.component";
 import {CourseService} from "../../../services/api/course.service";
 import {ICourse, ICourseCreateDto} from "../../../models/ICourse";
 import {MatSnakeService} from "../../../services/mat-snake-service";
 import {UserService} from "../../../services/api/user-service";
 import {AssignmentService} from "../../../services/api/assignment-service";
 import {ICourseUserPreviewDto, IUser, MemberType, UserRole} from "../../../models/IUser";
+import {Subscription} from "rxjs";
 
 interface CourseEditFormType {
   name: FormControl<string>,
@@ -23,9 +24,10 @@ interface CourseEditFormType {
   templateUrl: './course-edit.component.html',
   styleUrl: './course-edit.component.scss'
 })
-export class CourseEditComponent implements ICourseChildEvents, OnInit {
+export class CourseEditComponent extends ICourseChildEvents implements OnInit {
   private member: ICourseUserPreviewDto = UserService.getUserPreviewDtoPlaceholder()
-  private user: IUser = UserService.getUserPlaceholder()
+  private user!: IUser | null
+  private userSubscription: Subscription | null = null;
   private courseId?: string = "";
   protected course?: ICourse
   protected assignments: IAssignment[] = [];
@@ -46,13 +48,23 @@ export class CourseEditComponent implements ICourseChildEvents, OnInit {
     private userService: UserService,
     private assignmentService: AssignmentService,
   ) {
+    super()
+
     this.courseEditForm = fb.group<CourseEditFormType>(<CourseEditFormType>{
       name: new FormControl<string>(""),
       summary: new FormControl<string>(""),
     })
-    userService.userUpdate?.subscribe((user: IUser) => {
+
+    this.userSubscription = this.userService.user$.subscribe(user => {
       this.user = user;
-    })
+      this.updateParentButtons()
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   ngOnInit(): void {
@@ -80,11 +92,11 @@ export class CourseEditComponent implements ICourseChildEvents, OnInit {
     });
   }
 
-  getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>> {
-    return {
+  private updateParentButtons() {
+    super.updateButtonVisibility({
       SAVE: {
         visible: this.member.memberType === MemberType.EDUCATOR
-          || this.courseId == "" && this.user.role === UserRole.TEACHER,
+          || this.courseId == "" && this.user?.role === UserRole.TEACHER,
         text: "Save",
       },
       DELETE: {
@@ -92,7 +104,7 @@ export class CourseEditComponent implements ICourseChildEvents, OnInit {
         text: "Delete",
         ngClasses: ["cancel"]
       }
-    }
+    })
   }
 
   onButtonClicked(type: CourseChildEventType): void {
@@ -128,7 +140,7 @@ export class CourseEditComponent implements ICourseChildEvents, OnInit {
     return {
       name: this.courseEditForm.controls?.name.value,
       summary: this.courseEditForm.controls?.summary.value,
-      ownerId: this.user.id
+      ownerId: this.user?.id || ""
     }
   }
 

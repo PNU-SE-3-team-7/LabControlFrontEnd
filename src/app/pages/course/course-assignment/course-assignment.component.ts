@@ -22,7 +22,7 @@ import {ICourseUserPreviewDto} from "../../../models/IUser";
   templateUrl: './course-assignment.component.html',
   styleUrl: './course-assignment.component.scss'
 })
-export class CourseAssignmentComponent implements OnInit, ICourseChildEvents {
+export class CourseAssignmentComponent extends ICourseChildEvents implements OnInit {
   protected member: ICourseUserPreviewDto = UserService.getUserPreviewDtoPlaceholder()
   private assignmentId?: string;
   private courseId?: string;
@@ -35,7 +35,7 @@ export class CourseAssignmentComponent implements OnInit, ICourseChildEvents {
   protected submissionComments: ISubmissionComment[] = []
 
   protected membersSubmission: {}[] = []
-  
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -45,6 +45,7 @@ export class CourseAssignmentComponent implements OnInit, ICourseChildEvents {
     private assignmentService: AssignmentService,
     private submissionService: SubmissionService,
   ) {
+    super()
   }
 
   ngOnInit(): void {

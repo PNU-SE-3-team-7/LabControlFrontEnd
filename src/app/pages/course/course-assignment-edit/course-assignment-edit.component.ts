@@ -29,7 +29,7 @@ interface ICourseAssignmentEditFormType {
   templateUrl: './course-assignment-edit.component.html',
   styleUrl: './course-assignment-edit.component.scss'
 })
-export class CourseAssignmentEditComponent implements ICourseChildEvents, OnInit {
+export class CourseAssignmentEditComponent extends ICourseChildEvents implements OnInit {
   private member: ICourseUserPreviewDto = UserService.getUserPreviewDtoPlaceholder()
   private action?: "CREATE" | "EDIT";
   private courseId: string = '';
@@ -47,6 +47,7 @@ export class CourseAssignmentEditComponent implements ICourseChildEvents, OnInit
     private snake: MatSnakeService,
     private assignmentService: AssignmentService
   ) {
+    super()
     this.buildAssignmentEditForm()
   }
 
