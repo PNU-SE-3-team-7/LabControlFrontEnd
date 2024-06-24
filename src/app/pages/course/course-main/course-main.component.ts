@@ -41,15 +41,15 @@ export class CourseMainComponent extends ICourseChildEvents implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       this.courseId = params.get('courseId') || ""
 
-      // this.courseService.getCourse(this.courseId)
-      //   .subscribe((response: ICourse) => {
-      //     this.course = response;
-      //   }, error => this.snake.error(error))
-      //
-      // this.assignmentService.getByCourseId(this.courseId)
-      //   .subscribe((response: IAssignment[]) => {
-      //     this.assignments = response
-      //   }, error => this.snake.error(error))
+      this.courseService.getCourse(this.courseId)
+        .subscribe((response: ICourse) => {
+          this.course = response;
+        }, error => this.snake.error(error))
+
+      this.assignmentService.getByCourseId(this.courseId)
+        .subscribe((response: IAssignment[]) => {
+          this.assignments = response
+        }, error => this.snake.error(error))
     });
   }
 

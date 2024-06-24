@@ -4,15 +4,13 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {ICourseUserPreviewDto, ILoginUser, IUser, MemberType, UserRole} from "../../models/IUser";
 import {MatSnakeService} from "../mat-snake-service";
 import {Router} from "@angular/router";
+import {CourseService} from "./course.service";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private pathPrefix: string = "/auth";
-  private userSubject = new BehaviorSubject<IUser | null>(null);
-  public user$ = this.userSubject.asObservable();
   private user: IUser = {
     id: "unknown",
     firstName: "unknown",
@@ -28,10 +26,17 @@ export class UserService {
     memberType: MemberType.MEMBER
   }
 
+  private pathPrefix: string = "/auth";
+  private userSubject = new BehaviorSubject<IUser | null>(null);
+  public user$ = this.userSubject.asObservable();
+  private courseMemberSubject = new BehaviorSubject<ICourseUserPreviewDto | null>(null);
+  public courseMember$ = this.courseMemberSubject.asObservable();
+
   constructor(
     private api: ApiService,
     private snake: MatSnakeService,
     private router: Router,
+    private courseService: CourseService,
   ) {
     this.tryGetUser()
   }
@@ -59,9 +64,16 @@ export class UserService {
       });
   }
 
-  public getCourseMember(courseId: string): ICourseUserPreviewDto {
-    return this.userCourse;
+  public updateCourseUser(courseId: string): void {
+    this.courseService.getCourseMembers(courseId)
+      .subscribe(response => {
+        console.log(response)
+      })
   }
+
+  // public getCourseMember(courseId: string): ICourseUserPreviewDto {
+  //   return this.userCourse;
+  // }
 
   public whoami(): Observable<IUser> {
     return this.api.get(`${this.pathPrefix}/whoami`)

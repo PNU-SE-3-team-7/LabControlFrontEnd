@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {ApiService} from "./api.service";
 import {Observable} from "rxjs";
 import {ICourse, ICourseCreateDto, ICoursePreviewDto} from "../../models/ICourse";
-import {ICourseUserPreviewDto} from "../../models/IUser";
+import {IChangeMemberTypeRequest, ICourseMember, ICourseUserPreviewDto} from "../../models/IUser";
 
 
 @Injectable({
@@ -29,15 +29,28 @@ export class CourseService {
     return this.api.put<ICourse>(`${this.pathPrefix}`, {body: course});
   }
 
-  public getCourseMembers(id: string): Observable<ICourseUserPreviewDto[]> {
-    return this.api.get<ICourseUserPreviewDto[]>(`${this.pathPrefix}/${id}/member/list`);
-  }
-
   public getCourseListByOwner(id: string): Observable<ICoursePreviewDto[]> {
     return this.api.get<ICoursePreviewDto[]>(`${this.pathPrefix}/list/byOwner?ownerId=${id}`);
   }
 
   public deleteCourse(id: string): Observable<void> {
     return this.api.delete<void>(`${this.pathPrefix}/${id}`)
+  }
+
+  public getCourseMembers(id: string): Observable<ICourseUserPreviewDto[]> {
+    return this.api.get<ICourseUserPreviewDto[]>(`${this.pathPrefix}/${id}/member/list`);
+  }
+
+  public addCourseMember(id: string, member: ICourseMember): Observable<ICourseMember> {
+    console.log(member)
+    return this.api.post<ICourseMember>(`${this.pathPrefix}/${id}/member`, {body: member});
+  }
+
+  public deleteCourseMember(id: string, userId: string): void {
+    this.api.get<ICourseMember>(`${this.pathPrefix}/${id}/member/${userId}`);
+  }
+
+  public changeMemberType(id: string, request: IChangeMemberTypeRequest): void {
+    this.api.post<ICourseMember>(`${this.pathPrefix}/${id}/member/type`, {body: request});
   }
 }

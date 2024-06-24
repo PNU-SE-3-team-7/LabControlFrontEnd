@@ -1,7 +1,14 @@
 import {Injectable} from "@angular/core";
 import {ApiService} from "./api.service";
 import {Observable} from "rxjs";
-import {AssignmentType, AutoType, GradeType, IAssignment, IAssignmentCreateDto} from "../../models/IAssignment";
+import {
+  AssignmentType,
+  AutoType,
+  GradeType,
+  IAssignment,
+  IAssignmentCreateDto,
+  IAssignmentSearchDto
+} from "../../models/IAssignment";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +23,11 @@ export class AssignmentService {
   }
 
   public getByCourseId(id: string): Observable<IAssignment[]> {
-    return this.api.get<IAssignment[]>(`${this.pathPrefix}/${id}`);
+    return this.api.post<IAssignment[]>(`${this.pathPrefix}/list`, {body: <IAssignmentSearchDto>{courseId: id}});
+  }
+
+  public getByAssignmentId(id: string): Observable<IAssignment[]> {
+    return this.api.post<IAssignment[]>(`${this.pathPrefix}/list`, {body: <IAssignmentSearchDto>{assignmentId: id}});
   }
 
   public getById(id: string): Observable<IAssignment> {

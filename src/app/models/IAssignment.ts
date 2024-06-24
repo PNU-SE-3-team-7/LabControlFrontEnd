@@ -20,6 +20,11 @@ export interface IAssignment {
   sequence: number;
 }
 
+export interface IAssignmentSearchDto {
+  assignmentId?: string;
+  courseId?: string;
+}
+
 export interface IAssignmentCreateDto {
   courseId: string;
   parentId: string;

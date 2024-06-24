@@ -32,3 +32,14 @@ export interface IUserPreviewDto {
 export interface ICourseUserPreviewDto extends IUserPreviewDto {
   memberType: MemberType
 }
+
+export interface ICourseMember {
+  userId: string
+  courseId: string
+  memberType: MemberType
+}
+
+export interface IChangeMemberTypeRequest {
+  userId: string
+  memberType: MemberType
+}

@@ -63,15 +63,25 @@ export class CourseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.member = this.userService.getCourseMember(this.courseId);
+    if ("courseId" in this.activatedRoute.snapshot.params) {
+      this.courseId = this.activatedRoute.snapshot.params["courseId"] || "";
+    }
+
+    this.activatedRoute.data.subscribe(data => {
+      if (this.courseId != "") {
+        this.userService.updateCourseUser(this.courseId)
+      }
+    });
+
+    this.userService.courseMember$.subscribe(member => {
+      if (member != null) {
+        this.member = member
+      }
+    })
 
     this.activatedRoute.data.subscribe(data => {
       data['member'] = this.member;
     });
-
-    if ("courseId" in this.activatedRoute.snapshot.params) {
-      this.courseId = this.activatedRoute.snapshot.params["courseId"] || "";
-    }
   }
 
   protected onActivatedRouteChange(component: ICourseChildEvents): void {

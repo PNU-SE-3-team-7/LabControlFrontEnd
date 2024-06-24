@@ -109,13 +109,17 @@ export class CourseEditComponent extends ICourseChildEvents implements OnInit {
 
   onButtonClicked(type: CourseChildEventType): void {
     if (type == CourseChildEventType.SAVE) {
-      console.log(this.buildCourseCreateDto())
-
-      if (this.courseId == "") {
+      if (this.courseId == "" && this.user != null) {
         this.courseService.createCourse(this.buildCourseCreateDto()).subscribe(response => {
-          console.log("sddf")
-          this.router.navigateByUrl(`/course/${response.id}`)
-          this.snake.info("Курс успішно створено")
+          this.courseService.addCourseMember(response.id, {
+            courseId: response.id,
+            memberType: MemberType.EDUCATOR,
+            userId: this.user?.id || ""
+          })
+            .subscribe(response => {
+              this.router.navigateByUrl(`/course/${response.courseId}`)
+              this.snake.info("Курс успішно створено")
+            })
         }, error => this.snake.error(error))
       } else {
         this.courseService.updateCourse(this.buildCourseDto()).subscribe(response => {
