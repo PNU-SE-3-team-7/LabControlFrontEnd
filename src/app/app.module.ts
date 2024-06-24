@@ -39,8 +39,12 @@ import {
   MatDatepickerToggle
 } from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {LoginComponent} from "./pages/auth/login/login.component";
 import {HttpClientModule} from "@angular/common/http";
-import {LoginComponent} from './pages/auth/login/login.component';
+import { BaseCheckboxesComponent } from './components/inputs/base-checkboxes/base-checkboxes.component';
+import { BaseRangeDatepickerComponent } from './components/inputs/base-range-datepicker/base-range-datepicker.component';
+import { BaseSelectComponent } from './components/inputs/base-select/base-select.component';
+import { BaseTextareaComponent } from './components/inputs/base-textarea/base-textarea.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +90,10 @@ import {LoginComponent} from './pages/auth/login/login.component';
     MatDatepickerModule,
     MatDatepicker,
     MatNativeDateModule,
+    BaseCheckboxesComponent,
+    BaseRangeDatepickerComponent,
+    BaseSelectComponent,
+    BaseTextareaComponent,
   ],
   providers: [
     provideAnimationsAsync(),

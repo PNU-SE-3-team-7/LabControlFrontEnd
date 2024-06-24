@@ -1,4 +1,7 @@
 <div class="course-list">
-  <a routerLink="2323">2323 Cours</a>
+  <div *ngFor="let course of coursesList">
+    <a [routerLink]="['/course', course.id]">{{ course.name }}</a>
+    <p>{{ truncateSummary(course.summary, 100) }}</p>
+  </div>
   <router-outlet></router-outlet>
 </div>

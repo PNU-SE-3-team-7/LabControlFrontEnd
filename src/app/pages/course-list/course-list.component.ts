@@ -15,6 +15,15 @@ export class CourseListComponent implements OnInit{
   ) {
   }
 
+  truncateSummary(summary: string, maxLength: number): string {
+  if (summary.length > maxLength) {
+    return summary.substring(0, maxLength) + '...';
+  } else {
+    // Add spaces and then an ellipsis to ensure it always ends with ...
+    return summary.padEnd(maxLength, ' ') + '...';
+  }
+}
+
   ngOnInit(): void {
   }
 }
