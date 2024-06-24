@@ -35,24 +35,19 @@ const routes: Routes = [
       {
         path: '',
         component: CourseMainComponent,
-      },
-      {
+      }, {
         path: 'edit',
         component: CourseEditComponent,
-      },
-      {
+      }, {
         path: 'assignment/create',
         component: CourseAssignmentEditComponent,
-      },
-      {
+      }, {
         path: 'assignment/:assignmentId',
         component: CourseAssignmentComponent,
-      },
-      {
+      }, {
         path: 'assignment/:parentId/create',
         component: CourseAssignmentEditComponent,
-      },
-      {
+      }, {
         path: 'assignment/:assignmentId/edit',
         component: CourseAssignmentEditComponent,
       }
