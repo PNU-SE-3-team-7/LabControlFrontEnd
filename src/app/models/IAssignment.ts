@@ -40,6 +40,7 @@ export interface IAssignmentCreateDto {
   maxGrade: number;
   weight: number;
   threshold: number;
+  sequence: number;
 }
 
 export enum AssignmentType {

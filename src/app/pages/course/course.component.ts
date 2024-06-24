@@ -78,10 +78,6 @@ export class CourseComponent implements OnInit {
         this.member = member
       }
     })
-
-    this.activatedRoute.data.subscribe(data => {
-      data['member'] = this.member;
-    });
   }
 
   protected onActivatedRouteChange(component: ICourseChildEvents): void {

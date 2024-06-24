@@ -35,6 +35,15 @@
     background: #009dff;
 
     .user_details{
+      display: flex;
+
+      flex-direction: row;
+
+      .logout {
+        color: #ff0000;
+
+        margin-left: 10px;
+      }
     }
 
     .nav-links{

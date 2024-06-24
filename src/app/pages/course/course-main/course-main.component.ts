@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {IAssignment} from "../../../models/IAssignment";
 import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../../components/labels/assignment-type-states";
-import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "../course.component";
+import {CourseChildEventType, ICourseChildEvents} from "../course.component";
 import {CourseService} from "../../../services/api/course.service";
 import {ICourseUserPreviewDto, MemberType, UserRole} from "../../../models/IUser";
 import {UserService} from "../../../services/api/user-service";
@@ -29,14 +29,19 @@ export class CourseMainComponent extends ICourseChildEvents implements OnInit {
     private snake: MatSnakeService,
     private courseService: CourseService,
     private assignmentService: AssignmentService,
+    private userService: UserService,
   ) {
     super()
   }
 
   ngOnInit(): void {
-    this.activatedRoute.parent?.data.subscribe(data => {
-      this.member = data['member'];
-    });
+    this.userService.courseMember$.subscribe(member => {
+      if (member != null) {
+        this.member = member
+
+        this.updateButtons()
+      }
+    })
 
     this.activatedRoute.paramMap.subscribe(params => {
       this.courseId = params.get('courseId') || ""
@@ -53,19 +58,26 @@ export class CourseMainComponent extends ICourseChildEvents implements OnInit {
     });
   }
 
-  getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>> {
-    return {
+  private updateButtons() {
+    super.updateButtonVisibility({
       EDIT: {
         visible: this.member.memberType === MemberType.EDUCATOR,
         text: "Edit"
+      },
+      ADD: {
+        visible: this.member.memberType === MemberType.EDUCATOR,
+        text: "Add assignment"
       }
-    }
+    })
   }
 
   onButtonClicked(type: CourseChildEventType): void {
     switch (type) {
       case CourseChildEventType.EDIT:
         this.router.navigate(['edit'], {relativeTo: this.activatedRoute});
+        break
+      case CourseChildEventType.ADD:
+        this.router.navigate([`assignment/create`], {relativeTo: this.activatedRoute});
         break
     }
   }

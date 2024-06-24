@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "../course.component";
+import {CourseChildEventType, ICourseChildEvents} from "../course.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AssignmentType, AutoType, GradeType, IAssignment, IAssignmentCreateDto} from "../../../models/IAssignment";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
@@ -45,43 +45,49 @@ export class CourseAssignmentEditComponent extends ICourseChildEvents implements
     private router: Router,
     private fb: FormBuilder,
     private snake: MatSnakeService,
-    private assignmentService: AssignmentService
+    private assignmentService: AssignmentService,
+    private userService: UserService,
   ) {
     super()
     this.buildAssignmentEditForm()
   }
 
   ngOnInit(): void {
-    this.activatedRoute.parent?.data.subscribe(data => {
-      this.member = data['member'];
-    });
+    this.userService.courseMember$.subscribe(member => {
+      if (member != null) {
+        this.member = member
+
+        this.updateButtons()
+      }
+    })
 
     this.activatedRoute.paramMap.subscribe(params => {
       this.parentId = params.get('parentId') || ""
       this.assignmentId = params.get('assignmentId') || ""
-      this.action = this.parentId ? "CREATE" : "EDIT"
+      this.action = this.parentId == "" ? "CREATE" : "EDIT"
     });
+
     this.activatedRoute.parent?.paramMap.subscribe(params => {
       this.courseId = params.get('courseId') || '';
     });
   }
 
-  getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>> {
-    return {
+  private updateButtons() {
+    super.updateButtonVisibility({
       DELETE: {
-        visible: this.member.memberType === MemberType.EDUCATOR,
+        visible: this.member.memberType === MemberType.EDUCATOR && this.action != "CREATE",
         text: 'Delete',
         ngClasses: ["cancel"]
       },
       SAVE: {
         visible: true,
-        text: 'Save',
+        text: this.action == "CREATE" ? "Create" : "Save",
       }
-    }
+    })
   }
 
   onButtonClicked(type: CourseChildEventType): void {
-    if (type === CourseChildEventType.DELETE) {
+    if (type === CourseChildEventType.SAVE) {
       if (this.action === "CREATE") {
         this.assignmentService.create(this.buildAssignmentCreateDto())
           .subscribe(response => {
@@ -129,7 +135,8 @@ export class CourseAssignmentEditComponent extends ICourseChildEvents implements
   private buildAssignmentCreateDto(): IAssignmentCreateDto {
     const formControls = this.assignmentEditForm?.controls;
     return {
-      ...this.assignment,
+      courseId: this.courseId,
+      parentId: this.parentId,
       title: formControls?.title.value || this.assignment.title,
       description: formControls?.description.value || this.assignment.description,
       type: formControls?.type.value || this.assignment.type,
@@ -142,6 +149,7 @@ export class CourseAssignmentEditComponent extends ICourseChildEvents implements
       maxGrade: formControls?.maxGrade.value || this.assignment.maxGrade,
       weight: formControls?.weight.value || this.assignment.weight,
       threshold: formControls?.threshold.value || this.assignment.threshold,
+      sequence: 1
     };
   }
 

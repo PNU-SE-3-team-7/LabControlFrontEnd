@@ -59,6 +59,12 @@ export class CourseEditComponent extends ICourseChildEvents implements OnInit {
       this.user = user;
       this.updateParentButtons()
     });
+
+    this.userService.courseMember$.subscribe(member => {
+      if (member != null) {
+        this.member = member
+      }
+    })
   }
 
   ngOnDestroy(): void {
@@ -68,10 +74,6 @@ export class CourseEditComponent extends ICourseChildEvents implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.parent?.data.subscribe(data => {
-      this.member = data['member'];
-    });
-
     this.activatedRoute.parent?.paramMap.subscribe(params => {
       this.courseId = params.get('courseId') || '';
 

@@ -43,7 +43,8 @@ export class UserService {
 
   public tryGetUser(): void {
     this.whoami().subscribe((response) => {
-        this.userSubject.next(response);
+        this.user = response
+        this.userSubject.next(this.user);
       },
       (error) => {
         UserService.removeAuthToken();
@@ -67,13 +68,10 @@ export class UserService {
   public updateCourseUser(courseId: string): void {
     this.courseService.getCourseMembers(courseId)
       .subscribe(response => {
-        console.log(response)
+        this.userCourse = response.filter(item => item.id === this.user.id)[0]
+        this.courseMemberSubject.next(this.userCourse)
       })
   }
-
-  // public getCourseMember(courseId: string): ICourseUserPreviewDto {
-  //   return this.userCourse;
-  // }
 
   public whoami(): Observable<IUser> {
     return this.api.get(`${this.pathPrefix}/whoami`)

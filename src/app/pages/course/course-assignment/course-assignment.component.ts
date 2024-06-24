@@ -11,11 +11,11 @@ import {FormBuilder} from "@angular/forms";
 import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../../components/labels/assignment-type-states";
 import {ISubmissionComment} from "../../../models/IComment";
 import {IAttachedComponentAddLinkType} from "../../../components/attached-content/attached-content.component";
-import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "../course.component";
+import {CourseChildEventType, ICourseChildEvents} from "../course.component";
 import {AssignmentService} from "../../../services/api/assignment-service";
 import {SubmissionService} from "../../../services/api/submission-service";
 import {UserService} from "../../../services/api/user-service";
-import {ICourseUserPreviewDto} from "../../../models/IUser";
+import {ICourseUserPreviewDto, MemberType} from "../../../models/IUser";
 
 @Component({
   selector: 'app-course-assignment',
@@ -33,7 +33,6 @@ export class CourseAssignmentComponent extends ICourseChildEvents implements OnI
   protected submission: ISubmission = SubmissionService.getPlaceholder()
   protected subAssignments: IAssignment[] = []
   protected submissionComments: ISubmissionComment[] = []
-
   protected membersSubmission: {}[] = []
 
   constructor(
@@ -44,11 +43,20 @@ export class CourseAssignmentComponent extends ICourseChildEvents implements OnI
     private fb: FormBuilder,
     private assignmentService: AssignmentService,
     private submissionService: SubmissionService,
+    private userService: UserService,
   ) {
     super()
   }
 
   ngOnInit(): void {
+    this.userService.courseMember$.subscribe(member => {
+      if (member != null) {
+        this.member = member
+
+        this.updateButtons()
+      }
+    })
+
     this.activatedRoute.parent?.data.subscribe(data => {
       this.member = data['member'];
     });
@@ -61,17 +69,17 @@ export class CourseAssignmentComponent extends ICourseChildEvents implements OnI
     });
   }
 
-  getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>> {
-    return {
+  private updateButtons() {
+    super.updateButtonVisibility({
       ADD: {
-        visible: true,
+        visible: this.member.memberType === MemberType.EDUCATOR,
         text: "Add subassignment",
       },
       EDIT: {
-        visible: true,
+        visible: this.member.memberType === MemberType.EDUCATOR,
         text: "Edit",
       }
-    }
+    })
   }
 
   onButtonClicked(type: CourseChildEventType): void {
