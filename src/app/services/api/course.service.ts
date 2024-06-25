@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {ApiService} from "./api.service";
 import {Observable} from "rxjs";
-import {ICourse, ICourseCreateDto, ICoursePreviewDto} from "../../models/ICourse";
+import {ICourse, ICourseCreateDto, ICoursePreviewDto, IUserCourseListRequest} from "../../models/ICourse";
 import {IChangeMemberTypeRequest, ICourseMember, ICourseUserPreviewDto} from "../../models/IUser";
 
 
@@ -27,6 +27,10 @@ export class CourseService {
 
   public updateCourse(course: ICourse): Observable<ICourse> {
     return this.api.put<ICourse>(`${this.pathPrefix}`, {body: course});
+  }
+
+  public getUserCourseList(request: IUserCourseListRequest): Observable<ICoursePreviewDto[]> {
+    return this.api.post<ICoursePreviewDto[]>(`${this.pathPrefix}/list`, {body: request});
   }
 
   public getCourseListByOwner(id: string): Observable<ICoursePreviewDto[]> {

@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ICourse} from "../../models/ICourse";
+import {ICoursePreviewDto} from "../../models/ICourse";
 import {ActivatedRoute} from "@angular/router";
+import {UserService} from "../../services/api/user-service";
+import {IUser, MemberType} from "../../models/IUser";
+import {CourseService} from "../../services/api/course.service";
 
 @Component({
   selector: 'app-course-list',
@@ -8,11 +11,27 @@ import {ActivatedRoute} from "@angular/router";
   styleUrl: './course-list.component.scss'
 })
 export class CourseListComponent implements OnInit{
-  public coursesList: ICourse[] = [];
+  private user: IUser | null = null;
+  public coursesList: ICoursePreviewDto[] = [];
 
   constructor(
     private router: ActivatedRoute,
+    private userService: UserService,
+    private courseService: CourseService,
   ) {
+    this.userService.user$.subscribe(member => {
+      if (member != null) {
+        this.user = member
+
+        this.courseService.getUserCourseList({userId: this.user.id, memberType: MemberType.MEMBER})
+          .subscribe(response => {
+            this.coursesList = response
+          })
+      }
+    })
+  }
+
+  ngOnInit(): void {
   }
 
   truncateSummary(summary: string, maxLength: number): string {
@@ -23,7 +42,4 @@ export class CourseListComponent implements OnInit{
     return summary.padEnd(maxLength, ' ') + '...';
   }
 }
-
-  ngOnInit(): void {
-  }
 }

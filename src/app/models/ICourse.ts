@@ -1,4 +1,4 @@
-import {IUserPreviewDto} from "./IUser";
+import {IUserPreviewDto, MemberType} from "./IUser";
 
 export interface ICourse{
   id: string;
@@ -18,4 +18,9 @@ export interface ICoursePreviewDto {
   name: string;
   summary: string;
   owner: IUserPreviewDto
+}
+
+export interface IUserCourseListRequest {
+  userId: string
+  memberType: MemberType
 }
