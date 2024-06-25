@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
       if (user) {
         this.router.navigateByUrl("/")
       }
-      console.log('User updated in HeaderComponent:', user);
     });
   }
 

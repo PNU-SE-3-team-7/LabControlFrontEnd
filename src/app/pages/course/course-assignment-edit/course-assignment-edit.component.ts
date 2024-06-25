@@ -56,7 +56,6 @@ export class CourseAssignmentEditComponent extends ICourseChildEvents implements
     this.userService.courseMember$.subscribe(member => {
       if (member != null) {
         this.member = member
-
         this.updateButtons()
       }
     })
@@ -65,6 +64,7 @@ export class CourseAssignmentEditComponent extends ICourseChildEvents implements
       this.parentId = params.get('parentId') || ""
       this.assignmentId = params.get('assignmentId') || ""
       this.action = this.parentId == "" ? "CREATE" : "EDIT"
+      this.updateButtons()
     });
 
     this.activatedRoute.parent?.paramMap.subscribe(params => {

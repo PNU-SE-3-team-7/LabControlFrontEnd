@@ -41,9 +41,11 @@
       flex-direction: row;
 
       .logout {
-        color: #ff0000;
+        color: #222222;
 
         margin-left: 10px;
+
+        cursor: pointer;
       }
     }
 

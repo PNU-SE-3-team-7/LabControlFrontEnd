@@ -41,7 +41,7 @@ export class UserService {
     this.tryGetUser()
   }
 
-  public tryGetUser(): void {
+  private tryGetUser(): void {
     this.whoami().subscribe((response) => {
         this.user = response
         this.userSubject.next(this.user);
@@ -84,16 +84,6 @@ export class UserService {
       lastName: "anonymous",
       email: "anonymous",
       memberType: MemberType.MEMBER
-    }
-  }
-
-  public static getUserPlaceholder(): IUser {
-    return {
-      id: "anonymous",
-      firstName: "anonymous",
-      lastName: "anonymous",
-      email: "anonymous",
-      role: UserRole.TEACHER
     }
   }
 

@@ -63,6 +63,7 @@ export class CourseEditComponent extends ICourseChildEvents implements OnInit {
     this.userService.courseMember$.subscribe(member => {
       if (member != null) {
         this.member = member
+        this.updateParentButtons()
       }
     })
   }
@@ -99,10 +100,10 @@ export class CourseEditComponent extends ICourseChildEvents implements OnInit {
       SAVE: {
         visible: this.member.memberType === MemberType.EDUCATOR
           || this.courseId == "" && this.user?.role === UserRole.TEACHER,
-        text: "Save",
+        text: this.courseId == "" ? "Create" : "Save",
       },
       DELETE: {
-        visible: this.member.memberType === MemberType.EDUCATOR,
+        visible: this.member.memberType === MemberType.EDUCATOR && this.courseId != "",
         text: "Delete",
         ngClasses: ["cancel"]
       }
