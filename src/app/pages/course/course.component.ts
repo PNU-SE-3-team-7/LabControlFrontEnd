@@ -1,6 +1,9 @@
 import {ChangeDetectorRef, Component, OnInit,} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
+import {ICourseUserPreviewDto} from "../../models/IUser";
+import {UserService} from "../../services/api/user-service";
+import {BehaviorSubject, Subscription} from "rxjs";
 
 export enum CourseChildEventType {
   CREATE = "CREATE",
@@ -16,10 +19,17 @@ export interface ICourseButtonDetails {
   ngClasses?: string[]
 }
 
-export interface ICourseChildEvents {
-  getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>>
+export abstract class ICourseChildEvents {
+  private buttonsSubject = new BehaviorSubject<Partial<Record<CourseChildEventType, ICourseButtonDetails>>>({});
+  public buttons$ = this.buttonsSubject.asObservable();
 
-  onButtonClicked(type: CourseChildEventType): void
+  protected updateButtonVisibility(items: Partial<Record<CourseChildEventType, ICourseButtonDetails>>) {
+    this.buttonsSubject.next(items)
+  }
+
+  // getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>>
+
+  public abstract onButtonClicked(type: CourseChildEventType): void
 }
 
 @Component({
@@ -28,6 +38,8 @@ export interface ICourseChildEvents {
   styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit {
+  private member: ICourseUserPreviewDto = UserService.getUserPreviewDtoPlaceholder()
+
   private defaultButtonsVisibility: Record<CourseChildEventType, ICourseButtonDetails> = {
     CREATE: {visible: false, text: 'Create'},
     DELETE: {visible: false, text: 'Delete'},
@@ -39,18 +51,46 @@ export class CourseComponent implements OnInit {
   protected courseId: string = "";
   protected childComponentInstance?: ICourseChildEvents;
   protected buttonsVisibility: Record<CourseChildEventType, ICourseButtonDetails> = this.defaultButtonsVisibility;
+  private buttonsSubscription: Subscription | null = null;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private userService: UserService,
   ) {
   }
 
   ngOnInit(): void {
     if ("courseId" in this.activatedRoute.snapshot.params) {
       this.courseId = this.activatedRoute.snapshot.params["courseId"] || "";
+    }
+
+    this.activatedRoute.data.subscribe(data => {
+      if (this.courseId != "") {
+        this.userService.updateCourseUser(this.courseId)
+      }
+    });
+
+    this.userService.courseMember$.subscribe(member => {
+      if (member != null) {
+        this.member = member
+      }
+    })
+  }
+
+  protected onActivatedRouteChange(component: ICourseChildEvents): void {
+    this.childComponentInstance = component
+    this.buttonsSubscription = this.childComponentInstance.buttons$.subscribe(items => {
+      this.buttonsVisibility = {...this.defaultButtonsVisibility, ...items};
+      this.cdr.detectChanges();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.buttonsSubscription) {
+      this.buttonsSubscription.unsubscribe();
     }
   }
 
@@ -72,17 +112,7 @@ export class CourseComponent implements OnInit {
     this.location.back();
   }
 
-  protected onActivatedRouteChange(component: ICourseChildEvents): void {
-    this.childComponentInstance = component
-    const customVisibility = this.childComponentInstance.getButtonsVisibility();
-    this.buttonsVisibility = {...this.defaultButtonsVisibility, ...customVisibility};
-    this.cdr.detectChanges();
-  }
-
   protected isPeoplesPageAvailable(): boolean {
     return "courseId" in this.activatedRoute.snapshot.params
   }
-
-  protected readonly Object = Object;
-  protected readonly CourseChildEventType = CourseChildEventType;
 }

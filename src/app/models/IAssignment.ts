@@ -20,6 +20,29 @@ export interface IAssignment {
   sequence: number;
 }
 
+export interface IAssignmentSearchDto {
+  assignmentId?: string;
+  courseId?: string;
+}
+
+export interface IAssignmentCreateDto {
+  courseId: string;
+  parentId: string;
+  title: string;
+  description: string;
+  type: AssignmentType;
+  submissionEnabled: boolean;
+  dueDate: Date;
+  visibilityStart: Date;
+  visibilityEnd: Date;
+  gradeType: GradeType;
+  autoType: AutoType;
+  maxGrade: number;
+  weight: number;
+  threshold: number;
+  sequence: number;
+}
+
 export enum AssignmentType {
   ASSIGNMENT = "ASSIGNMENT",
   TASK = "TASK",

@@ -3,12 +3,11 @@
     <svg class="svg" xmlns="http://www.w3.org/2000/svg" width="15" height="15"
          viewBox="0 0 6 6"><path fill="#009dff" d="M1 0c2.5 0 5 2.5 5 5V0H1Z"></path></svg></span>
   <nav class="navigation">
-    <div class="user_details">
-      <div>JJerome</div>
+    <div class="user_details" *ngIf="user">
+      <div>{{ user.email }}</div>
+      <div (click)="logout()" class="logout">Logout</div>
     </div>
-
-    <hr class="separate-line">
-
+    <hr class="separate-line" *ngIf="user">
     <div class="nav-links">
       <a routerLink="/course" class="link">Courses</a>
     </div>

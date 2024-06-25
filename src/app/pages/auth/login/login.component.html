@@ -1,0 +1,11 @@
+<div class="login-form-wrapper">
+  <p class="title">Sign-in</p>
+  <form class="login-form" [formGroup]="loginForm" (submit)="tryLogin($event)">
+    <div class="form-field">
+      <mat-label class="label">Login</mat-label>
+      <input type="text" class="base-input" matInput placeholder="user@email.com" formControlName="login"
+             [value]="'user@mail.com'">
+    </div>
+    <app-base-button class="button" type="submit">Sign-in</app-base-button>
+  </form>
+</div>

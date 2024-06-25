@@ -1,10 +1,10 @@
 <div class="course-main">
   <div class="about-course">
     <div class="course-name">
-      {{course.name}}
+      {{ course?.name }}
     </div>
     <div class="course-summary">
-      {{course.summary}}
+      {{ course?.summary }}
     </div>
   </div>
   <div class="assignments" *ngIf="assignments && assignments.length > 0">
@@ -16,7 +16,7 @@
           <app-base-label [stateInfo]="ASSIGNMENT_TYPE_LABEL_INFO[item.type]"></app-base-label>
         </div>
         <div class="right-side">
-          <div class="grade">{{7}}/{{item.maxGrade}}</div>
+          <div class="grade" *ngIf="member.memberType === MemberType.MEMBER ">{{ 7 }}/{{ item.maxGrade }}</div>
           <div class="due-date">{{formatDate(item.dueDate)}}</div>
         </div>
       </div>

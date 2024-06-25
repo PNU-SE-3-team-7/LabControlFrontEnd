@@ -1,708 +1,83 @@
 import {Component, OnInit} from '@angular/core';
 import {ICourse} from "../../../models/ICourse";
 import {ActivatedRoute, Router} from "@angular/router";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
-import {FormBuilder} from "@angular/forms";
-import {AssignmentType, AutoType, GradeType, IAssignment} from "../../../models/IAssignment";
+import {IAssignment} from "../../../models/IAssignment";
 import {ASSIGNMENT_TYPE_LABEL_INFO} from "../../../components/labels/assignment-type-states";
-import {CourseChildEventType, ICourseButtonDetails, ICourseChildEvents} from "../course.component";
+import {CourseChildEventType, ICourseChildEvents} from "../course.component";
+import {CourseService} from "../../../services/api/course.service";
+import {ICourseUserPreviewDto, MemberType, UserRole} from "../../../models/IUser";
+import {UserService} from "../../../services/api/user-service";
+import {AssignmentService} from "../../../services/api/assignment-service";
+import {MatSnakeService} from "../../../services/mat-snake-service";
 
 @Component({
   selector: 'app-course-main',
   templateUrl: './course-main.component.html',
   styleUrl: './course-main.component.scss'
 })
-export class CourseMainComponent implements ICourseChildEvents, OnInit {
-  private courseId?: string;
-  protected course: ICourse = {
-    id: "JJerome",
-    name: "Bagato textu tutu povinno buti",
-    summary: "Bagato textu tutu povinno buti Bagato textu tutu povinno butiBagato textu tutu povinno buti"
-  }
-  protected assignments: IAssignment[] = [
-    {
-      id: '2',
-      courseId: 'course2',
-      parentId: 'parent2',
-      title: 'Assignment 2',
-      description: 'This is the second assignment',
-      type: AssignmentType.TASK,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-10T14:30:00Z'),
-      createdDate: new Date('2023-05-20T09:00:00Z'),
-      dueDate: new Date('2023-06-20T23:59:59Z'),
-      visibilityStart: new Date('2023-06-10T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-05T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.AUTO,
-      maxGrade: 10,
-      weight: 30,
-      threshold: 80,
-      sequence: 2
-    },
-    {
-      id: '3',
-      courseId: 'course3',
-      parentId: 'parent3',
-      title: 'Assignment 3',
-      description: 'This is the third assignment',
-      type: AssignmentType.MATERIAL,
-      submissionEnabled: false,
-      updatedDate: new Date('2023-06-15T16:00:00Z'),
-      createdDate: new Date('2023-05-25T10:30:00Z'),
-      dueDate: new Date('2023-07-01T23:59:59Z'),
-      visibilityStart: new Date('2023-06-20T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-10T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 40,
-      threshold: 75,
-      sequence: 3
-    },
-    {
-      id: '4',
-      courseId: 'course4',
-      parentId: 'parent4',
-      title: 'Assignment 4',
-      description: 'This is the fourth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-20T11:15:00Z'),
-      createdDate: new Date('2023-05-30T14:45:00Z'),
-      dueDate: new Date('2023-07-10T23:59:59Z'),
-      visibilityStart: new Date('2023-06-25T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-20T23:59:59Z'),
-      visibility: false,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.AUTO,
-      maxGrade: 10,
-      weight: 20,
-      threshold: 60,
-      sequence: 4
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    },
-    {
-      id: '5',
-      courseId: 'course5',
-      parentId: 'parent5',
-      title: 'Assignment 5',
-      description: 'This is the fifth assignment',
-      type: AssignmentType.ASSIGNMENT,
-      submissionEnabled: true,
-      updatedDate: new Date('2023-06-25T09:30:00Z'),
-      createdDate: new Date('2023-06-01T16:00:00Z'),
-      dueDate: new Date('2023-07-15T23:59:59Z'),
-      visibilityStart: new Date('2023-07-01T00:00:00Z'),
-      visibilityEnd: new Date('2023-07-25T23:59:59Z'),
-      visibility: true,
-      gradeType: GradeType.CONTINUOUS,
-      autoType: AutoType.MANUAL,
-      maxGrade: 10,
-      weight: 15,
-      threshold: 65,
-      sequence: 5
-    }
-  ];
+export class CourseMainComponent extends ICourseChildEvents implements OnInit {
+  protected member: ICourseUserPreviewDto = UserService.getUserPreviewDtoPlaceholder();
+  private courseId: string = "";
+  protected course?: ICourse
+  protected assignments: IAssignment[] = []
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private matSnack: MatSnackBar,
     private dialog: MatDialog,
-    private fb: FormBuilder
+    private snake: MatSnakeService,
+    private courseService: CourseService,
+    private assignmentService: AssignmentService,
+    private userService: UserService,
   ) {
+    super()
   }
 
   ngOnInit(): void {
+    this.userService.courseMember$.subscribe(member => {
+      if (member != null) {
+        this.member = member
+
+        this.updateButtons()
+      }
+    })
+
     this.activatedRoute.paramMap.subscribe(params => {
       this.courseId = params.get('courseId') || ""
+
+      this.courseService.getCourse(this.courseId)
+        .subscribe((response: ICourse) => {
+          this.course = response;
+        }, error => this.snake.error(error))
+
+      this.assignmentService.getByCourseId(this.courseId)
+        .subscribe((response: IAssignment[]) => {
+          this.assignments = response
+        }, error => this.snake.error(error))
     });
   }
 
-
-  getButtonsVisibility(): Partial<Record<CourseChildEventType, ICourseButtonDetails>> {
-    return {
+  private updateButtons() {
+    super.updateButtonVisibility({
       EDIT: {
-        visible: true,
+        visible: this.member.memberType === MemberType.EDUCATOR,
         text: "Edit"
+      },
+      ADD: {
+        visible: this.member.memberType === MemberType.EDUCATOR,
+        text: "Add assignment"
       }
-    }
+    })
   }
 
   onButtonClicked(type: CourseChildEventType): void {
     switch (type) {
       case CourseChildEventType.EDIT:
         this.router.navigate(['edit'], {relativeTo: this.activatedRoute});
+        break
+      case CourseChildEventType.ADD:
+        this.router.navigate([`assignment/create`], {relativeTo: this.activatedRoute});
         break
     }
   }
@@ -719,4 +94,6 @@ export class CourseMainComponent implements ICourseChildEvents, OnInit {
   }
 
   protected readonly ASSIGNMENT_TYPE_LABEL_INFO = ASSIGNMENT_TYPE_LABEL_INFO;
+  protected readonly UserRole = UserRole;
+  protected readonly MemberType = MemberType;
 }

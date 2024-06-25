@@ -3,13 +3,13 @@
     <div class="comment-item-wrapper"
          *ngFor="let comment of comments"
          [ngClass]="{
-                    'yours': comment.senderId !== this.user.id,
-                    'mine': comment.senderId === this.user.id,
+                    'yours': comment.senderId !== this.member.id,
+                    'mine': comment.senderId === this.member.id,
                     }"
     >
       <div class="comment-item">
         <div class="comment-owner" [style.color]="getUserColor(comment.senderId)">
-          {{ comment.senderId === this.user.id ? "You" : "JJerome" }}
+          {{ comment.senderId === this.member.id ? "You" : "JJerome" }}
           :
         </div>
         <div class="comment-text">
